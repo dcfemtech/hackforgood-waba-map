@@ -1,2 +1,4 @@
-# hackforgood-waba-map
-DCFemTech Hack for Good 2016 - WABA Bike Map Project
+# WABA Bike Infrastructure Map Project
+DCFemTech Hack for Good 2016
+
+https://dcfemtech.github.io/hackforgood-waba-map/
