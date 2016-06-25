@@ -11,6 +11,13 @@ var dcBikeLanes = L.mapbox.featureLayer().addTo(map);
 dcBikeLanes.loadURL('./DC_bikelanes.geojson')
     .on('ready', done);
 
+// Try to get user's current location and set the view
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+        map.setView([position.coords.latitude, position.coords.longitude], 16);
+    });
+}
+
 function done() {
     dcBikeLanes.setStyle({ color: 'green', weight: 2 });
 
