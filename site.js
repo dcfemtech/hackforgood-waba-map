@@ -42,8 +42,10 @@ function setProperties (buffer) {
 function done() {
     dcBikeLanes.setStyle(bikeLaneStyle);
     mocoBikeLanes.setStyle(bikeLaneStyle);
+    arlingtonBikeTrails.setStyle(bikeLaneStyle);
+    alexBikeTrails.setStyle(bikeLaneStyle);
 
-    function run() {
+    function run() { 
         var radius = parseInt(document.getElementById('radius').value);
         if (isNaN(radius)) radius = 500;
 
@@ -56,14 +58,13 @@ function done() {
         setProperties(bufferMoco);
         bufferMocoLayer.setGeoJSON(bufferMoco);
 
-
         var bufferAlex = turf.buffer(alexBikeTrails.getGeoJSON(), radius/5280, 'miles');
-        alexBufferLayer.setGeoJSON(bufferAlex)
-            .setStyle(bufferStyle);
+        setProperties(bufferAlex);
+        alexBufferLayer.setGeoJSON(bufferAlex);
         
         var bufferArlington = turf.buffer(arlingtonBikeTrails.getGeoJSON(), radius/5280, 'miles');
-        arlingtonBufferLayer.setGeoJSON(bufferArlington)
-            .setStyle(bufferStyle);
+        setProperties(bufferArlington);
+        arlingtonBufferLayer.setGeoJSON(bufferArlington);
             
     }
 
