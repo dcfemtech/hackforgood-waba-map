@@ -22,7 +22,11 @@ var bufferStyle = { "fill": "#56B6DB",
                     "stroke": "#1A3742",
                     "stroke-width": 2
                 };
-
+function setProperties (buffer) {
+    for (var i = 0; i < buffer.features.length; i++) {
+        buffer.features[i].properties = bufferStyle;
+    }
+}
 function done() {
     dcBikeLanes.setStyle(bikeLaneStyle);
     mocoBikeLanes.setStyle(bikeLaneStyle);
@@ -33,16 +37,11 @@ function done() {
 
         var buffer = turf.buffer(dcBikeLanes.getGeoJSON(), radius / 5280, 'miles');
         // Each buffer feature object needs to have the properties set individually
-        for (var i = 0; i < buffer.features.length; i++) {
-            buffer.features[i].properties = bufferStyle;
-        }
+        setProperties(buffer);
         dcBufferLayer.setGeoJSON(buffer);
 
         var bufferMoco = turf.buffer(mocoBikeLanes.getGeoJSON(), radius / 5280, 'miles');
-        for (var i = 0; i < bufferMoco.features.length; i++) {
-            bufferMoco.features[i].properties = bufferStyle;
-
-        }
+        setProperties(bufferMoco);
         bufferMocoLayer.setGeoJSON(bufferMoco);
 
 
