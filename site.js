@@ -22,7 +22,11 @@ function done() {
         var radius = parseInt(document.getElementById('radius').value);
         if (isNaN(radius)) radius = 500;
 
-        var buffer = turf.buffer(dcBikeLanes.getGeoJSON(), radius/5280, 'miles');
+        var dcBikeLanesGeoJSON = dcBikeLanes.getGeoJSON();
+
+        var dcBikeLaneUnion = featureUnion(dcBikeLanesGeoJSON);
+
+        var buffer = turf.buffer(dcBikeLaneUnion, radius/5280, 'miles');
         bufferLayer.setGeoJSON(buffer)
             .setStyle({
                 "fill": "#FF69B4",
@@ -37,6 +41,19 @@ function done() {
                 "stroke-width": 2
             });
 
+    }
+
+    function featureUnion(geojson){
+        var merged = geojson.features[0];
+
+        var length = geojson.features.length;
+
+        for (var i = 1; i < length; i++) {
+            console.log("Processing feature " + i);
+            merged = turf.union(merged, geojson.features[i]);
+        }
+
+        return merged
     }
 
     run();
