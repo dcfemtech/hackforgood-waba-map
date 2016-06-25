@@ -9,11 +9,21 @@ var dcBufferLayer = L.mapbox.featureLayer().addTo(map);
 var bufferMocoLayer = L.mapbox.featureLayer().addTo(map);
 var dcBikeLanes = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
+var alexBikeTrails = L.mapbox.featureLayer().addTo(map);
+var alexBufferLayer = L.mapbox.featureLayer().addTo(map);
+var arlingtonBikeTrails = L.mapbox.featureLayer().addTo(map);
+var arlingtonBufferLayer = L.mapbox.featureLayer().addTo(map);
 
 dcBikeLanes.loadURL('./DC_bikelanes.geojson')
     .on('ready', done);
 
 mocoBikeLanes.loadURL('./MontgomeryCountyBikelanes.geojson')
+    .on('ready', done);
+
+alexBikeTrails.loadURL('./AlexandriaBikeTrail.geojson')
+    .on('ready', done);
+
+arlingtonBikeTrails.loadURL('./ArlingtonBikeRoutes.geojson')
     .on('ready', done);
 
 // styles and color paletter for map
@@ -39,6 +49,14 @@ function done() {
         bufferMocoLayer.setGeoJSON(bufferMoco)
             .setStyle(bufferStyle);
 
+        var bufferAlex = turf.buffer(alexBikeTrails.getGeoJSON(), radius/5280, 'miles');
+        alexBufferLayer.setGeoJSON(bufferAlex)
+            .setStyle(bufferStyle);
+        
+        var bufferArlington = turf.buffer(arlingtonBikeTrails.getGeoJSON(), radius/5280, 'miles');
+        arlingtonBufferLayer.setGeoJSON(bufferArlington)
+            .setStyle(bufferStyle);
+            
     }
 
     run();
