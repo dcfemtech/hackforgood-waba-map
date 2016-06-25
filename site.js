@@ -22,11 +22,13 @@ var bufferStyle = { "fill": "#56B6DB",
                     "stroke": "#1A3742",
                     "stroke-width": 2
                 };
+
 function setProperties (buffer) {
     for (var i = 0; i < buffer.features.length; i++) {
         buffer.features[i].properties = bufferStyle;
     }
 }
+
 function done() {
     dcBikeLanes.setStyle(bikeLaneStyle);
     mocoBikeLanes.setStyle(bikeLaneStyle);
