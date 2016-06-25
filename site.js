@@ -18,6 +18,18 @@ var alexBikeTrails = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeTrails = L.mapbox.featureLayer().addTo(map);
 var fairfaxBikeLanes = L.mapbox.featureLayer().addTo(map);
 
+var geocoder = L.mapbox.geocoderControl('mapbox.places')
+geocoder.setPosition('topright')
+map.addControl(geocoder);
+
+geocoder.on('select', function(e){
+    // close the address selection dropdown and add a marker
+    this._closeIfOpen()
+    marker = L.marker(e.feature.center.reverse());
+    marker.addTo(map);
+})
+
+
 dcBikeLanes.loadURL('./DC_bikelanes.geojson')
     .on('ready', done);
 
