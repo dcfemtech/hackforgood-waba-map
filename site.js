@@ -18,10 +18,16 @@ mocoBikeLanes.loadURL('./MontgomeryCountyBikelanes.geojson')
 
 // styles and color paletter for map
 var bikeLaneStyle = { color: 'green', weight: 2 };
-var bufferStyle = { "fill": "#FF69B4",
-                    "stroke": "#FF69B4",
+var bufferStyle = { "fill": "#56B6DB",
+                    "stroke": "#1A3742",
                     "stroke-width": 2
                 };
+
+function setProperties (buffer) {
+    for (var i = 0; i < buffer.features.length; i++) {
+        buffer.features[i].properties = bufferStyle;
+    }
+}
 
 function done() {
     dcBikeLanes.setStyle(bikeLaneStyle);
@@ -31,13 +37,15 @@ function done() {
         var radius = parseInt(document.getElementById('radius').value);
         if (isNaN(radius)) radius = 500;
 
-        var buffer = turf.buffer(dcBikeLanes.getGeoJSON(), radius/5280, 'miles');
-        dcBufferLayer.setGeoJSON(buffer)
-            .setStyle(bufferStyle);
+        var buffer = turf.buffer(dcBikeLanes.getGeoJSON(), radius / 5280, 'miles');
+        // Each buffer feature object needs to have the properties set individually
+        setProperties(buffer);
+        dcBufferLayer.setGeoJSON(buffer);
 
-        var bufferMoco = turf.buffer(mocoBikeLanes.getGeoJSON(), radius/5280, 'miles');
-        bufferMocoLayer.setGeoJSON(bufferMoco)
-            .setStyle(bufferStyle);
+        var bufferMoco = turf.buffer(mocoBikeLanes.getGeoJSON(), radius / 5280, 'miles');
+        setProperties(bufferMoco);
+        bufferMocoLayer.setGeoJSON(bufferMoco);
+
 
     }
 
