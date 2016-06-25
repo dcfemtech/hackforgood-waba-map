@@ -12,7 +12,7 @@ var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 
 dcBikeLanes.loadURL('./DC_bikelanes.geojson')
     .on('ready', done);
-mocoBikeLanes.loadURL('./Bikeways.geojson')
+mocoBikeLanes.loadURL('./MontgomeryCountyBikelanes.geojson')
     .on('ready', done);
 function done() {
     dcBikeLanes.setStyle({ color: 'green', weight: 2 });
