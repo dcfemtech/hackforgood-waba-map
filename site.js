@@ -12,7 +12,6 @@ var fairfaxBufferLayer = L.mapbox.featureLayer().addTo(map);
 var alexBufferLayer = L.mapbox.featureLayer().addTo(map);
 var arlingtonBufferLayer = L.mapbox.featureLayer().addTo(map);
 
-
 var dcBikeLanes = L.mapbox.featureLayer().addTo(map);
 var dcBikeTrails = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
@@ -32,22 +31,22 @@ geocoder.on('select', function(e){
     marker.addTo(map);
 })
 
-dcBikeLanes.loadURL('./DC_bikelanes.geojson')
+dcBikeLanes.loadURL('./data/DC_bikelanes.geojson')
     .on('ready', done);
 
-dcBikeTrails.loadURL('./DC_Bike_Trails.geojson')
+dcBikeTrails.loadURL('./data/DC_Bike_Trails.geojson')
     .on('ready', done);
 
-mocoBikeLanes.loadURL('./MontgomeryCountyBikeways.geojson')
+mocoBikeLanes.loadURL('./data/MontgomeryCountyBikeways.geojson')
     .on('ready', done);
 
-fairfaxBikeLanes.loadURL('./FairfaxBicycleRoutes.geojson')
+fairfaxBikeLanes.loadURL('./data/FairfaxBicycleRoutes.geojson')
     .on('ready', done);
 
-alexBikeTrails.loadURL('./AlexandriaBikeTrail.geojson')
+alexBikeTrails.loadURL('./data/AlexandriaBikeTrail.geojson')
     .on('ready', done);
 
-arlingtonBikeTrails.loadURL('./ArlingtonBikeRoutes.geojson')
+arlingtonBikeTrails.loadURL('./data/ArlingtonBikeRoutes.geojson')
     .on('ready', done);
 
 // styles and color paletter for map
