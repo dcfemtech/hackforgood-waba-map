@@ -18,7 +18,12 @@
 <div id='map'></div>
 <div class='pin-top fill-gray pad1'>
     Areas within 
-    <input type='number' id='radius' max='10000' min='0' class='clean short small-input' value='500' step='100' /> feet
+    <select name='distance' id='radius'>
+        <option value='500' selected='selected'>500 feet</option>
+        <option value='1000'>1000 feet</option>
+        <option value='2500'>2500 feet</option>
+        <option value='5280'>1 mile</option>
+    </select>
     of a bike lane or protected bike infrastructure.
 </div>
 <script src='site.js'></script>
