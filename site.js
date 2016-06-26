@@ -26,9 +26,9 @@ geocoder.on('select', function(e){
     // close the address selection dropdown and add a marker
     this._closeIfOpen()
     marker = L.marker(e.feature.center.reverse());
+    marker.bindPopup(e.feature.place_name);
     marker.addTo(map);
 })
-
 
 dcBikeLanes.loadURL('./DC_bikelanes.geojson')
     .on('ready', done);
