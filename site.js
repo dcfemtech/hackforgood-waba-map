@@ -31,22 +31,22 @@ geocoder.on('select', function(e){
     marker.addTo(map);
 })
 
-dcBikeLanes.loadURL('./data/DC_bikelanes.geojson')
+dcBikeLanes.loadURL('./data/DC_Bike_Lanes.geojson')
     .on('ready', done);
 
 dcBikeTrails.loadURL('./data/DC_Bike_Trails.geojson')
     .on('ready', done);
 
-mocoBikeLanes.loadURL('./data/MontgomeryCountyBikeways.geojson')
+mocoBikeLanes.loadURL('./data/MD_MontgomeryCounty_Bike.geojson')
     .on('ready', done);
 
-fairfaxBikeLanes.loadURL('./data/FairfaxBicycleRoutes.geojson')
+fairfaxBikeLanes.loadURL('./data/VA_FairfaxCounty_Bike.geojson')
     .on('ready', done);
 
-alexBikeTrails.loadURL('./data/AlexandriaBikeTrail.geojson')
+alexBikeTrails.loadURL('./data/VA_Alexandria_Bike.geojson')
     .on('ready', done);
 
-arlingtonBikeTrails.loadURL('./data/ArlingtonBikeRoutes.geojson')
+arlingtonBikeTrails.loadURL('./data/VA_Arlington_Bike.geojson')
     .on('ready', done);
 
 // styles and color paletter for map
