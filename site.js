@@ -6,18 +6,25 @@ var map = L.mapbox.map('map', 'mapbox.light', { zoomControl: false })
 new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
 var dcBufferLayer = L.mapbox.featureLayer().addTo(map);
-var bufferMocoLayer = L.mapbox.featureLayer().addTo(map);
+var mocoBufferLayer = L.mapbox.featureLayer().addTo(map);
+var fairfaxBufferLayer = L.mapbox.featureLayer().addTo(map);
+var alexBufferLayer = L.mapbox.featureLayer().addTo(map);
+var arlingtonBufferLayer = L.mapbox.featureLayer().addTo(map);
+
+
 var dcBikeLanes = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexBikeTrails = L.mapbox.featureLayer().addTo(map);
-var alexBufferLayer = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeTrails = L.mapbox.featureLayer().addTo(map);
-var arlingtonBufferLayer = L.mapbox.featureLayer().addTo(map);
+var fairfaxBikeLanes = L.mapbox.featureLayer().addTo(map);
 
 dcBikeLanes.loadURL('./DC_bikelanes.geojson')
     .on('ready', done);
 
-mocoBikeLanes.loadURL('./MontgomeryCountyBikelanes.geojson')
+mocoBikeLanes.loadURL('./MontgomeryCountyBikeways.geojson')
+    .on('ready', done);
+
+fairfaxBikeLanes.loadURL('./FairfaxBicycleRoutes.geojson')
     .on('ready', done);
 
 alexBikeTrails.loadURL('./AlexandriaBikeTrail.geojson')
@@ -32,40 +39,27 @@ var bufferStyle = { "fill": "#56B6DB",
                     "stroke": "#1A3742",
                     "stroke-width": 2
                 };
-
+// Each buffer feature object needs to have the properties set individually
 function setProperties (buffer) {
     for (var i = 0; i < buffer.features.length; i++) {
         buffer.features[i].properties = bufferStyle;
     }
 }
 
-function done() {
-    dcBikeLanes.setStyle(bikeLaneStyle);
-    mocoBikeLanes.setStyle(bikeLaneStyle);
-    arlingtonBikeTrails.setStyle(bikeLaneStyle);
-    alexBikeTrails.setStyle(bikeLaneStyle);
+function done(e) {
+    var BikeLanes = e.target;
+
+    BikeLanes.setStyle(bikeLaneStyle);
 
     function run() { 
         var radius = parseInt(document.getElementById('radius').value);
         if (isNaN(radius)) radius = 500;
 
-        var buffer = turf.buffer(dcBikeLanes.getGeoJSON(), radius / 5280, 'miles');
+        var buffer = turf.buffer(BikeLanes.getGeoJSON(), radius / 5280, 'miles');
         // Each buffer feature object needs to have the properties set individually
         setProperties(buffer);
-        dcBufferLayer.setGeoJSON(buffer);
+        BikeLanes.setGeoJSON(buffer);
 
-        var bufferMoco = turf.buffer(mocoBikeLanes.getGeoJSON(), radius / 5280, 'miles');
-        setProperties(bufferMoco);
-        bufferMocoLayer.setGeoJSON(bufferMoco);
-
-        var bufferAlex = turf.buffer(alexBikeTrails.getGeoJSON(), radius/5280, 'miles');
-        setProperties(bufferAlex);
-        alexBufferLayer.setGeoJSON(bufferAlex);
-        
-        var bufferArlington = turf.buffer(arlingtonBikeTrails.getGeoJSON(), radius/5280, 'miles');
-        setProperties(bufferArlington);
-        arlingtonBufferLayer.setGeoJSON(bufferArlington);
-            
     }
 
     run();
