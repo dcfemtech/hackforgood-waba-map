@@ -3,22 +3,15 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y
 var map = L.mapbox.map('map', 'mapbox.light', { zoomControl: false })
     .setView([38.898, -77.043], 12);
 
-
-
 var dcBikeData = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexBikeTrails = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeTrails = L.mapbox.featureLayer().addTo(map);
-var fairfaxBikeLanes = L.mapbox.featureLayer().addTo(map);
-
 
 dcBikeData.loadURL('./data/DC_Bike_Paths_all.geojson')
     .on('ready', bikelane_loaded);
 
 mocoBikeLanes.loadURL('./data/MD_MontgomeryCounty_bike.geojson')
-    .on('ready', bikelane_loaded);
-
-fairfaxBikeLanes.loadURL('./data/VA_FairfaxCounty_Bike.geojson')
     .on('ready', bikelane_loaded);
 
 alexBikeTrails.loadURL('./data/VA_Alexandria_Bike.geojson')
@@ -68,10 +61,6 @@ geocoder.on('select', function(e){
     search_marker.bindPopup(e.feature.place_name);
     search_marker.addTo(map);
 })
-
-
-
-
 
 new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
