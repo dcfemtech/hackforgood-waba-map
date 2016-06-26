@@ -8,18 +8,29 @@ new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 var dcBufferLayer = L.mapbox.featureLayer().addTo(map);
 var mocoBufferLayer = L.mapbox.featureLayer().addTo(map);
 var fairfaxBufferLayer = L.mapbox.featureLayer().addTo(map);
+var alexBufferLayer = L.mapbox.featureLayer().addTo(map);
+var arlingtonBufferLayer = L.mapbox.featureLayer().addTo(map);
+
 
 var dcBikeLanes = L.mapbox.featureLayer().addTo(map);
-var mocoBikeWays = L.mapbox.featureLayer().addTo(map);
+var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
+var alexBikeTrails = L.mapbox.featureLayer().addTo(map);
+var arlingtonBikeTrails = L.mapbox.featureLayer().addTo(map);
 var fairfaxBikeLanes = L.mapbox.featureLayer().addTo(map);
 
 dcBikeLanes.loadURL('./DC_bikelanes.geojson')
     .on('ready', done);
 
-mocoBikeWays.loadURL('./MontgomeryCountyBikeways.geojson')
+mocoBikeLanes.loadURL('./MontgomeryCountyBikeways.geojson')
     .on('ready', done);
 
 fairfaxBikeLanes.loadURL('./FairfaxBicycleRoutes.geojson')
+    .on('ready', done);
+
+alexBikeTrails.loadURL('./AlexandriaBikeTrail.geojson')
+    .on('ready', done);
+
+arlingtonBikeTrails.loadURL('./ArlingtonBikeRoutes.geojson')
     .on('ready', done);
 
 // styles and color paletter for map
@@ -40,10 +51,9 @@ function done(e) {
 
     BikeLanes.setStyle(bikeLaneStyle);
 
-    function run() {
+    function run() { 
         var radius = parseInt(document.getElementById('radius').value);
         if (isNaN(radius)) radius = 500;
-
 
         var buffer = turf.buffer(BikeLanes.getGeoJSON(), radius / 5280, 'miles');
         // Each buffer feature object needs to have the properties set individually
