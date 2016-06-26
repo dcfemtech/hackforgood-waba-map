@@ -31,7 +31,7 @@ geocoder.on('select', function(e){
     marker.addTo(map);
 })
 
-dcBikeLanes.loadURL('./data/DC_Bike_Lanes.geojson')
+/*dcBikeLanes.loadURL('./data/DC_Bike_Lanes.geojson')
     .on('ready', done);
 
 dcBikeTrails.loadURL('./data/DC_Bike_Trails.geojson')
@@ -47,7 +47,7 @@ alexBikeTrails.loadURL('./data/VA_Alexandria_Bike.geojson')
     .on('ready', done);
 
 arlingtonBikeTrails.loadURL('./data/VA_Arlington_Bike.geojson')
-    .on('ready', done);
+    .on('ready', done);*/
 
 // styles and color paletter for map
 var bikeLaneStyle = { color: 'green', weight: 2 };
