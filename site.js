@@ -6,6 +6,7 @@ var map = L.mapbox.map('map', 'mapbox.light', { zoomControl: false })
 new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
 var dcBufferLayer = L.mapbox.featureLayer().addTo(map);
+var dcTrailsBufferLayer = L.mapbox.featureLayer().addTo(map);
 var mocoBufferLayer = L.mapbox.featureLayer().addTo(map);
 var fairfaxBufferLayer = L.mapbox.featureLayer().addTo(map);
 var alexBufferLayer = L.mapbox.featureLayer().addTo(map);
@@ -13,6 +14,7 @@ var arlingtonBufferLayer = L.mapbox.featureLayer().addTo(map);
 
 
 var dcBikeLanes = L.mapbox.featureLayer().addTo(map);
+var dcBikeTrails = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexBikeTrails = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeTrails = L.mapbox.featureLayer().addTo(map);
@@ -31,6 +33,9 @@ geocoder.on('select', function(e){
 
 
 dcBikeLanes.loadURL('./DC_bikelanes.geojson')
+    .on('ready', done);
+
+dcBikeTrails.loadURL('./DC_Bike_Trails.geojson')
     .on('ready', done);
 
 mocoBikeLanes.loadURL('./MontgomeryCountyBikeways.geojson')
@@ -63,7 +68,7 @@ function done(e) {
 
     BikeLanes.setStyle(bikeLaneStyle);
 
-    function run() { 
+    function run() {
         var radius = parseInt(document.getElementById('radius').value);
         if (isNaN(radius)) radius = 500;
 
