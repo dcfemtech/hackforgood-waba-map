@@ -12,8 +12,7 @@ var fairfaxBufferLayer = L.mapbox.featureLayer().addTo(map);
 var alexBufferLayer = L.mapbox.featureLayer().addTo(map);
 var arlingtonBufferLayer = L.mapbox.featureLayer().addTo(map);
 
-var dcBikeLanes = L.mapbox.featureLayer().addTo(map);
-var dcBikeTrails = L.mapbox.featureLayer().addTo(map);
+var dcBikeData = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexBikeTrails = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeTrails = L.mapbox.featureLayer().addTo(map);
@@ -35,10 +34,7 @@ geocoder.on('select', function(e){
     search_marker.addTo(map);
 })
 
-dcBikeLanes.loadURL('./data/DC_Bike_Lanes.geojson')
-    .on('ready', done);
-
-dcBikeTrails.loadURL('./data/DC_Bike_Trails.geojson')
+dcBikeData.loadURL('./data/DC_Bike_Paths_all.geojson')
     .on('ready', done);
 
 mocoBikeLanes.loadURL('./data/MD_MontgomeryCounty_bike.geojson')
