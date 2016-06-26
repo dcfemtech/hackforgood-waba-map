@@ -30,7 +30,7 @@ function setProperties (buffer) {
 }
 
 function done(e) {
-    BikeLanes = e.target
+    var BikeLanes = e.target;
 
     BikeLanes.setStyle(bikeLaneStyle);
 
