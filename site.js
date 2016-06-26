@@ -35,27 +35,20 @@ function setProperties (buffer) {
     }
 }
 
-function done() {
-    dcBikeLanes.setStyle(bikeLaneStyle);
-    mocoBikeWays.setStyle(bikeLaneStyle);
-    fairfaxBikeLanes.setStyle(bikeLaneStyle);
+function done(e) {
+    var BikeLanes = e.target;
+
+    BikeLanes.setStyle(bikeLaneStyle);
 
     function run() {
         var radius = parseInt(document.getElementById('radius').value);
         if (isNaN(radius)) radius = 500;
 
-        var buffer = turf.buffer(dcBikeLanes.getGeoJSON(), radius / 5280, 'miles');
+
+        var buffer = turf.buffer(BikeLanes.getGeoJSON(), radius / 5280, 'miles');
+        // Each buffer feature object needs to have the properties set individually
         setProperties(buffer);
-        dcBufferLayer.setGeoJSON(buffer);
-
-        var bufferMoco = turf.buffer(mocoBikeWays.getGeoJSON(), radius / 5280, 'miles');
-        setProperties(bufferMoco);
-        mocoBufferLayer.setGeoJSON(bufferMoco);
-
-        var bufferFairfax = turf.buffer(fairfaxBikeLanes.getGeoJSON(), radius / 5280, 'miles');
-        setProperties(bufferFairfax);
-        fairfaxBufferLayer.setGeoJSON(bufferFairfax);
-
+        BikeLanes.setGeoJSON(buffer);
 
     }
 
