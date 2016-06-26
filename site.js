@@ -23,12 +23,16 @@ var geocoder = L.mapbox.geocoderControl('mapbox.places')
 geocoder.setPosition('topright')
 map.addControl(geocoder);
 
+var search_marker
 geocoder.on('select', function(e){
     // close the address selection dropdown and add a marker
+    if(search_marker){
+        map.removeLayer(search_marker)
+    }
     this._closeIfOpen()
-    marker = L.marker(e.feature.center.reverse());
-    marker.bindPopup(e.feature.place_name);
-    marker.addTo(map);
+    search_marker = L.marker(e.feature.center.reverse());
+    search_marker.bindPopup(e.feature.place_name);
+    search_marker.addTo(map);
 })
 
 dcBikeLanes.loadURL('./data/DC_Bike_Lanes.geojson')
