@@ -44,9 +44,6 @@ dcBikeTrails.loadURL('./data/DC_Bike_Trails.geojson')
 mocoBikeLanes.loadURL('./data/MD_MontgomeryCounty_bike.geojson')
     .on('ready', done);
 
-fairfaxBikeLanes.loadURL('./data/VA_FairfaxCounty_Bike.geojson')
-    .on('ready', done);
-
 alexBikeTrails.loadURL('./data/VA_Alexandria_Bike.geojson')
     .on('ready', done);
 
