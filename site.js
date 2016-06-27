@@ -77,7 +77,6 @@ function setProperties(buffer) {
 // onload callbacks for buffers and bikelanes
 function loadBuffer(data) {
     var buffer = data.target;
-    buffer.setStyle(bufferStyle);
     setProperties(buffer.getGeoJSON());
     buffer.setGeoJSON(buffer.getGeoJSON())
 }
