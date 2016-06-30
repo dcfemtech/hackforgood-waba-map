@@ -5,30 +5,83 @@ var map = L.mapbox.map('map', 'mapbox.light', { zoomControl: false })
 
 new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
-var bufferLayer = L.mapbox.featureLayer().addTo(map);
-var dcBikeLanes = L.mapbox.featureLayer().addTo(map);
+// styles and color palette for map
+var bikeLaneStyle = { 'color': 'green', 'weight': 2 };
+var bufferStyle = { 'fill': '#56B6DB',
+                    'stroke': '#1A3742',
+                    'stroke-width': 2 };
 
-dcBikeLanes.loadURL('./DC_bikelanes.geojson')
-    .on('ready', done);
+var dcBikeData = L.mapbox.featureLayer().addTo(map);
+var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
+var alexandriaBikeLanes = L.mapbox.featureLayer().addTo(map);
+var arlingtonBikeLanes = L.mapbox.featureLayer().addTo(map);
 
-function done() {
-    dcBikeLanes.setStyle({ color: 'green', weight: 2 });
+dcBikeData.loadURL('./data/DC_Bike_Paths_all.geojson')
+    .on('ready', loadBikeLanes);
+mocoBikeLanes.loadURL('./data/MD_MontgomeryCounty_bike.geojson')
+    .on('ready', loadBikeLanes);
+alexandriaBikeLanes.loadURL('./data/VA_Alexandria_Bike.geojson')
+    .on('ready', loadBikeLanes);
+arlingtonBikeLanes.loadURL('./data/VA_Arlington_Bike.geojson')
+    .on('ready', loadBikeLanes);
 
-    function run() {
-        var radius = parseInt(document.getElementById('radius').value);
-        if (isNaN(radius)) radius = 500;
+// load buffers
+var dcBuffer500 = L.mapbox.featureLayer().addTo(map);
+var dcBuffer1000 = L.mapbox.featureLayer();
+var dcBuffer2500 = L.mapbox.featureLayer();
+var dcBuffer5280 = L.mapbox.featureLayer();
 
-        var buffer = turf.buffer(dcBikeLanes.getGeoJSON(), radius/5280, 'miles');
-        bufferLayer.setGeoJSON(buffer)
-            .setStyle({
-                "fill": "#FF69B4",
-                "stroke": "#FF69B4",
-                "stroke-width": 2
-            });
-       var
+dcBuffer500.loadURL('./buffers/dcBikeLanes_buff_500ft.geojson')
+    .on('ready', loadBuffer);
+dcBuffer1000.loadURL('./buffers/dcBikeLanes_buff_1000ft.geojson')
+    .on('ready', loadBuffer);
+dcBuffer2500.loadURL('./buffers/dcBikeLanes_buff_2500ft.geojson')
+    .on('ready', loadBuffer);
+dcBuffer5280.loadURL('./buffers/dcBikeLanes_buff_5280ft.geojson')
+    .on('ready', loadBuffer);
+
+// Buffer layers overlay control
+var overlayMaps = {
+    '500 ft': dcBuffer500,
+    '1000 ft': dcBuffer1000,
+    '2500 ft': dcBuffer2500,
+    '1 mile': dcBuffer5280 
+};
+
+L.control.layers(null, overlayMaps).addTo(map);
+
+// Geocoder control
+var geocoder = L.mapbox.geocoderControl('mapbox.places');
+geocoder.setPosition('topright');
+map.addControl(geocoder);
+
+var searchMarker;
+geocoder.on('select', function(data) {
+    // close the address selection dropdown and add a marker
+    if (searchMarker) {
+        map.removeLayer(searchMarker);
     }
+    this._closeIfOpen();
+    searchMarker = L.marker(data.feature.center.reverse());
+    searchMarker.bindPopup(data.feature.place_name);
+    searchMarker.addTo(map);
+});
 
-    run();
+// Each buffer feature object needs to have the properties set individually
+function setProperties(buffer) {
+    for (var i = 0; i < buffer.features.length; i++) {
+        buffer.features[i].properties = bufferStyle;
+    }
+}
 
-    document.getElementById('radius').onchange = run;
+// onload callbacks for buffers and bikelanes
+function loadBuffer(data) {
+    var buffer = data.target;
+    setProperties(buffer.getGeoJSON());
+    buffer.setGeoJSON(buffer.getGeoJSON())
+}
+
+function loadBikeLanes(data) {
+    var bikeLanes = data.target;
+    bikeLanes.setStyle(bikeLaneStyle);
 }
