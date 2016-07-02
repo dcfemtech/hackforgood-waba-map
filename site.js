@@ -16,13 +16,13 @@ var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexandriaBikeLanes = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeLanes = L.mapbox.featureLayer().addTo(map);
 
-dcBikeData.loadURL('./data/DC_Bike_Paths_all.geojson')
+dcBikeData.loadURL('./bikelanes/DC_Bike_Paths_All.geojson')
     .on('ready', loadBikeLanes);
-mocoBikeLanes.loadURL('./data/MD_MontgomeryCounty_bike.geojson')
+mocoBikeLanes.loadURL('./bikelanes/MD_MontgomeryCounty_Bikeways.geojson')
     .on('ready', loadBikeLanes);
-alexandriaBikeLanes.loadURL('./data/VA_Alexandria_Bike.geojson')
+alexandriaBikeLanes.loadURL('./bikelanes/VA_Alexandria_Bike.geojson')
     .on('ready', loadBikeLanes);
-arlingtonBikeLanes.loadURL('./data/VA_Arlington_Bike.geojson')
+arlingtonBikeLanes.loadURL('./bikelanes/VA_Arlington_Bike.geojson')
     .on('ready', loadBikeLanes);
 
 // load buffers
@@ -31,13 +31,13 @@ var dcBuffer1000 = L.mapbox.featureLayer();
 var dcBuffer2500 = L.mapbox.featureLayer();
 var dcBuffer5280 = L.mapbox.featureLayer();
 
-dcBuffer500.loadURL('./buffers/dcBikeLanes_buff_500ft.geojson')
+dcBuffer500.loadURL('./buffers/DC_Bike_Buffer_500ft.geojson')
     .on('ready', loadBuffer);
-dcBuffer1000.loadURL('./buffers/dcBikeLanes_buff_1000ft.geojson')
+dcBuffer1000.loadURL('./buffers/DC_Bike_Buffer_1000ft.geojson')
     .on('ready', loadBuffer);
-dcBuffer2500.loadURL('./buffers/dcBikeLanes_buff_2500ft.geojson')
+dcBuffer2500.loadURL('./buffers/DC_Bike_Buffer_2500ft.geojson')
     .on('ready', loadBuffer);
-dcBuffer5280.loadURL('./buffers/dcBikeLanes_buff_5280ft.geojson')
+dcBuffer5280.loadURL('./buffers/DC_Bike_Buffer_5280ft.geojson')
     .on('ready', loadBuffer);
 
 // Buffer layers overlay control
