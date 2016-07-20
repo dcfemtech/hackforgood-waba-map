@@ -15,7 +15,7 @@ We started this project at DCFemTech's 2016 Hack for Good hackathon and are cont
 * Don't push directly to the `master` branch.
 * Instead, create your own feature branch then launch pull requests (PRs) against the `master` branch - @alulsh or someone else will do a code review before merging your pull request.
     * To create your own feature branch - `git checkout -b mybranchname`.
-    * When you're ready to create a pull request, first push the branch (`git push origin mybranchname`) then visit the repo on GitHub.com
+    * When you're ready to create a pull request, first push the branch (`git push origin mybranchname`) then visit the repo on GitHub.com and click the green "Compare & pull request" button.
 * Try to tackle one GitHub issue per pull request - it's more difficult to merge a PR when half of the code looks great, but the other half is not ready or needs more work.
 * When commenting on someone's PR, use line notes instead of pushing to their branch. It's ok to push more commits to their branch/PR if you have permission from them though!
 * PRs from individual's forks of this repo are welcome, but if you are a contributor we will add you to this repo directly as a collabotor so that you can push your own branches. We find that people don't often update their forks, which makes for difficult merges. 
