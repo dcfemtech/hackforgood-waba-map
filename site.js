@@ -1,16 +1,16 @@
 /**
 * Dependencies:
-*    Mapbox JS SDK 2.4.0
+*    mapbox.js 2.4.0
 */
 
 //Prove we're legit
 L.mapbox.accessToken = 'pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y2RmYjRlMGI1ZjIzIn0.pngboKEPsfuC4j54XDT3VA';
 
 /**
-*Initialize the map through the Mapbox Javascript SDK.
+*Initialize the map through mapbox.js
 *    L.mapbox.map(
 *        element: ID of the div of where to put the map
-*        map base: mapbox.light is the basic OpenStreetsMap with a light colored theme
+*        map base: mapbox.light is the basic OpenStreetMap with a light colored theme
 *        options: {array of options})
 *        .setView([lat/lon of center], zoom level where larger is more zoomed)
 */
@@ -26,7 +26,7 @@ var bufferStyle = { 'fill': '#56B6DB',
 //Add zoom control manually (instead of in mapbox.map call) so we can decide the position (default is upper left)
 new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
-//Create a variable for each bike lane layer, and then asycronously load it
+//Create a variable for each bike lane layer, and then asynchronously load it
 var dcBikeData = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexandriaBikeLanes = L.mapbox.featureLayer().addTo(map);
@@ -98,11 +98,11 @@ geocoder.on('select', function(data) {
 * Onload callbacks for buffers and bikelanes
 */
 
-//Styles the buffer using bufferStyle variable, and 
+//Styles the buffer using bufferStyle variable; setGeoJSON is needed to apply the properties to the featureLayer
 function loadBuffer(data) {
     var buffer = data.target;
     setProperties(buffer.getGeoJSON());
-    //buffer.setGeoJSON(buffer.getGeoJSON())
+    buffer.setGeoJSON(buffer.getGeoJSON())
 }
 
 // Each buffer feature object needs to have the properties set individually
