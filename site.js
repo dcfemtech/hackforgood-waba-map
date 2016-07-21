@@ -1,9 +1,21 @@
+/**
+* Dependencies:
+*    mapbox.js 2.4.0
+*/
+
+//Prove we're legit
 L.mapbox.accessToken = 'pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y2RmYjRlMGI1ZjIzIn0.pngboKEPsfuC4j54XDT3VA';
 
+/**
+*Initialize the map through mapbox.js
+*    L.mapbox.map(
+*        element: ID of the div of where to put the map
+*        map base: mapbox.light is the basic OpenStreetMap with a light colored theme
+*        options: {array of options})
+*        .setView([lat/lon of center], zoom level where larger is more zoomed)
+*/
 var map = L.mapbox.map('map', 'mapbox.light', { zoomControl: false })
             .setView([38.898, -77.043], 12);
-
-new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
 // styles and color palette for map
 var bikeLaneStyle = { 'color': 'green', 'weight': 2 };
@@ -11,6 +23,10 @@ var bufferStyle = { 'fill': '#56B6DB',
                     'stroke': '#1A3742',
                     'stroke-width': 2 };
 
+//Add zoom control manually (instead of in mapbox.map call) so we can decide the position (default is upper left)
+new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
+
+//Create a variable for each bike lane layer, and then asynchronously load it
 var dcBikeData = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexandriaBikeLanes = L.mapbox.featureLayer().addTo(map);
@@ -25,7 +41,7 @@ alexandriaBikeLanes.loadURL('./bikelanes/VA_Alexandria_Bike.geojson')
 arlingtonBikeLanes.loadURL('./bikelanes/VA_Arlington_Bike.geojson')
     .on('ready', loadBikeLanes);
 
-// load buffers
+// load the pre-calculated buffers for each distance ()
 var dcBuffer500 = L.mapbox.featureLayer().addTo(map);
 var dcBuffer1000 = L.mapbox.featureLayer();
 var dcBuffer2500 = L.mapbox.featureLayer();
@@ -40,7 +56,11 @@ dcBuffer2500.loadURL('./buffers/DC_Bike_Buffer_2500ft.geojson')
 dcBuffer5280.loadURL('./buffers/DC_Bike_Buffer_5280ft.geojson')
     .on('ready', loadBuffer);
 
-// Buffer layers overlay control
+/**
+* Add the layers toolbar to toggle different distance buffers on/off
+*/
+
+// Put the layers that are toggleable into an object
 var overlayMaps = {
     '500 ft': dcBuffer500,
     '1000 ft': dcBuffer1000,
@@ -48,9 +68,15 @@ var overlayMaps = {
     '1 mile': dcBuffer5280 
 };
 
+//L.control is Leaflet. Syntax: .layers(baseLayers, overlays)
 L.control.layers(null, overlayMaps).addTo(map);
 
-// Geocoder control
+
+/**
+* Add a search control to the map (Geocoder).
+* First, add the control. 
+* second, specify behavior of the map after a search
+*/
 var geocoder = L.mapbox.geocoderControl('mapbox.places');
 geocoder.setPosition('topright');
 map.addControl(geocoder);
@@ -61,11 +87,23 @@ geocoder.on('select', function(data) {
     if (searchMarker) {
         map.removeLayer(searchMarker);
     }
-    this._closeIfOpen();
+    this._closeIfOpen(); //'this' is the geocoder search bar on the page
     searchMarker = L.marker(data.feature.center.reverse());
     searchMarker.bindPopup(data.feature.place_name);
     searchMarker.addTo(map);
 });
+
+
+/**
+* Onload callbacks for buffers and bikelanes
+*/
+
+//Styles the buffer using bufferStyle variable; setGeoJSON is needed to apply the properties to the featureLayer
+function loadBuffer(data) {
+    var buffer = data.target;
+    setProperties(buffer.getGeoJSON());
+    buffer.setGeoJSON(buffer.getGeoJSON())
+}
 
 // Each buffer feature object needs to have the properties set individually
 function setProperties(buffer) {
@@ -74,13 +112,7 @@ function setProperties(buffer) {
     }
 }
 
-// onload callbacks for buffers and bikelanes
-function loadBuffer(data) {
-    var buffer = data.target;
-    setProperties(buffer.getGeoJSON());
-    buffer.setGeoJSON(buffer.getGeoJSON())
-}
-
+//Add styles to bikelanes
 function loadBikeLanes(data) {
     var bikeLanes = data.target;
     bikeLanes.setStyle(bikeLaneStyle);
