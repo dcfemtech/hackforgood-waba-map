@@ -32,9 +32,18 @@ var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexandriaBikeLanes = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeLanes = L.mapbox.featureLayer().addTo(map);
 
-dcBikeData.loadURL('./bikelanes/DC_Bike_Paths_All.geojson')
+/* handle Moco bikepaths */
+var mocoApiCall = "https://data.montgomerycountymd.gov/resource/972w-rnvw.json?category=";
+var mocoCategory = "Bike Lanes";//Paved Off-Road Trail || Separated Bike Lanes || Natural Surface
+var mocoUrl = mocoApiCall + mocoCategory;
+
+//mocoBikeLanes.loadURL('./bikelanes/MD_MontgomeryCounty_Bikeways.geojson')
+mocoBikeLanes.loadURL(mocoUrl)
     .on('ready', loadBikeLanes);
-mocoBikeLanes.loadURL('./bikelanes/MD_MontgomeryCounty_Bikeways.geojson')
+console.log(mocoBikeLanes.loadURL(mocoUrl));
+
+
+dcBikeData.loadURL('./bikelanes/DC_Bike_Paths_All.geojson')
     .on('ready', loadBikeLanes);
 alexandriaBikeLanes.loadURL('./bikelanes/VA_Alexandria_Bike.geojson')
     .on('ready', loadBikeLanes);
