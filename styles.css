@@ -1,12 +1,89 @@
 body {
-    margin:0; padding:0;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+.logo, #info, #menu {
+    position: absolute;
+    float: left;
+    height: auto;
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 9;
+}
+.logo {
+    top: 0;
+    left: 0;
+    width: 72%;
+}
+#info {
+    left: 75%;
+    width: 20%;
+    height: 120px;
+    padding: 10px;
+}
+.waba-logo, .title {
+    height: 100px;
+}
+.waba-logo {
+    float: left;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+}
+.title {
+    margin: 0 20px;
+    padding-top: 70px;
+    color: #3887BE;
 }
 #map {
-    position:absolute;
-    top:0; bottom:0;
-    width:100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
 }
-.small-input {
+#filters {
+    left: 0;
+    bottom: 10px;
+    width: 30%;
+    height: 200px;
+    padding: 10px;
+}
+.subheader-text {
+    margin-top: 10px;
+}
+.styled-select {
+    border: 0;
+    background: transparent;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 8px 10px;
+    padding: 2px 10px;
+    *width: 300px;
+    *background: #58B14C;
+    -webkit-appearance: none;
+}
+#region {
+    width: 260px;
+    color: white;
+}
+#buffer {
+    width: 200px;
+    color: #3887BE;
+}
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+.blue {
+    background-color: #3b8ec2;
+}
+.ltblue {
+    background-color: #cce6ff;
+}
+
+/*.small-input {
     width: 80px;
     vertical-align:middle;
-}
+}*/
