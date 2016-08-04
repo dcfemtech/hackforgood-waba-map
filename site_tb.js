@@ -1,17 +1,17 @@
 
 // ======= constants =======
-const TITLE = 'WABA Bike Infrastructure Map Project';
+const TITLE = "WABA Bike Infrastructure Map Project";
 
 // ======= display =======
 let defaultDisplay = {
     geopathFilesArray: [],
-    geopathCount: 0
+    featureLayersArray: []
 }
 
 // ======= map =======
 let defaultMap = {
     mapEl: document.getElementById("map"),
-    mapStyle: 'mapbox.light',
+    mapStyle: "mapbox.light",
     centerLat: 38.99,
     centerLng: -77.20,
     zoom: 11,
@@ -23,8 +23,10 @@ let defaultMap = {
 
 // ======= state =======
 let defaultState = {
-    selRegions: { DC: true, MO: true, PG: true, AR: true, AL: true },
-    laneType: { lanes: true, paths: false, trails: false },
+    selRegions: { DC: false, MO: false, PG: false, AR: false, AL: false },
+    regionData: { DC: null, MO: null, PG: null, AR: null, AL: null },
+    regionLayers: { DC: [], MO: [], PG: [], AR: [], AL: [] },
+    laneType: { lanes: true, paths: true, trails: true },
     bufferSize: 0,
     zone: { show: false},
     activePlace: { placeIndex: null, placeName: null },
@@ -35,78 +37,69 @@ let defaultState = {
 let regions = {
     DC: {
         id: "DC_0",
-        name: "DC",
+        name: "District of Columbia",
         center: { lat: 38.91, lng: -77.04 },
         zoneFiles: ["District_Mask.geojson", "Ward__2012.geojson"],
         laneFile: "DC_Bike_Lanes.geojson",
         pathFile: "DC_Bike_Paths_All.geojson",
         trailFile: "DC_Bike_Trails.geojson",
-        bufferFiles: [
-            { ft500: "DC_Bike_Buffer_1000ft.geojson" },
-            { ft1000: "DC_Bike_Buffer_2500ft.geojson" },
-            { ft1500: "DC_Bike_Buffer_500ft.geojson" },
-            { ft5280: "DC_Bike_Buffer_5280ft.geojson" }
-        ]
+        bufferFiles: {
+            ft500: "DC_Bike_Buffer_500ft.geojson",
+            ft1000: "DC_Bike_Buffer_1000ft.geojson",
+            ft2500: "DC_Bike_Buffer_2500ft.geojson",
+            ft5280: "DC_Bike_Buffer_5280ft.geojson" }
     },
     MO: {
         id: "MO_1",
-        name: "MO",
+        name: "Montgomery County",
         center: { lat: null, lng: null },
         zoneFiles: [],
         laneFile: "MD_MontgomeryCounty_Bikeways.geojson",
         pathFile: null,
         trailFile: null,
-        bufferFiles: [
-            { ft500: "DC_Bike_Buffer_1000ft.geojson" },
-            { ft1000: "DC_Bike_Buffer_2500ft.geojson" },
-            { ft1500: "DC_Bike_Buffer_500ft.geojson" },
-            { ft5280: "DC_Bike_Buffer_5280ft.geojson" }
-        ]
+        bufferFiles: {
+            ft500: "MD_MontgomeryCounty_Bikeways_Buffer_500ft.geojson",
+            ft1000: "MD_MontgomeryCounty_Bikeways_Buffer_1000ft.geojson",
+            ft2500: "MD_MontgomeryCounty_Bikeways_Buffer_2500ft.geojson",
+            ft5280: "MD_MontgomeryCounty_Bikeways_Buffer_5280ft.geojson" }
     },
     PG: {
         id: "PG_2",
-        name: "PG",
+        name: "Prince George's County",
         center: { lat: null, lng: null },
         zoneFiles: [],
         laneFile: null,
         pathFile: null,
         trailFile: null,
-        bufferFiles: [
-            { ft500: "DC_Bike_Buffer_1000ft.geojson" },
-            { ft1000: "DC_Bike_Buffer_2500ft.geojson" },
-            { ft1500: "DC_Bike_Buffer_500ft.geojson" },
-            { ft5280: "DC_Bike_Buffer_5280ft.geojson" }
-        ]
+        bufferFiles: { ft500:null, ft1000:null, ft2500:null, ft5280:null}
     },
     AR: {
         id: "AR_3",
-        name: "AR",
+        name: "Arlington",
         center: { lat: null, lng: null },
         zoneFiles: [],
         laneFile: "VA_Arlington_Bike.geojson",
         pathFile: null,
         trailFile: null,
-        bufferFiles: [
-            { ft500: "DC_Bike_Buffer_1000ft.geojson" },
-            { ft1000: "DC_Bike_Buffer_2500ft.geojson" },
-            { ft1500: "DC_Bike_Buffer_500ft.geojson" },
-            { ft5280: "DC_Bike_Buffer_5280ft.geojson" }
-        ]
+        bufferFiles: {
+            ft500:"VA_Arlington_Bike_Buffer_500ft.geojson",
+            ft1000:"VA_Arlington_Bike_Buffer_1000ft.geojson",
+            ft2500:"VA_Arlington_Bike_Buffer_2500ft.geojson",
+            ft5280:"VA_Arlington_Bike_Buffer_5280ft.geojson"}
     },
     AL: {
         id: "AL_4",
-        name: "AL",
+        name: "Alexandria",
         center: { lat: null, lng: null },
         zoneFiles: [],
         laneFile: "VA_Alexandria_Bike.geojson",
         pathFile: null,
         trailFile: null,
-        bufferFiles: [
-            { ft500: "DC_Bike_Buffer_1000ft.geojson" },
-            { ft1000: "DC_Bike_Buffer_2500ft.geojson" },
-            { ft1500: "DC_Bike_Buffer_500ft.geojson" },
-            { ft5280: "DC_Bike_Buffer_5280ft.geojson" }
-        ]
+        bufferFiles: {
+            ft500:"VA_Alexandria_Bike_Buffer_500ft.geojson",
+            ft1000:"VA_Alexandria_Bike_Buffer_1000ft.geojson",
+            ft2500:"VA_Alexandria_Bike_Buffer_2500ft.geojson",
+            ft5280:"VA_Alexandria_Bike_Buffer_5280ft.geojson" }
     }
 }
 
@@ -116,76 +109,229 @@ $(() => app.initialize());
 app = {
     map: defaultMap,
     state: defaultState,
+    display: defaultDisplay,
     activeMap: null,
+
+    // ======= displayBuffers =======
+    displayBuffers: function(bufferSize) {
+        console.log("app.displayBuffers");
+
+        var bufferStyle = { "fill": "#56B6DB", "stroke": "#1A3742", "stroke-width": 2 };
+        var bufferFileArray = [];
+        var buffers = null;
+        var loopCount = 0;
+        var url, bufferFile;
+
+        _.forEach(app.state.selRegions, function(value, key) {
+            if (value && (bufferSize != "none")) {
+                bufferFile = regions[key].bufferFiles[bufferSize];
+                url = "buffers/" + bufferFile;
+                console.log("  url: ", url);
+                bufferFileArray.push([key, url]);
+            }
+        });
+        console.log("  bufferFileArray: ", bufferFileArray);
+
+        if (bufferFileArray.length > 0) {
+            key = bufferFileArray[0][0];
+            url = bufferFileArray[0][1];
+            bufferQueue(key, url, bufferFileArray);
+        }
+
+        // == show selected region data
+        function bufferQueue(key, url, bufferFileArray) {
+            console.log("bufferQueue");
+            console.log("  url: ", url);
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "text"
+            }).done(function(jsonData){
+                console.log("*** ajax success ***");
+                console.log("  loopCount: ", loopCount);
+                var jsonData2 = $.parseJSON(jsonData);
+                buffers = L.mapbox.featureLayer(jsonData2).addTo(app.activeMap);
+                app.state.regionLayers[key].push(buffers);
+                buffers.setStyle(bufferStyle);
+                if (loopCount < bufferFileArray.length - 1) {
+                    loopCount++;
+                    url = bufferFileArray[loopCount];
+                    bufferQueue(url, bufferFileArray);
+                }
+            }).fail(function(){
+                console.log("*** ajax fail T ***");
+            });
+        }
+    },
 
     // ======= displayLanes =======
     displayLanes: function() {
         console.log("app.displayLanes");
-        defaultDisplay.geopathCount = defaultDisplay.geopathFilesArray.length;
-        var host = window.location.hostname;
-        var nextFile = defaultDisplay.geopathFilesArray[1];
-        var url = "bikelanes/" + nextFile;
-        var bikeLaneStyle = { 'color': 'green', 'weight': 2 };
 
-        // == get selected path data
-        $.ajax({
-            url: url,
-            method: "GET",
-            dataType: "text"
-        }).done(function(jsonData){
-            console.log("*** ajax success ***");
-            var jsonData2 = $.parseJSON(jsonData);
-            var bikeLanes = L.mapbox.featureLayer(jsonData2).addTo(app.activeMap);
-            bikeLanes.setStyle(bikeLaneStyle);
-        }).fail(function(){
-            console.log("*** ajax fail T ***");
+        var bikeLaneStyle = { "color": "green", "weight": 2 };
+        var bikeLanes = null;
+        var loopCount = 0;
+
+        // == store files for selected regions in array
+        // app.display.geopathFilesArray = [];
+        _.forEach(app.state.selRegions, function(value, key) {
+            if (value) {
+                app.state.regionData[key] = app.makeLanesArray(key);
+                console.log("  app.state.regionData: ", app.state.regionData);
+            } else {
+                app.state.regionData[key] = null;
+                app.state.regionLayers[key].forEach(function (bikeLanes) {
+                    app.activeMap.removeLayer(bikeLanes);
+                })
+                app.state.regionLayers[key] = [];
+            }
         });
+
+        _.forEach(app.state.regionData, function(value, key) {
+            console.log("  value: ", value);
+
+            // == init selected region data display
+            if (value && (app.state.regionLayers[key].length == 0)) {
+                var regionArray = value;
+                var nextFile = regionArray[0];
+                var url = "bikelanes/" + nextFile;
+                if (nextFile) { ajaxQueue(url, regionArray, key); }
+            }
+        });
+
+        // == show selected region data
+        function ajaxQueue(url, regionArray, key) {
+            console.log("ajaxQueue");
+            console.log("  url: ", url);
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "text"
+            }).done(function(jsonData){
+                console.log("*** ajax success ***");
+                console.log("  loopCount: ", loopCount);
+                var jsonData2 = $.parseJSON(jsonData);
+                bikeLanes = L.mapbox.featureLayer(jsonData2).addTo(app.activeMap);
+                app.state.regionLayers[key].push(bikeLanes);
+                bikeLanes.setStyle(bikeLaneStyle);
+                if (loopCount < regionArray.length - 1) {
+                    loopCount++;
+                    nextFile = regionArray[loopCount];
+                    url = "bikelanes/" + nextFile;
+                    ajaxQueue(url, regionArray, key);
+                }
+            }).fail(function(){
+                console.log("*** ajax fail T ***");
+            });
+        }
+    },
+
+    // ======= makeLanesArray =======
+    makeLanesArray: function(key) {
+        console.log("app.makeLanesArray");
+        var pathDataArray = [];
+        if (app.state.laneType.lanes) {
+            var laneFile = regions[key].laneFile;
+            laneFile ? pathDataArray.push(laneFile) : console.log("NO LANES");
+        }
+        if (app.state.laneType.paths) {
+            var pathFile = regions[key].pathFile;
+            pathFile ? pathDataArray.push(pathFile) : console.log("NO PATHS");
+        }
+        if (app.state.laneType.trails) {
+            var trailFile = regions[key].trailFile;
+            trailFile ? pathDataArray.push(trailFile) : console.log("NO TRAILS");
+        }
+        return pathDataArray;
     },
 
     // ======= initMap =======
     initMap: function () {
         console.log("app.initMap");
-        L.mapbox.accessToken = 'pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y2RmYjRlMGI1ZjIzIn0.pngboKEPsfuC4j54XDT3VA';
+        L.mapbox.accessToken = "pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y2RmYjRlMGI1ZjIzIn0.pngboKEPsfuC4j54XDT3VA";
         var map = L.mapbox.map(
             app.map.mapEl,
             app.map.mapStyle,
             { zoomControl: false })
                 .setView([app.map.centerLat, app.map.centerLng], app.map.zoom);
-        new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
+        new L.Control.Zoom({ position: "bottomright" }).addTo(map);
         return map;
     },
 
     // ======= initialize =======
     initialize: function () {
         console.log("app.initialize");
-        _.forEach(app.state.selRegions, function(value, key) {
-            if (value) {
-                app.showLanes(key);
-            }
-        });
-        console.log("  defaultDisplay.geopathFilesArray.length: ", defaultDisplay.geopathFilesArray.length);
         app.activeMap = app.initMap();
         app.displayLanes();
-    },
 
-    // ======= showLanes =======
-    showLanes: function(key) {
-        console.log("app.showLanes");
-        if (app.state.laneType.lanes) {
-            var laneFile = regions[key].laneFile;
-            laneFile ? defaultDisplay.geopathFilesArray.push(laneFile) : console.log("NO LANES");
-        }
-        if (app.state.laneType.paths) {
-            var pathFile = regions[key].pathFile;
-            pathFile ? defaultDisplay.geopathFilesArray.push(pathFile) : console.log("NO PATHS");
-        }
-        if (app.state.laneType.trails) {
-            var trailFile = regions[key].trailFile;
-            trailFile ? defaultDisplay.geopathFilesArray.push(trailFile) : console.log("NO TRAILS");
+        // ======= mouse location =======
+        app.activeMap.on("mousemove", function (e) {
+            document.getElementById("loc").innerHTML =
+                "x:   " + JSON.stringify(e.layerPoint.x) + "   y:   " + JSON.stringify(e.layerPoint.y) + "<br />" +
+                "lat: " + (e.latlng.lat).toFixed(2) + "   lng: " + (e.latlng.lng).toFixed(2);
+        });
+
+        // ======= filters =======
+        $(".filterBoxes").on("mouseover", function (e) {
+            if (e.target.id) { updateFilterBox(e.target.id, true); }
+        });
+        $(".filterBoxes").on("mouseout", function (e) {
+            if (e.target.id) { updateFilterBox(e.target.id, false); }
+            $("#hoverText").html("&nbsp;");
+        });
+        $(".filterBoxes").on("click", function (e) {
+            console.log("\n-- click --");
+            if (e.target.id) {
+                if (app.state.selRegions[e.target.id]) {
+                    app.state.selRegions[e.target.id] = false;
+                    updateFilterBox(e.target.id, false);
+                } else {
+                    app.state.selRegions[e.target.id] = true;
+                    updateFilterBox(e.target.id, true);
+                }
+            }
+            console.log("  app.state.selRegions[e.target.id]: ", app.state.selRegions[e.target.id]);
+            app.displayLanes();
+        });
+        $("#buffer").on("change", function (e) {
+            console.log("buffer change");
+            console.log("  $('#buffer').val(): ", $('#buffer').val());
+            app.displayBuffers($('#buffer').val());
+            // if (e.target.id) { updateFilterBox(e.target.id, true); }
+        });
+
+        function updateFilterBox(whichBox, hilite) {
+            // console.log("updateFilterBox");
+            if (hilite) {
+                $("#" + whichBox).css("color", "white");
+                $("#" + whichBox).css("background-color", "#9999ff");
+                $("#hoverText").html(regions[whichBox].name);
+            } else if (!app.state.selRegions[whichBox]) {
+                $("#" + whichBox).css("color", "#9999ff");
+                $("#" + whichBox).css("background-color", "white");
+                $("#hoverText").html("&nbsp;");
+            }
         }
     }
 }
 
+// ======= ARCHIVE =======
+
+// ======= select filters =======
+// $("#region").change(function (e) {
+//     console.log("region");
+//     let region = $(e.target).val();
+//     console.log("region: ", region);
+//     app.state.selRegions[region] = true;
+//     console.log("  app.state.selRegions[region]: ", app.state.selRegions[region]);
+//     app.displayLanes();
+// });
+//
+// $("#buffer").change(function (e) {
+//     console.log("buffer");
+//     let buffer = $(e.target).val();
+//     console.log("buffer: ", buffer);
+// });
 
 
 

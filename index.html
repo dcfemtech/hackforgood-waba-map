@@ -36,40 +36,35 @@
 
     <main>
 
-        <!-- ======= ======= ======= menu ======= ======= ======= -->
-        <div id="filters">
-            <h2 class="header-text">menu</h2>
-            <h3 class="subheader-text">region</h3>
-            <select id="region" class="styled-select semi-square blue" name="region" data-placeholder="Filter by region">
-                <option value="all">all</option>
-                <option value="Montgomery County">Montgomery County</option>
-                <option value="Prince George's">Prince George's County</option>
-                <option value="District of Columbia">District of Columbia</option>
-                <option value="Arlington">Arlington</option>
-            </select>
-            <h3 class="subheader-text">buffer size</h3>
-            <select id="buffer" class="styled-select semi-square ltblue" name="buffer" data-placeholder="Buffer size (ft)">
-                <option value="none">none</option>
-                <option value="500 ft">500 ft</option>
-                <option value="1000 ft">1000 ft</option>
-                <option value="1500 ft">1500 ft</option>
-                <option value="2000 ft">2000 ft</option>
-            </select>
-        </div>
-
         <!-- ======= ======= ======= map ======= ======= ======= -->
         <div id='map'></div>
 
-        <!-- <div class='pin-top fill-gray pad1'>
-            Areas within
-            <select name='distance' id='radius'>
-                <option value='500' selected='selected'>500 feet</option>
-                <option value='1000'>1000 feet</option>
-                <option value='2500'>2500 feet</option>
-                <option value='5280'>1 mile</option>
-            </select>
-            of a bike lane or protected bike infrastructure.
-        </div> -->
+        <!-- ======= ======= ======= menu ======= ======= ======= -->
+        <div id="filters">
+            <h2 class="header-text">menu</h2>
+            <div class="filterRow">
+                <div class="filterBoxes">
+                    <div id="MO" class="filterBox">MO</div>
+                    <div id="PG" class="filterBox">PG</div>
+                    <div id="DC" class="filterBox">DC</div>
+                    <div id="AR" class="filterBox">AR</div>
+                    <div id="AL" class="filterBox">AL</div>
+                    <div class="filterLabel">region</div>
+                </div>
+                <div id="hoverText">&nbsp;</div>
+            </div>
+            <div class="filterRow">
+                <select id="buffer" class="styled-select semi-square ltblue" name="buffer" data-placeholder="Buffer size (ft)">
+                    <option value="none">none</option>
+                    <option value="ft500">500 ft</option>
+                    <option value="ft1000">1000 ft</option>
+                    <option value="ft1500">1500 ft</option>
+                    <option value="ft5280">1 mile</option>
+                </select>
+                <div class="filterLabel">buffer size</div>
+                <span class="infoText">Select the region and buffer size</span>
+            </div>
+        </div>
 
     </main>
 
@@ -79,3 +74,32 @@
     <!-- <script src='site.js'></script> -->
 </body>
 </html>
+
+
+<!-- <select id="region" class="styled-select semi-square blue" name="region" data-placeholder="Filter by region">
+    <option value="all">all</option>
+    <option value="MO">Montgomery County</option>
+    <option value="PG">Prince George's County</option>
+    <option value="DC">District of Columbia</option>
+    <option value="AR">Arlington</option>
+    <option value="AL">Alexandria</option>
+</select>
+<h3 class="subheader-text">buffer size</h3>
+<select id="buffer" class="styled-select semi-square ltblue" name="buffer" data-placeholder="Buffer size (ft)">
+    <option value="none">none</option>
+    <option value="500 ft">500 ft</option>
+    <option value="1000 ft">1000 ft</option>
+    <option value="1500 ft">1500 ft</option>
+    <option value="2000 ft">2000 ft</option>
+</select> -->
+
+<!-- <div class='pin-top fill-gray pad1'>
+    Areas within
+    <select name='distance' id='radius'>
+        <option value='500' selected='selected'>500 feet</option>
+        <option value='1000'>1000 feet</option>
+        <option value='2500'>2500 feet</option>
+        <option value='5280'>1 mile</option>
+    </select>
+    of a bike lane or protected bike infrastructure.
+</div> -->
