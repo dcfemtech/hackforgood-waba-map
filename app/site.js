@@ -21,7 +21,7 @@ var map = L.mapbox.map('map', 'mapbox.light', { zoomControl: false })
 var bikeLaneStyle = { 'color': 'green', 'weight': 2 };
 var bufferStyle = { 'fill': '#56B6DB',
                     'stroke': '#1A3742',
-                    'stroke-width': 2 };
+                    'stroke-width': 1 };
 
 //Add zoom control manually (instead of in mapbox.map call) so we can decide the position (default is upper left)
 new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
@@ -32,13 +32,13 @@ var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexandriaBikeLanes = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeLanes = L.mapbox.featureLayer().addTo(map);
 
-dcBikeData.loadURL('./bikelanes/DC_Bike_Paths_All.geojson')
+dcBikeData.loadURL('./data/bikelanes/DC_Bike_Paths_All.geojson')
     .on('ready', loadBikeLanes);
-mocoBikeLanes.loadURL('./bikelanes/MD_MontgomeryCounty_Bikeways.geojson')
+mocoBikeLanes.loadURL('./data//bikelanes/MD_MontgomeryCounty_Bikeways.geojson')
     .on('ready', loadBikeLanes);
-alexandriaBikeLanes.loadURL('./bikelanes/VA_Alexandria_Bike.geojson')
+alexandriaBikeLanes.loadURL('./data/bikelanes/VA_Alexandria_Bike.geojson')
     .on('ready', loadBikeLanes);
-arlingtonBikeLanes.loadURL('./bikelanes/VA_Arlington_Bike.geojson')
+arlingtonBikeLanes.loadURL('./data/bikelanes/VA_Arlington_Bike.geojson')
     .on('ready', loadBikeLanes);
 
 // load the pre-calculated buffers for each distance ()
@@ -47,13 +47,13 @@ var dcBuffer1000 = L.mapbox.featureLayer();
 var dcBuffer2500 = L.mapbox.featureLayer();
 var dcBuffer5280 = L.mapbox.featureLayer();
 
-dcBuffer500.loadURL('./buffers/DC_Bike_Buffer_500ft.geojson')
+dcBuffer500.loadURL('./data/buffers/DC_Bike_Buffer_500ft.geojson')
     .on('ready', loadBuffer);
-dcBuffer1000.loadURL('./buffers/DC_Bike_Buffer_1000ft.geojson')
+dcBuffer1000.loadURL('./data/buffers/DC_Bike_Buffer_1000ft.geojson')
     .on('ready', loadBuffer);
-dcBuffer2500.loadURL('./buffers/DC_Bike_Buffer_2500ft.geojson')
+dcBuffer2500.loadURL('./data/buffers/DC_Bike_Buffer_2500ft.geojson')
     .on('ready', loadBuffer);
-dcBuffer5280.loadURL('./buffers/DC_Bike_Buffer_5280ft.geojson')
+dcBuffer5280.loadURL('./data/buffers/DC_Bike_Buffer_5280ft.geojson')
     .on('ready', loadBuffer);
 
 /**
@@ -65,7 +65,7 @@ var overlayMaps = {
     '500 ft': dcBuffer500,
     '1000 ft': dcBuffer1000,
     '2500 ft': dcBuffer2500,
-    '1 mile': dcBuffer5280 
+    '1 mile': dcBuffer5280
 };
 
 //L.control is Leaflet. Syntax: .layers(baseLayers, overlays)
@@ -74,7 +74,7 @@ L.control.layers(null, overlayMaps).addTo(map);
 
 /**
 * Add a search control to the map (Geocoder).
-* First, add the control. 
+* First, add the control.
 * second, specify behavior of the map after a search
 */
 var geocoder = L.mapbox.geocoderControl('mapbox.places');
@@ -117,3 +117,4 @@ function loadBikeLanes(data) {
     var bikeLanes = data.target;
     bikeLanes.setStyle(bikeLaneStyle);
 }
+//

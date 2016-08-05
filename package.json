@@ -1,0 +1,29 @@
+{
+  "name": "hackforgood-waba-map",
+  "version": "1.0.0",
+  "description": "### Live Demo https://dcfemtech.github.io/hackforgood-waba-map/",
+  "main": "gulp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcfemtech/hackforgood-waba-map.git"
+  },
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/dcfemtech/hackforgood-waba-map/issues"
+  },
+  "homepage": "https://github.com/dcfemtech/hackforgood-waba-map#readme",
+  "devDependencies": {
+    "concat": "0.0.1-security",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-embedlr": "^0.5.2",
+    "gulp-livereload": "^3.8.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-serve": "^1.4.0",
+    "tiny-lr": "^0.2.1"
+  }
+}
