@@ -21,7 +21,7 @@ var map = L.mapbox.map('map', 'mapbox.light', { zoomControl: false })
 var bikeLaneStyle = { 'color': 'green', 'weight': 2 };
 var bufferStyle = { 'fill': '#56B6DB',
                     'stroke': '#1A3742',
-                    'stroke-width': 1 };
+                    'stroke-width': 2 };
 
 //Add zoom control manually (instead of in mapbox.map call) so we can decide the position (default is upper left)
 new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
@@ -34,7 +34,7 @@ var arlingtonBikeLanes = L.mapbox.featureLayer().addTo(map);
 
 dcBikeData.loadURL('./data/bikelanes/DC_Bike_Paths_All.geojson')
     .on('ready', loadBikeLanes);
-mocoBikeLanes.loadURL('./data//bikelanes/MD_MontgomeryCounty_Bikeways.geojson')
+mocoBikeLanes.loadURL('./data/bikelanes/MD_MontgomeryCounty_Bikeways.geojson')
     .on('ready', loadBikeLanes);
 alexandriaBikeLanes.loadURL('./data/bikelanes/VA_Alexandria_Bike.geojson')
     .on('ready', loadBikeLanes);
@@ -117,4 +117,3 @@ function loadBikeLanes(data) {
     var bikeLanes = data.target;
     bikeLanes.setStyle(bikeLaneStyle);
 }
-//
