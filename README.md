@@ -4,6 +4,12 @@
 ### Live Demo
 https://dcfemtech.github.io/hackforgood-waba-map/
 
+### Local development
+1. `npm install`
+1. `gulp`
+1. `point your browser at localhost:3000`
+1. Hack away! The site will reload as you make changes
+
 ### Data Sources
 
 | Location | URL | Description |
