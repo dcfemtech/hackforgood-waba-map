@@ -27,15 +27,17 @@ var bufferStyle = { 'fill': '#56B6DB',
 new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
 //Create a variable for each bike lane layer, and then asynchronously load it
-var dcBikeData = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
+var mocoPavedTrail = L.mapbox.featureLayer().addTo(map);
+var mocoSepLanes = L.mapbox.featureLayer().addTo(map);
+var mocoNatural = L.mapbox.featureLayer().addTo(map);
+var dcBikeData = L.mapbox.featureLayer().addTo(map);
 var alexandriaBikeLanes = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeLanes = L.mapbox.featureLayer().addTo(map);
 
 dcBikeData.loadURL('./bikelanes/DC_Bike_Paths_All.geojson')
     .on('ready', loadBikeLanes);
-mocoBikeLanes.loadURL('./bikelanes/MD_MontgomeryCounty_Bikeways.geojson')
-    .on('ready', loadBikeLanes);
+addMocoLanes();
 alexandriaBikeLanes.loadURL('./bikelanes/VA_Alexandria_Bike.geojson')
     .on('ready', loadBikeLanes);
 arlingtonBikeLanes.loadURL('./bikelanes/VA_Arlington_Bike.geojson')
@@ -65,7 +67,7 @@ var overlayMaps = {
     '500 ft': dcBuffer500,
     '1000 ft': dcBuffer1000,
     '2500 ft': dcBuffer2500,
-    '1 mile': dcBuffer5280 
+    '1 mile': dcBuffer5280
 };
 
 //L.control is Leaflet. Syntax: .layers(baseLayers, overlays)
@@ -74,7 +76,7 @@ L.control.layers(null, overlayMaps).addTo(map);
 
 /**
 * Add a search control to the map (Geocoder).
-* First, add the control. 
+* First, add the control.
 * second, specify behavior of the map after a search
 */
 var geocoder = L.mapbox.geocoderControl('mapbox.places');
@@ -93,6 +95,25 @@ geocoder.on('select', function(data) {
     searchMarker.addTo(map);
 });
 
+/* handle Moco bike pathways */
+function addMocoLanes() {
+    var mocoApiCall = "https://data.montgomerycountymd.gov/resource/972w-rnvw.geojson?category=";
+    //Bike Lanes
+    var mocoUrl = mocoApiCall + "Bike Lanes";
+    mocoBikeLanes.loadURL(mocoUrl).on('ready', loadBikeLanes);
+
+    //Paved Off-Road Trail
+    mocoUrl = mocoApiCall + "Paved Off-Road Trail";
+    mocoPavedTrail.loadURL(mocoUrl).on('ready', loadBikeLanes);
+
+    //Separated Bike Lanes
+    mocoUrl = mocoApiCall + "Separated Bike Lanes";
+    mocoSepLanes.loadURL(mocoUrl);
+
+    //Natural Surface
+    mocoUrl = mocoApiCall + "Natural Surface";
+    mocoNatural.on('ready', loadBikeLanes);
+}
 
 /**
 * Onload callbacks for buffers and bikelanes
