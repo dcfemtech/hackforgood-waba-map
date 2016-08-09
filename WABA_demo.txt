@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="WABA_demo.css">
+    <title>WABA Demo Map</title>
+  </head>
+  <body>
+    <header id="header" class="site-header" role="banner"></header>
+    <div id="content" class="site-content"></div>
+    <div id="secondary" class="widget-area"
+  </body>
+    </html>

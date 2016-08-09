@@ -1,0 +1,27 @@
+/*body{
+  background:linear-gradient(#5d6d63,#1a3742);
+}*/
+body{
+  background-color:#1a3742;
+}
+#header{
+  width:1040px;
+  height:105px;
+  background-color:#5d6d63;
+}
+#content{
+  width:600px;
+  height:842.188px;
+  /*padding:20px 29px 70px;*/
+  /*vertical-align:baseline;*/
+  display:inline-block;
+  background-color:#ffffff;
+  
+}
+#secondary{
+  width:440px;
+  height:842.188px;
+  background-color:#404040;
+  display:inline-block;
+  
+}
