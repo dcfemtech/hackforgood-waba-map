@@ -344,7 +344,7 @@ app = {
             if (app.state.selRegions[region] && (app.state[region].laneData.length == 0)) {
                 app.state[region].laneData = app.makeLanesArray(region);
                 if (app.state[region].laneData) {
-                    var url = "bikeLanes/" + app.state[region].laneData[0];
+                    var url = "bikelanes/" + app.state[region].laneData[0];
                     app.laneAjaxQueue(url, region, null);
                 }
             } else {
