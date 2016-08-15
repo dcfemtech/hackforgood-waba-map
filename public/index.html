@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- ======= params ======= -->
+    <meta charset=utf-8 />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>DC Bike Infrastructure</title>
+
+    <!-- ======= mapbox ======= -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <!-- <link rel="stylesheet" href="https://www.mapbox.com/base/latest/base.css" />
+    <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/v2.4.0/mapbox.css" /> -->
+
+    <!-- ======= styles ======= -->
+    <link rel="stylesheet" href="bower_components/normalize-css/normalize.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+    <!-- ======= info ======= -->
+    <div id="info">
+        <h2 class="header-text">location</h2>
+        <div id="loc">
+            <p>latitude:  <span id="lat">&nbsp;</span></p>
+            <p>longitude:  <span id="lng">&nbsp;</span></p>
+        </div>
+    </div>
+
+    <!-- ======= menu ======= -->
+    <div class="menu">
+        <div id="dragBar">
+            <h3 class="menu-label">menu</h3>
+        </div>
+        <div id="hoverText">.</div>
+        <table id="filters">
+            <tr class="table-header">
+                <th class="td-r"><span class="filter-label">regions</span></th>
+                <th>&nbsp;</th>
+                <th class="td-b" colspan="4"><span class="filter-label">buffers</span></td>
+            </tr>
+            <tr id="clearAll">
+                <td class="td-r"><div id="clearAll-r"><p class="label-x">all</p></div></td>
+                <td class="td-s">&nbsp;</td>
+                <td class="td-b" colspan="4">&nbsp;</td>
+            </tr>
+
+            <!-- ======= regions ======= -->
+            <tr id="AL">
+                <td class="td-r"><div class="region"><p class="label-r">AL</p></div></td>
+                <td class="td-s">&nbsp;</td>
+                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
+            </tr>
+            <tr id="AR">
+                <td class="td-r"><div class="region"><p class="label-r">AR</p></div></td>
+                <td class="td-s">&nbsp;</td>
+                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
+            </tr>
+            <tr id="DC">
+                <td class="td-r"><div class="region"><p class="label-r">DC</p></div></td>
+                <td class="td-s">&nbsp;</td>
+                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
+            </tr>
+            <tr id="MO">
+                <td class="td-r"><div class="region"><p class="label-r">MO</p></div></td>
+                <td class="td-s">&nbsp;</td>
+                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
+            </tr>
+            <tr id="PG">
+                <td class="td-r"><div class="region"><p class="label-r">PG</p></div></td>
+                <td class="td-s">&nbsp;</td>
+                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
+                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
+            </tr>
+        </table>
+        <div class="locText start">&nbsp;</div><span class="filter-label">start</span>
+        <div class="locText end">&nbsp;</div><span class="filter-label">end</span>
+    </div>
+
+    <!-- ======= map ======= -->
+    <div id="map"></div>
+
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v2.4.0/mapbox.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="lodash/lodash.js"></script>
+    <script src='script.js'></script>
+
+</body>
+</html>
