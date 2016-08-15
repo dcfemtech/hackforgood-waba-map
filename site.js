@@ -29,12 +29,15 @@ new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 //Create a variable for each bike lane layer, and then asynchronously load it
 var dcBikeData = L.mapbox.featureLayer().addTo(map);
 var mocoBikeLanes = L.mapbox.featureLayer().addTo(map);
+var pgcoBikeLanes = L.mapbox.featureLayer().addTo(map);
 var alexandriaBikeLanes = L.mapbox.featureLayer().addTo(map);
 var arlingtonBikeLanes = L.mapbox.featureLayer().addTo(map);
 
 dcBikeData.loadURL('./bikelanes/DC_Bike_Paths_All.geojson')
     .on('ready', loadBikeLanes);
 mocoBikeLanes.loadURL('./bikelanes/MD_MontgomeryCounty_Bikeways.geojson')
+    .on('ready', loadBikeLanes);
+pgcoBikeLanes.loadURL('./bikelanes/MD_PrinceGeorgesCounty_Bikeways.geojson')
     .on('ready', loadBikeLanes);
 alexandriaBikeLanes.loadURL('./bikelanes/VA_Alexandria_Bike.geojson')
     .on('ready', loadBikeLanes);
