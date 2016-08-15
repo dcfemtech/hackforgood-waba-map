@@ -1,0 +1,33 @@
+{
+  "name": "waba-bikemap",
+  "version": "1.0.0",
+  "description": "Map of bike infrastructure in the Washington D.C. metro area for the Washington Area Bicyclists Association.",
+  "scripts": {
+    "test": "eslint --no-eslintrc -c .eslintrc site.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcfemtech/hackforgood-waba-map.git"
+  },
+  "keywords": [
+    "bike",
+    "map",
+    "bike",
+    "lanes",
+    "bike",
+    "infrastructure",
+    "WABA",
+    "DC",
+    "Washington",
+    "DC"
+  ],
+  "author": "Code for DC",
+  "bugs": {
+    "url": "https://github.com/dcfemtech/hackforgood-waba-map/issues"
+  },
+  "homepage": "https://github.com/dcfemtech/hackforgood-waba-map#readme",
+  "devDependencies": {
+    "eslint": "^3.3.0",
+    "serve": "^1.4.0"
+  }
+}
