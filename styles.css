@@ -1,12 +1,139 @@
 body {
-    margin:0; padding:0;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+.logo, #info, #menu {
+    position: absolute;
+    float: left;
+    height: auto;
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 9;
+}
+.logo {
+    top: 0;
+    left: 0;
+    width: 72%;
+}
+#info {
+    left: 75%;
+    width: 20%;
+    height: 120px;
+    padding: 10px;
+}
+.waba-logo, .title {
+    height: 100px;
+}
+.waba-logo {
+    float: left;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+}
+.title {
+    margin: 0 20px;
+    padding-top: 70px;
+    color: #3887BE;
 }
 #map {
-    position:absolute;
-    top:0; bottom:0;
-    width:100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
 }
-.small-input {
+#filters {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 40%;
+    height: 220px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 5px 5px 5px #ddd;
+    z-index: 9;
+}
+.filterRow {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 80px;
+    margin-left: 0;
+    background-color: white;
+}
+.filterBoxes {
+    height: 30px;
+    margin: 10px 0 0 10px;
+    padding: 0;
+}
+.filterLabel {
+    height: 40px;
+    margin-top: 10px;
+    padding-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+#hoverText {
+    position: relative;;
+    width: 65%;
+    height: 20px;
+    margin: 10px 0 0 10px;
+    padding-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #7979d2;
+    background-color: #eee;
+}
+.filterBox {
+    position: relative;
+    float: left;
+    width: 40px;
+    height: 30px;
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: #7979d2;
+    background-color: white;
+    border: 4px solid #7979d2;
+}
+.subheader-text {
+    margin-top: 10px;
+}
+.infoText {
+    margin: 10px;
+}
+.styled-select {
+    float: left;
+    margin: 10px 10px;
+    padding: 2px 10px;
+    width: 300px;
+    border: 0;
+    font-size: 14px;
+    font-weight: bold;
+    background: #58B14C;
+}
+#region {
+    width: 260px;
+    color: white;
+}
+#buffer {
+    width: 200px;
+    color: #3887BE;
+}
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+.blue {
+    background-color: #3b8ec2;
+}
+.ltblue {
+    background-color: #cce6ff;
+}
+
+/*.small-input {
     width: 80px;
     vertical-align:middle;
-}
+}*/
