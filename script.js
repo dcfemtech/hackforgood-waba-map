@@ -15,8 +15,8 @@ let defaultDisplay = {
     toggleClearAll: function() {
         console.log("toggleClearAll");
         var clearFlag = false;
-        _.forEach(app.state.selRegions, function(selected, region) {
-            if (selected) { clearFlag = true; }
+        $.each(app.state.selRegions, function(selected, region) {
+            if (selected == true) { clearFlag = true; }
         });
         clearFlag ? $('#clearAll-r > p').text('clear') : $('#clearAll-r > p').text('all');
     }
@@ -34,7 +34,6 @@ let defaultMap = {
     markersGroup: [],
     markersSelected: []
 }
-console.log("  defaultMap: ", defaultMap);
 
 // ======= state =======
 let defaultState = {
@@ -437,9 +436,12 @@ app = {
 
         // == select or clear all regions
         var clearFlag = false;
-        _.forEach(app.state.selRegions, function(selected, region) {
-            if (selected) { clearFlag = true; }
+        $.each(app.state.selRegions, function(region, selected) {
+            if (selected == true) {
+                clearFlag = true;
+            }
         });
+        console.log("  clearFlag: ", clearFlag);
         clearFlag ? clearAll() : selectAll();
 
         // ======= selectAll =======
@@ -464,7 +466,8 @@ app = {
             });
 
             // == set selected state for all regions
-            _.forEach(app.state.selRegions, function(selected, region) {
+            $.each(app.state.selRegions, function(region, selected) {
+                console.log("  selected/region: ", selected, region);
                 if (!selected) {
                     app.state.selRegions[region] = true;
                 }
@@ -504,7 +507,7 @@ app = {
             });
 
             // == clear lane and buffer states and data layers
-            _.forEach(app.state.selRegions, function(selected, region) {
+            $.each(app.state.selRegions, function(region, selected) {
                 if (selected) {
                     app.state.selRegions[region] = false;
                     app.state[region].laneLayers.forEach(function (laneData) {
@@ -512,10 +515,10 @@ app = {
                     })
                     app.state[region].laneData = [];
                     app.state[region].laneLayers = [];
-                    _.forEach(app.state[region].selBuffers, function(state, buffer) {
+                    $.each(app.state[region].selBuffers, function(buffer, state) {
                         buffer = false;
                     });
-                    _.forEach(app.state[region].bufferLayers, function(bufferData, buffer) {
+                    $.each(app.state[region].bufferLayers, function(buffer, bufferData) {
                         if (bufferData) {
                             app.activeMap.removeLayer(bufferData);
                             bufferData = null;
@@ -648,9 +651,6 @@ app = {
         app.activeMap.on("mousemove", function (e) {
             document.getElementById("lat").innerHTML = (e.latlng.lat).toFixed(4);
             document.getElementById("lng").innerHTML = (e.latlng.lng).toFixed(4);
-            // document.getElementById("loc").innerHTML =
-            //     "x:   " + JSON.stringify(e.layerPoint.x) + "   y:   " + JSON.stringify(e.layerPoint.y) + "<br />" +
-            //     "lat: " + (e.latlng.lat).toFixed(2) + "   lng: " + (e.latlng.lng).toFixed(2);
         });
 
         // ======= mouse location =======
@@ -713,7 +713,8 @@ app = {
         // ======= clearRouteMarkers =======
         function clearRouteMarkers(jsonData) {
             console.log("clearRouteMarkers");
-            _.forEach(app.map.markersGroup, function(marker) {
+            $.each(app.map.markersGroup, function(index, marker) {
+                console.log("  marker: ", marker);
                 app.activeMap.removeLayer(marker);
             });
             app.map.markersGroup = [];
