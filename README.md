@@ -4,6 +4,21 @@
 ### Live Demo
 https://dcfemtech.github.io/hackforgood-waba-map/
 
+## Development
+
+This project is managed with npm - you will need to first install Node and NPM. We recommend using the [Node Version Manager (nvm)](https://github.com/creationix/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to install and manage Node.
+
+Once you've installed Node, to run this project:
+
+1. Clone the repo locally: `git clone https://github.com/dcfemtech/hackforgood-waba-map.git` or `git clone git@github.com:dcfemtech/hackforgood-waba-map.git` depending on your git setup
+2. Change into the directory: `cd hackforgood-waba-map`
+3. Install dependencies: `npm install`
+4. Start the project: `npm start`
+
+## Tests
+
+At the moment there are no tests. Nevertheless, if you run `npm test` this will lint for code style using [eslint](http://eslint.org/).
+
 ### Data Sources
 
 | Location | URL | Description |
