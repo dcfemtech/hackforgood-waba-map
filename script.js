@@ -15,7 +15,7 @@ let defaultDisplay = {
     toggleClearAll: function() {
         console.log("toggleClearAll");
         var clearFlag = false;
-        $.each(app.state.selRegions, function(selected, region) {
+        $.each(app.state.selRegions, function(region, selected) {
             if (selected == true) { clearFlag = true; }
         });
         clearFlag ? $('#clearAll-r > p').text('clear') : $('#clearAll-r > p').text('all');
@@ -234,7 +234,7 @@ app = {
                     } else if ($(hoverEl).hasClass('end')) {
                         hoverText = "map click end loction";
                     } else if (($(hoverEl).attr('id') == 'clearAll-r') && ($(hoverEl).text() == 'all')) {
-                        hoverText = "select all regions/buffers";
+                        hoverText = "select all regions";
                     } else if (($(hoverEl).attr('id') == 'clearAll-r') && ($(hoverEl).text() == 'clear')) {
                         hoverText = "clear all regions/buffers";
                     }
@@ -256,6 +256,7 @@ app = {
         console.log("toggleFilterState");
         var region = $(toggleEl).parents().eq(1).attr('id');
         var buffer = null;
+        console.log("  app.state.selRegions[region]1: ", app.state.selRegions[region]);
 
         // == update region filter
         if ($(toggleEl).hasClass('region')) {
@@ -264,6 +265,17 @@ app = {
             app.state.selRegions[region] ?
                 app.state.selRegions[region] = false :
                 app.state.selRegions[region] = true;
+
+            // == update clear/all button text
+            // console.log("  app.state.selRegions[region]2: ", app.state.selRegions[region]);
+            // if (app.state.selRegions[region] == true) {
+            //     console.log("TRUE");
+            //     console.log("  $('#clearAll-r > p').text(): ", $('#clearAll-r > p').text());
+            //     $('#clearAll-r > p').text('clear');
+            //     console.log("  $('#clearAll-r > p').text(): ", $('#clearAll-r > p').text());
+            // } else {
+            //     console.log("MISSED");
+            // }
 
             // == toggle region element (and buffer elements if deselecting)
             app.state.selRegions[region] ?
@@ -467,7 +479,6 @@ app = {
 
             // == set selected state for all regions
             $.each(app.state.selRegions, function(region, selected) {
-                console.log("  selected/region: ", selected, region);
                 if (!selected) {
                     app.state.selRegions[region] = true;
                 }
