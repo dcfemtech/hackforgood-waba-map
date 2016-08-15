@@ -1,11 +1,11 @@
 "use strict";
 
 // ======= constants =======
-const TITLE = "WABA Bike Infrastructure Map Project";
+var TITLE = "WABA Bike Infrastructure Map Project";
 var loopCount = 0;
 
 // ======= display =======
-let defaultDisplay = {
+var defaultDisplay = {
     loopCount: 0,
     allRegions: false,
     regionsArray: ["AL", "AR", "DC", "MO", "PG"],
@@ -23,7 +23,7 @@ let defaultDisplay = {
 };
 
 // ======= map =======
-let defaultMap = {
+var defaultMap = {
     mapEl: document.getElementById("map"),
     mapStyle: "mapbox.light",
     centerLat: 38.99,
@@ -36,7 +36,7 @@ let defaultMap = {
 }
 
 // ======= state =======
-let defaultState = {
+var defaultState = {
     selRegions: { AL: false, AR: false, DC: false, MO: false, PG: false },
     AL: {
         selLanes: { lanes:true, paths:false, trails:false },
@@ -86,7 +86,7 @@ let defaultState = {
 }
 
 // ======= regions =======
-let regions = {
+var regions = {
     AL: {
         id: "AL_4",
         name: "Alexandria",
@@ -164,8 +164,8 @@ let regions = {
 
 
 // ======= app =======
-let app;
-$(() => app.initialize());
+var app;
+// $(() => app.initialize());
 app = {
     map: defaultMap,
     state: defaultState,
@@ -742,3 +742,5 @@ app = {
         }
     }
 }
+
+app.initialize();
