@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Map of bike infrastructure in the Washington D.C. metro area for the Washington Area Bicyclists Association.",
   "scripts": {
+    "start": "serve",
     "test": "eslint -c .eslintrc *.js"
   },
   "repository": {
