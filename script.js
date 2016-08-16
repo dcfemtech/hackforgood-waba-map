@@ -1,7 +1,6 @@
 "use strict";
 
 // ======= constants =======
-var TITLE = "WABA Bike Infrastructure Map Project";
 var loopCount = 0;
 
 // ======= display =======
@@ -13,7 +12,6 @@ var defaultDisplay = {
 
     // ======= toggleClearAll =======
     toggleClearAll: function() {
-        console.log("toggleClearAll");
         var clearFlag = false;
         $.each(app.state.selRegions, function(region, selected) {
             if (selected == true) { clearFlag = true; }
@@ -91,8 +89,6 @@ var regions = {
         id: "AL_4",
         name: "Alexandria",
         box: { NW: [null, null], SE: [null, null] },
-        center: [null, null],
-        zoneFiles: [],
         laneFiles: {
             lanes: "VA_Alexandria_Bike.geojson",
             paths: null,
@@ -107,8 +103,6 @@ var regions = {
         id: "AR_3",
         name: "Arlington",
         box: { NW: [null, null], SE: [null, null] },
-        center: [null, null],
-        zoneFiles: [],
         laneFiles: {
             lanes: "VA_Arlington_Bike.geojson",
             paths: null,
@@ -123,8 +117,6 @@ var regions = {
         id: "DC_0",
         name: "District of Columbia",
         box: { NW: [null, null], SE: [null, null] },
-        center: [38.91, -77.04],
-        zoneFiles: ["District_Mask.geojson", "Ward__2012.geojson"],
         laneFiles: {
             lanes: "DC_Bike_Lanes.geojson",
             paths: "DC_Bike_Paths_All.geojson",
@@ -139,8 +131,6 @@ var regions = {
         id: "MO_1",
         name: "Montgomery County",
         box: { NW: [null, null], SE: [null, null] },
-        center: [null, null],
-        zoneFiles: [],
         laneFiles: {
             lanes: "MD_MontgomeryCounty_Bikeways.geojson",
             paths: null,
@@ -155,8 +145,6 @@ var regions = {
         id: "PG_2",
         name: "Prince George's County",
         box: { NW: [null, null], SE: [null, null] },
-        center: [null, null],
-        zoneFiles: [],
         laneFiles: { lanes:null, paths:null, trails:null },
         bufferFiles: { ft500:null, ft1000:null, ft2500:null, ft5280:null }
     },
@@ -175,7 +163,6 @@ app = {
 
     // ======= initialize =======
     initialize: function() {
-        console.log("initialize");
         app.activeMap = app.initMap();
         app.activateMap();
         app.activateMenu();
@@ -183,33 +170,27 @@ app = {
 
     // ======= activateMenu =======
     activateMenu: function() {
-        console.log("activateMenu");
 
         $('.region, .buffer').on('click', function(e) {
-            console.log("\n-- click --");
             event.stopPropagation();
             app.toggleFilterState(e.currentTarget);
             app.toggleFilterData(e.currentTarget);
         });
         $('#clearAll').on('click', function(e) {
-            console.log("\n-- click --");
             event.stopPropagation();
             app.clearSelectAll(e.currentTarget);
         });
         $('.region, .buffer, .start, .end, #clearAll-r').on('mouseenter', function(e) {
-            // console.log("-- over --");
             event.stopPropagation();
             updateHoverText(e.currentTarget, "enter");
         });
         $('.region, .buffer, .start, .end, #clearAll-r').on('mouseleave', function(e) {
-            // console.log("-- out --");
             event.stopPropagation();
             updateHoverText(e.currentTarget, "leave");
         });
 
         // ======= updateHoverText =======
         function updateHoverText(hoverEl, enterLeave) {
-            // console.log("updateHoverText");
             var hoverText;
             var region = $(hoverEl).parents().eq(1).attr('id');
             if (enterLeave == "enter") {
@@ -253,10 +234,8 @@ app = {
 
     // ======= toggleFilterState =======
     toggleFilterState: function(toggleEl) {
-        console.log("toggleFilterState");
         var region = $(toggleEl).parents().eq(1).attr('id');
         var buffer = null;
-        console.log("  app.state.selRegions[region]1: ", app.state.selRegions[region]);
 
         // == update region filter
         if ($(toggleEl).hasClass('region')) {
@@ -265,17 +244,6 @@ app = {
             app.state.selRegions[region] ?
                 app.state.selRegions[region] = false :
                 app.state.selRegions[region] = true;
-
-            // == update clear/all button text
-            // console.log("  app.state.selRegions[region]2: ", app.state.selRegions[region]);
-            // if (app.state.selRegions[region] == true) {
-            //     console.log("TRUE");
-            //     console.log("  $('#clearAll-r > p').text(): ", $('#clearAll-r > p').text());
-            //     $('#clearAll-r > p').text('clear');
-            //     console.log("  $('#clearAll-r > p').text(): ", $('#clearAll-r > p').text());
-            // } else {
-            //     console.log("MISSED");
-            // }
 
             // == toggle region element (and buffer elements if deselecting)
             app.state.selRegions[region] ?
@@ -317,7 +285,6 @@ app = {
 
         // ======= updateBufferState =======
         function updateBufferState(toggleEl) {
-            console.log("updateBufferState");
 
             // == deselect region filter element
             $(toggleEl).removeClass('selected');
@@ -342,7 +309,6 @@ app = {
 
     // ======= toggleFilterData =======
     toggleFilterData: function(toggleEl) {
-        console.log("toggleFilterData");
 
         var laneFeatures = null;
         var bufferFeatures = null;
@@ -379,14 +345,12 @@ app = {
 
             // ======= getBufferData =======
             function getBufferData(region, buffer) {
-                console.log("getBufferData");
                 var url = "buffers/" + regions[region].bufferFiles[buffer];
                 app.bufferAjaxQueue(url, region, buffer);
             }
 
             // ======= clearBufferData =======
             function clearBufferData(region, buffer) {
-                console.log("clearBufferData");
                 var bufferFeature = app.state[region].bufferLayers[buffer];
                 if (bufferFeature) {
                     app.activeMap.removeLayer(bufferFeature);
@@ -397,7 +361,6 @@ app = {
 
         // ======= removeBufferLayers =======
         function removeBufferLayers(region) {
-            console.log("removeBufferLayers");
             if (!app.state.selRegions[region]) {
                 app.state[region].laneLayers.forEach(function (laneData) {
                     app.activeMap.removeLayer(laneData);
@@ -425,7 +388,6 @@ app = {
 
     // ======= makeLanesArray =======
     makeLanesArray: function(region) {
-        console.log("makeLanesArray");
         var pathDataArray = [];
         if (regions[region].laneFiles.lanes) {
             var laneFile = regions[region].laneFiles.lanes;
@@ -444,7 +406,6 @@ app = {
 
     // ======= clearSelectAll =======
     clearSelectAll: function(toggleEl) {
-        console.log("clearSelectAll");
 
         // == select or clear all regions
         var clearFlag = false;
@@ -453,12 +414,10 @@ app = {
                 clearFlag = true;
             }
         });
-        console.log("  clearFlag: ", clearFlag);
         clearFlag ? clearAll() : selectAll();
 
         // ======= selectAll =======
         function selectAll() {
-            console.log("selectAll");
 
             // == show buffer elements
             var bufferEls = $('.td-b').children('.buffer');
@@ -486,12 +445,10 @@ app = {
             });
             var url = "bikelanes/" + regions[app.display.regionsArray[0]].laneFiles.lanes;
             app.laneAjaxQueue(url, app.display.regionsArray[0]);
-            console.log("  app.state: ", app.state);
         }
 
         // ======= clearAll =======
         function clearAll() {
-            console.log("clearAll");
 
             // == update clear/all button text
             $('#clearAll-r > p').text('all');
@@ -540,13 +497,11 @@ app = {
 
             // == restore regions array
             app.display.regionsArray = ["AL", "AR", "DC", "MO", "PG"];
-            console.log("  app.state: ", app.state);
         }
     },
 
     // ======= laneAjaxQueue =======
     laneAjaxQueue: function(url, region) {
-        console.log("laneAjaxQueue");
         var laneData = null;
 
         $.ajax({
@@ -554,19 +509,16 @@ app = {
             method: "GET",
             dataType: "text"
         }).done(function(jsonData){
-            console.log("*** ajax success ***");
-            var jsonData2 = $.parseJSON(jsonData);
-            var laneFeatures = L.mapbox.featureLayer(jsonData2).addTo(app.activeMap);
+            var parsedJson = $.parseJSON(jsonData);
+            var laneFeatures = L.mapbox.featureLayer(parsedJson).addTo(app.activeMap);
             app.state[region].laneLayers.push(laneFeatures);
             laneFeatures.setStyle(app.state[region].bikeLaneStyle);
             if ((app.display.loopCount < app.state[region].laneData.length - 1) && (app.state[region].laneData.length != 1)) {
-                console.log("multiple files");
                 app.display.loopCount++;
                 laneData = app.state[region].laneData[app.display.loopCount];
                 url = "bikelanes/" + laneData;
                 app.laneAjaxQueue(url, region);
             } else {
-                console.log("single file");
                 app.display.loopCount = 0;
                 if (app.display.allRegions) {
                     if (app.display.regionsArray.length > 0) {
@@ -591,15 +543,13 @@ app = {
 
     // ======= bufferAjaxQueue =======
     bufferAjaxQueue: function(url, region, buffer) {
-        console.log("bufferAjaxQueue");
         $.ajax({
             url: url,
             method: "GET",
             dataType: "text"
         }).done(function(jsonData){
-            console.log("*** ajax success ***");
-            var jsonData2 = $.parseJSON(jsonData);
-            var bufferFeatures = L.mapbox.featureLayer(jsonData2).addTo(app.activeMap);
+            var parsedJson = $.parseJSON(jsonData);
+            var bufferFeatures = L.mapbox.featureLayer(parsedJson).addTo(app.activeMap);
             app.state[region].bufferLayers[buffer] = bufferFeatures;
             bufferFeatures.setStyle(app.display.bufferStyle);
         }).fail(function(){
@@ -607,43 +557,8 @@ app = {
         });
     },
 
-    // ======= allLanesQueue =======
-    allLanesQueue: function(url, regionsArray) {
-        console.log("allLanesQueue");
-        if ((Array.isArray(regionsArray)) && (regionsArray.length > 0)) {
-            var region = regionsArray[0];
-        } else {
-            var region = regionsArray;
-        }
-
-        $.ajax({
-            url: url,
-            method: "GET",
-            dataType: "text"
-        }).done(function(jsonData){
-            console.log("*** ajax success ***");
-            var jsonData2 = $.parseJSON(jsonData);
-            var laneFeatures = L.mapbox.featureLayer(jsonData2).addTo(app.activeMap);
-            app.state[region].laneLayers.push(laneFeatures);
-            laneFeatures.setStyle(app.state[region].bikeLaneStyle);
-            if (loopCount < app.state[region].laneData.length - 1) {
-                loopCount++;
-                var laneData = app.state[region].laneData[loopCount];
-                app.allLanesQueue(url, region);
-            } else {
-                var arrayR = app.display.regionsArray;
-                arrayR.shift();
-                app.display.regionsArray = arrayR;
-                app.allLanesQueue(url, arrayR);
-            }
-        }).fail(function(){
-            console.log("*** ajax fail T ***");
-        });
-    },
-
     // ======= initMap =======
     initMap: function () {
-        console.log("app.initMap");
         L.mapbox.accessToken = "pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y2RmYjRlMGI1ZjIzIn0.pngboKEPsfuC4j54XDT3VA";
         var map = L.mapbox.map(
             app.map.mapEl,
@@ -656,7 +571,6 @@ app = {
 
     // ======= activateMap =======
     activateMap: function() {
-        console.log("activateMap");
 
         // ======= mouse location =======
         app.activeMap.on("mousemove", function (e) {
@@ -666,7 +580,6 @@ app = {
 
         // ======= mouse location =======
         app.activeMap.on("click", function (e) {
-            console.log("\n-- mapClick -- ");
             var latLng = [JSON.stringify(e.latlng.lat), JSON.stringify(e.latlng.lng)];
             !$("#startLoc").val() ?
                 app.addRouteMarker("start", latLng) :
@@ -677,14 +590,11 @@ app = {
 
     // ======= addRouteMarker =======
     addRouteMarker: function(startEnd, latLng, data) {
-        console.log("addRouteMarker");
 
         // == geocoding request format: /geocoding/v5/{mode}/{query}.json
-        var baseUrl = "https://api.mapbox.com/geocoding/v5/";
-        var routeMode = "mapbox.places/";
-        var latLngQuery = latLng[1] + "," + latLng[0];
+        var baseUrl = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + latLng[1] + "," + latLng[0]
         var token = "pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y2RmYjRlMGI1ZjIzIn0.pngboKEPsfuC4j54XDT3VA";
-        var url = baseUrl + routeMode + latLngQuery + ".json?access_token=" + token;
+        var url = baseUrl + ".json?access_token=" + token;
 
         // == get directions for selected places
         $.ajax({
@@ -692,18 +602,15 @@ app = {
             method: "GET",
             dataType: "text"
         }).done(function(jsonData){
-            console.log("*** ajax success ***");
-            var jsonData2 = $.parseJSON(jsonData);
-            console.dir(jsonData2);
-            updateRouteData(jsonData2);
-            makeRouteMarker(jsonData2);
+            var parsedJson = $.parseJSON(jsonData);
+            updateRouteData(parsedJson);
+            makeRouteMarker(parsedJson);
         }).fail(function(){
             console.log("*** ajax fail ***");
         });
 
         // ======= updateRouteData =======
         function updateRouteData(jsonData) {
-            console.log("updateRouteData");
 
             var startLoc = $('.start').text();
             var endLoc = $('.end').text();
@@ -723,9 +630,7 @@ app = {
 
         // ======= clearRouteMarkers =======
         function clearRouteMarkers(jsonData) {
-            console.log("clearRouteMarkers");
             $.each(app.map.markersGroup, function(index, marker) {
-                console.log("  marker: ", marker);
                 app.activeMap.removeLayer(marker);
             });
             app.map.markersGroup = [];
@@ -733,7 +638,6 @@ app = {
 
         // ======= makeRouteMarker =======
         function makeRouteMarker(jsonData) {
-            console.log("makeRouteMarker");
             var latLng = jsonData.features[0].center;
             var lat = latLng[0];
             var lng = latLng[1];
