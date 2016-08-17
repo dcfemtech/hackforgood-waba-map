@@ -145,7 +145,10 @@ var regions = {
         id: "PG_2",
         name: "Prince George's County",
         box: { NW: [null, null], SE: [null, null] },
-        laneFiles: { lanes:null, paths:null, trails:null },
+        laneFiles: {
+            lanes:"MD_PrinceGeorgesCounty_Bikeways.geojson",
+            paths:null,
+            trails:null },
         bufferFiles: { ft500:null, ft1000:null, ft2500:null, ft5280:null }
     },
 }
