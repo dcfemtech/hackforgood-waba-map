@@ -175,20 +175,20 @@ app = {
     activateMenu: function() {
 
         $('.region, .buffer').on('click', function(e) {
-            event.stopPropagation();
+            e.stopPropagation();
             app.toggleFilterState(e.currentTarget);
             app.toggleFilterData(e.currentTarget);
         });
         $('#clearAll').on('click', function(e) {
-            event.stopPropagation();
+            e.stopPropagation();
             app.clearSelectAll(e.currentTarget);
         });
         $('.region, .buffer, .start, .end, #clearAll-r').on('mouseenter', function(e) {
-            event.stopPropagation();
+            e.stopPropagation();
             updateHoverText(e.currentTarget, 'enter');
         });
         $('.region, .buffer, .start, .end, #clearAll-r').on('mouseleave', function(e) {
-            event.stopPropagation();
+            e.stopPropagation();
             updateHoverText(e.currentTarget, 'leave');
         });
 
