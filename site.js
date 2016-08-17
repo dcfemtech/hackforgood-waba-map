@@ -345,21 +345,21 @@ app = {
             app.state[selRegion].selBuffers[buffer] ?
                 getBufferData(selRegion, buffer) :
                 clearBufferData(selRegion, buffer);
+        }
 
-            // ======= getBufferData =======
-            function getBufferData(region, buffer) {
-                var url = 'buffers/' + regions[region].bufferFiles[buffer];
-                app.bufferAjaxQueue(url, region, buffer);
-            }
+        // ======= getBufferData =======
+        function getBufferData(region, buffer) {
+            var url = 'buffers/' + regions[region].bufferFiles[buffer];
+            app.bufferAjaxQueue(url, region, buffer);
+        }
 
-            // ======= clearBufferData =======
-            function clearBufferData(region, buffer) {
-                var bufferFeature = app.state[region].bufferLayers[buffer];
-                if (bufferFeature) {
-                    app.activeMap.removeLayer(bufferFeature);
-                }
-                app.state[region].bufferLayers[buffer] = null;
+        // ======= clearBufferData =======
+        function clearBufferData(region, buffer) {
+            var bufferFeature = app.state[region].bufferLayers[buffer];
+            if (bufferFeature) {
+                app.activeMap.removeLayer(bufferFeature);
             }
+            app.state[region].bufferLayers[buffer] = null;
         }
 
         // ======= removeBufferLayers =======
