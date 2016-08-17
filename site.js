@@ -24,8 +24,8 @@ var defaultDisplay = {
 var defaultMap = {
     mapEl: document.getElementById("map"),
     mapStyle: "mapbox.light",
-    centerLat: 38.99,
-    centerLng: -77.20,
+    centerLat: 38.8990,
+    centerLng: -77.0354,
     zoom: 11,
     zoomControl: false,
     dataLayers: [],
@@ -145,7 +145,10 @@ var regions = {
         id: "PG_2",
         name: "Prince George's County",
         box: { NW: [null, null], SE: [null, null] },
-        laneFiles: { lanes:null, paths:null, trails:null },
+        laneFiles: {
+            lanes:"MD_PrinceGeorgesCounty_Bikeways.geojson",
+            paths:null,
+            trails:null },
         bufferFiles: { ft500:null, ft1000:null, ft2500:null, ft5280:null }
     },
 }
@@ -226,7 +229,7 @@ app = {
                         $(hoverEl).removeClass("entered");
                     }
                 }
-                hoverText = ".";
+                hoverText = "";
             }
             $("#hoverText").text(hoverText);
         }
