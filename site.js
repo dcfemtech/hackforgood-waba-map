@@ -169,10 +169,13 @@ app = {
         app.activeMap = app.initMap();
         app.activateMap();
         app.activateMenu();
+        app.activateErrorModal();
     },
 
     // ======= activateMenu =======
     activateMenu: function() {
+
+        $('.menu').draggable();
 
         $('.region, .buffer').on('click', function(e) {
             event.stopPropagation();
@@ -233,6 +236,12 @@ app = {
             }
             $('#hoverText').text(hoverText);
         }
+    },
+
+    activateErrorModal: function() {
+        $('#error-box button').on('click', function(e) {
+            $('#error-box').fadeOut(200);
+        }); 
     },
 
     // ======= toggleFilterState =======
@@ -394,15 +403,15 @@ app = {
         var pathDataArray = [];
         if (regions[region].laneFiles.lanes) {
             var laneFile = regions[region].laneFiles.lanes;
-            laneFile ? pathDataArray.push(laneFile) : console.log('NO LANES');
+            laneFile ? pathDataArray.push(laneFile) : app.showError('NO LANES');  
         }
         if (regions[region].laneFiles.paths) {
             var pathFile = regions[region].laneFiles.paths;
-            pathFile ? pathDataArray.push(pathFile) : console.log('NO PATHS');
+            pathFile ? pathDataArray.push(pathFile) : app.showError('NO PATHS');
         }
         if (regions[region].laneFiles.trails) {
             var trailFile = regions[region].laneFiles.trails;
-            trailFile ? pathDataArray.push(trailFile) : console.log('NO TRAILS');
+            trailFile ? pathDataArray.push(trailFile) : app.showError('NO TRAILS');
         }
         return pathDataArray;       // array of lane/path/trail geojson files
     },
@@ -532,7 +541,7 @@ app = {
                             url = 'bikelanes/' + laneData;
                             app.laneAjaxQueue(url, region);
                         } else {
-                            console.log('=== ALERT: Missing data for', region);
+                            app.showError('Missing data for' + region);
                         }
                     } else {
                         app.display.regionsArray = ['AL', 'AR', 'DC', 'MO', 'PG'];
@@ -540,7 +549,7 @@ app = {
                 }
             }
         }).fail(function(){
-            console.log('*** ajax fail T ***');
+            app.showError('AJAX failure');
         });
     },
 
@@ -556,7 +565,7 @@ app = {
             app.state[region].bufferLayers[buffer] = bufferFeatures;
             bufferFeatures.setStyle(app.display.bufferStyle);
         }).fail(function(){
-            console.log('*** ajax fail T ***');
+            app.showError('AJAX failure');
         });
     },
 
@@ -591,6 +600,12 @@ app = {
 
     },
 
+    showError: function(errorMessage) {
+        $('#error-box').fadeIn(200);
+        $('#error-text').html(errorMessage);
+
+    },
+
     // ======= addRouteMarker =======
     addRouteMarker: function(startEnd, latLng, data) {
 
@@ -609,7 +624,7 @@ app = {
             updateRouteData(parsedJson);
             makeRouteMarker(parsedJson);
         }).fail(function(){
-            console.log('*** ajax fail ***');
+            app.showError('AJAX failure');
         });
 
         // ======= updateRouteData =======
