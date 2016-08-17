@@ -24,8 +24,8 @@ var defaultDisplay = {
 var defaultMap = {
     mapEl: document.getElementById("map"),
     mapStyle: "mapbox.light",
-    centerLat: 38.99,
-    centerLng: -77.20,
+    centerLat: 38.8990,
+    centerLng: -77.0354,
     zoom: 11,
     zoomControl: false,
     dataLayers: [],
@@ -229,7 +229,7 @@ app = {
                         $(hoverEl).removeClass("entered");
                     }
                 }
-                hoverText = ".";
+                hoverText = "";
             }
             $("#hoverText").text(hoverText);
         }
