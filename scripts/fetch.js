@@ -2,13 +2,12 @@
 var path = require('path');
 var request = require('request');
 
-var montgomery = { name: 'Montgomery County, MD', url: 'https://data.montgomerycountymd.gov/api/geospatial/icc2-ppee?method=export&format=GeoJSON', type: 'geojson', filename: 'MD_MontgomeryCounty_Bikeways.geojson', mappingFunction: mocomap, done: false };
-var arlington = { name: 'Arlington County, VA', url: 'http://gisdata.arlgis.opendata.arcgis.com/datasets/af497e2747104622ac74f4457b3fb73f_4.geojson', type: 'geojson', filename: 'VA_Arlington_Bike.geojson', mappingFunction: arlingtonmap, done: false };
-var alexandria = { name: 'Alexandria, VA', url: 'http://data.alexgis.opendata.arcgis.com/datasets/685dfe61f1aa477f8cbd21dceb5ba9b5_0.geojson', type: 'geojson', filename: 'VA_Alexandria_Bike.geojson', mappingFunction: alexandriamap, done: false };
-var dcLanes = { name: 'Washington, DC Bike Lanes', url: 'http://opendata.dc.gov/datasets/294e062cdf2c48d5b9cbc374d9709bc0_2.geojson', type: 'geojson', filename: 'DC_Bike_Lanes.geojson', mappingFunction: dclanesmap, done: false, onDone: combineDC };
-var dcTrails = { name: 'Washington, DC Trails', url: 'http://opendata.dc.gov/datasets/e8c2b7ef54fb43d9a2ed1b0b75d0a14d_4.geojson', type: 'geojson', filename: 'DC_Bike_Trails.geojson', mappingFunction: dctrailsmap, done: false, onDone: combineDC };
-var princegeorges = { name: 'Prince George\'s County, MD', url: 'http://gisdata.pgplanning.org/opendata/downloadzip.asp?FileName=/data/ShapeFile/Master_Plan_Trail_Ln.zip', type: 'shapefile', filename: 'MD_PrinceGeorgesCounty_Bikeways.geojson', mappingFunction: pgmap, done: false };
-
+var montgomery = { name: 'Montgomery County, MD', url: 'https://data.montgomerycountymd.gov/api/geospatial/icc2-ppee?method=export&format=GeoJSON', type: 'geojson', filename: 'MD_MontgomeryCounty_Bikeways.geojson', mappingFunction: mocoMap, done: false };
+var arlington = { name: 'Arlington County, VA', url: 'http://gisdata.arlgis.opendata.arcgis.com/datasets/af497e2747104622ac74f4457b3fb73f_4.geojson', type: 'geojson', filename: 'VA_Arlington_Bike.geojson', mappingFunction: arlingtonMap, done: false };
+var alexandria = { name: 'Alexandria, VA', url: 'http://data.alexgis.opendata.arcgis.com/datasets/685dfe61f1aa477f8cbd21dceb5ba9b5_0.geojson', type: 'geojson', filename: 'VA_Alexandria_Bike.geojson', mappingFunction: alexandriaMap, done: false };
+var dcLanes = { name: 'Washington, DC Bike Lanes', url: 'http://opendata.dc.gov/datasets/294e062cdf2c48d5b9cbc374d9709bc0_2.geojson', type: 'geojson', filename: 'DC_Bike_Lanes.geojson', mappingFunction: dcLanesMap, done: false, onDone: combineDC };
+var dcTrails = { name: 'Washington, DC Trails', url: 'http://opendata.dc.gov/datasets/e8c2b7ef54fb43d9a2ed1b0b75d0a14d_4.geojson', type: 'geojson', filename: 'DC_Bike_Trails.geojson', mappingFunction: dcTrailsMap, done: false, onDone: combineDC };
+var princeGeorges = { name: 'Prince George\'s County, MD', url: 'http://gisdata.pgplanning.org/opendata/downloadzip.asp?FileName=/data/ShapeFile/Master_Plan_Trail_Ln.zip', type: 'shapefile', filename: 'MD_PrinceGeorgesCounty_Bikeways.geojson', mappingFunction: pgMap, done: false };
 
 function fetch(locality) {
     console.log('fetching file for ' + locality.name);
@@ -69,7 +68,7 @@ function mapFilterSave(geoJson, locality) {
     if (locality.onDone) locality.onDone();
 }
 
-function mocomap(rawGeoJson) {
+function mocoMap(rawGeoJson) {
     //keep objectid
     //keep name
     //convert category = 'Paved Off-Road Trail' to wabaclassification = 'Paved Trail'
@@ -96,7 +95,7 @@ function mocomap(rawGeoJson) {
     return geojson;
 }
 
-function arlingtonmap(rawGeoJson) {
+function arlingtonMap(rawGeoJson) {
     //convert OBJECTID to objectid
     //convert Label to name
     //convert Route_Type = 'Off Street Trail' to wabaclassification = 'Paved Trail'
@@ -119,7 +118,7 @@ function arlingtonmap(rawGeoJson) {
     return geojson;
 }
 
-function alexandriamap(rawGeoJson) {
+function alexandriaMap(rawGeoJson) {
     //filter to STATUS = 'Existing'
     //convert FID to objectid
     //convert TRAILTYPE = 'Off Street' to wabaclassification = 'Paved Trail'
@@ -142,7 +141,7 @@ function alexandriamap(rawGeoJson) {
     return geojson;
 }
 
-function dclanesmap(rawGeoJson) {
+function dcLanesMap(rawGeoJson) {
     //convert OBJECTID to objectid
     //convert FACILITY = 'Bus/Bike Lane' to wabaclassification = 'Bus/Bike Lane'
     //convert FACILITY = 'Existing Bike Lane' to wabaclassification = 'Bike Lane'
@@ -168,7 +167,7 @@ function dclanesmap(rawGeoJson) {
     return geojson;
 }
 
-function dctrailsmap(rawGeoJson) {
+function dcTrailsMap(rawGeoJson) {
     //convert OBJECTID to objectid
     //convert NAME to name
     //set all to wabaclassification = 'Paved Trail'
@@ -185,7 +184,7 @@ function dctrailsmap(rawGeoJson) {
     return geojson;
 }
 
-function pgmap(rawGeoJson) {
+function pgMap(rawGeoJson) {
     //filter to FACILITY_S = 'Existing'
     //convert FACILITY_N to name
     //convert FACILITY_T = 'Hard Surface Trail' to wabaclassification = 'Paved Trail'
@@ -231,5 +230,5 @@ fetch(arlington);
 fetch(alexandria);
 fetch(dcLanes);
 fetch(dcTrails);
-fetch(princegeorges);
+fetch(princeGeorges);
 
