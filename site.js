@@ -90,7 +90,7 @@ var regions = {
         name: 'Alexandria',
         box: { NW: [null, null], SE: [null, null] },
         laneFiles: {
-            lanes: 'VA_Alexandria_Bike.geojson',
+            lanes: 'VA_Alexandria.geojson',
             paths: null,
             trails: null },
         bufferFiles: {
@@ -104,7 +104,7 @@ var regions = {
         name: 'Arlington',
         box: { NW: [null, null], SE: [null, null] },
         laneFiles: {
-            lanes: 'VA_Arlington_Bike.geojson',
+            lanes: 'VA_Arlington.geojson',
             paths: null,
             trails: null },
         bufferFiles: {
@@ -118,9 +118,9 @@ var regions = {
         name: 'District of Columbia',
         box: { NW: [null, null], SE: [null, null] },
         laneFiles: {
-            lanes: 'DC_Bike_Lanes.geojson',
-            paths: 'DC_Bike_Paths_All.geojson',
-            trails: 'DC_Bike_Trails.geojson' },
+            lanes: 'DC_Washington.geojson',
+            paths: null,
+            trails: null },
         bufferFiles: {
             ft500: 'DC_Bike_Buffer_500ft.geojson',
             ft1000: 'DC_Bike_Buffer_1000ft.geojson',
@@ -132,7 +132,7 @@ var regions = {
         name: 'Montgomery County',
         box: { NW: [null, null], SE: [null, null] },
         laneFiles: {
-            lanes: 'MD_MontgomeryCounty_Bikeways.geojson',
+            lanes: 'MD_MontgomeryCounty.geojson',
             paths: null,
             trails: null },
         bufferFiles: {
@@ -146,7 +146,7 @@ var regions = {
         name: 'Prince George\'s County',
         box: { NW: [null, null], SE: [null, null] },
         laneFiles: {
-            lanes: 'MD_PrinceGeorgesCounty_Bikeways.geojson',
+            lanes: 'MD_PrinceGeorgesCounty.geojson',
             paths: null,
             trails: null },
         bufferFiles: { ft500:null, ft1000:null, ft2500:null, ft5280:null }
