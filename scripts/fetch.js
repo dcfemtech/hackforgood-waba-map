@@ -78,10 +78,10 @@ function mocoMap(rawGeoJson) {
     //convert category = 'Natural Surface' to wabaclassification = 'Unpaved Trail'
     //convert category = 'Separated Bike Lanes' to wabaclassification = 'Separated Bike Lanes'
 
-    var geojson = { "type": "FeatureCollection", "features": [] };
+    var geojson = { type: 'FeatureCollection', features: [] };
     for (var i = 0; i < rawGeoJson.features.length; i++) {
         var rawFeature = rawGeoJson.features[i];
-        var mappedFeature = { "type": "Feature", "properties": { "objectid": rawFeature.properties.objectid, "name": rawFeature.properties.name }, "geometry": rawFeature.geometry };
+        var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.objectid, name: rawFeature.properties.name }, geometry: rawFeature.geometry };
         if (rawFeature.properties.category == 'Paved Off-Road Trail') mappedFeature.properties.wabaclassification = 'Paved Trail';
         if (rawFeature.properties.category == 'Bike Lanes') mappedFeature.properties.wabaclassification = 'Bike Lane';
         if (rawFeature.properties.category == 'Bike-Friendly Shoulders') mappedFeature.properties.wabaclassification = 'Shoulder';
@@ -103,10 +103,10 @@ function arlingtonMap(rawGeoJson) {
     //convert Route_Type = 'Sharrow' to wabaclassification = 'Sharrows'
     //convert Route_Type = 'Suggested Route' to wabaclassification = 'Signed Route'
 
-    var geojson = { "type": "FeatureCollection", "features": [] };
+    var geojson = { type: 'FeatureCollection', features: [] };
     for (var i = 0; i < rawGeoJson.features.length; i++) {
         var rawFeature = rawGeoJson.features[i];
-        var mappedFeature = { "type": "Feature", "properties": { "objectid": rawFeature.properties.OBJECTID, "name": rawFeature.properties.Label }, "geometry": rawFeature.geometry };
+        var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.OBJECTID, name: rawFeature.properties.Label }, geometry: rawFeature.geometry };
         if (rawFeature.properties.Route_Type == 'Off Street Trail') mappedFeature.properties.wabaclassification = 'Paved Trail';
         if (rawFeature.properties.Route_Type == 'Marked Route') mappedFeature.properties.wabaclassification = 'Bike Lane';
         if (rawFeature.properties.Route_Type == 'Sharrow') mappedFeature.properties.wabaclassification = 'Sharrows';
@@ -125,12 +125,12 @@ function alexandriaMap(rawGeoJson) {
     //convert TRAILTYPE = 'On Street' and SHARROW = 'No' to wabaclassification = 'Bike Lane'
     //convert TRAILTYPE = 'On Street' and SHARROW = 'Yes' to wabaclassification = 'Sharrows'
 
-    var geojson = { "type": "FeatureCollection", "features": [] };
+    var geojson = { type: 'FeatureCollection', features: [] };
     rawGeoJson.features = rawGeoJson.features.filter(function (value) { return value.properties.STATUS == 'Existing'; })
 
     for (var i = 0; i < rawGeoJson.features.length; i++) {
         var rawFeature = rawGeoJson.features[i];
-        var mappedFeature = { "type": "Feature", "properties": { "objectid": rawFeature.properties.FID }, "geometry": rawFeature.geometry };
+        var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.FID }, geometry: rawFeature.geometry };
         if (rawFeature.properties.TRAILTYPE == 'Off Street') mappedFeature.properties.wabaclassification = 'Paved Trail';
         if (rawFeature.properties.TRAILTYPE == 'On Street' && rawFeature.properties.SHARROW == 'No') mappedFeature.properties.wabaclassification = 'Bike Lane';
         if (rawFeature.properties.TRAILTYPE == 'On Street' && rawFeature.properties.SHARROW == 'Yes') mappedFeature.properties.wabaclassification = 'Sharrows';
@@ -150,10 +150,10 @@ function dcLanesMap(rawGeoJson) {
     //convert FACILITY = 'Contraflow Bike Lane' to wabaclassification = 'Bike Lane'
     //convert FACILITY = 'Climbing Lane' to wabaclassification = 'Bike Lane'
 
-    var geojson = { "type": "FeatureCollection", "features": [] };
+    var geojson = { type: 'FeatureCollection', features: [] };
     for (var i = 0; i < rawGeoJson.features.length; i++) {
         var rawFeature = rawGeoJson.features[i];
-        var mappedFeature = { "type": "Feature", "properties": { "objectid": rawFeature.properties.OBJECTID }, "geometry": rawFeature.geometry };
+        var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.OBJECTID }, geometry: rawFeature.geometry };
         if (rawFeature.properties.FACILITY == 'Bus/Bike Lane') mappedFeature.properties.wabaclassification = 'Bus/Bike Lane';
         if (rawFeature.properties.FACILITY == 'Existing Bike Lane') mappedFeature.properties.wabaclassification = 'Bike Lane';
         if (rawFeature.properties.FACILITY == 'Climbing Lane') mappedFeature.properties.wabaclassification = 'Bike Lane';
@@ -172,10 +172,10 @@ function dcTrailsMap(rawGeoJson) {
     //convert NAME to name
     //set all to wabaclassification = 'Paved Trail'
 
-    var geojson = { "type": "FeatureCollection", "features": [] };
+    var geojson = { type: 'FeatureCollection', features: [] };
     for (var i = 0; i < rawGeoJson.features.length; i++) {
         var rawFeature = rawGeoJson.features[i];
-        var mappedFeature = { "type": "Feature", "properties": { "objectid": rawFeature.properties.OBJECTID, "name": rawFeature.properties.NAME }, "geometry": rawFeature.geometry };
+        var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.OBJECTID, name: rawFeature.properties.NAME }, geometry: rawFeature.geometry };
         mappedFeature.properties.wabaclassification = 'Paved Trail';
 
         geojson.features.push(mappedFeature);
@@ -191,12 +191,12 @@ function pgMap(rawGeoJson) {
     //convert FACILITY_T = 'Shared Roadway' to wabaclassification = 'Sharrows'
     //convert FACILITY_T = 'Bike Lane' to wabaclassification = 'Bike Lane'
 
-    var geojson = { "type": "FeatureCollection", "features": [] };
+    var geojson = { type: 'FeatureCollection', features: [] };
     rawGeoJson.features = rawGeoJson.features.filter(function (value) { return value.properties.FACILITY_S == 'Existing'; })
 
     for (var i = 0; i < rawGeoJson.features.length; i++) {
         var rawFeature = rawGeoJson.features[i];
-        var mappedFeature = { "type": "Feature", "properties": { "objectid": i }, "geometry": rawFeature.geometry };
+        var mappedFeature = { type: 'Feature', properties: { objectid: i }, geometry: rawFeature.geometry };
         if (rawFeature.properties.FACILITY_T == 'Hard Surface Trail') mappedFeature.properties.wabaclassification = 'Paved Trail';
         if (rawFeature.properties.FACILITY_T == 'Shared Roadway') mappedFeature.properties.wabaclassification = 'Sharrows';
         if (rawFeature.properties.FACILITY_T == 'Bike Lane') mappedFeature.properties.wabaclassification = 'Bike Lane';
