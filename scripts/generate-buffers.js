@@ -5,36 +5,61 @@ var fs = require('fs');
 var path = require('path');
 var d3 = require('d3-queue');
 
-var q = d3.queue(1);
+var q = d3.queue();
 
-var arlington = JSON.parse(fs.readFileSync(path.resolve('bikelanes', 'VA_Arlington_Bike.geojson'), 'utf8'));
-var dc = JSON.parse(fs.readFileSync(path.resolve('bikelanes', 'DC_Bike_Paths_All.geojson'), 'utf8'));
+var sourcePath = 'bikelanes';
 
 // See https://github.com/dcfemtech/hackforgood-waba-map/issues/1 for background
 
-function featureUnion(name, geojson, callback){
+function generateBuffers(name, geojson, callback) {
+    try {
+        console.log('merging features for ' + name);
+        var unionedJson = featureUnion(geojson);
+
+        generateBuffer(unionedJson, 0.094697, name + '_buffer_500ft.geojson');
+        generateBuffer(unionedJson, 0.189394, name + '_buffer_1000ft.geojson');
+        generateBuffer(unionedJson, 0.4734848, name + '_buffer_2500ft.geojson');
+        generateBuffer(unionedJson, 1, name + '_buffer_1mile.geojson');
+
+    } catch (ex) {
+        callback(ex.description, name);
+    }
+    callback(null, name);
+}
+
+function featureUnion(geojson){
     var merged = geojson.features[0];
-
-    console.log("merging " + name);
-
     var length = geojson.features.length;
 
     for (var i = 1; i < length; i++) {
-        console.log("processing " + name + " feature " + i);
         merged = turf.union(merged, geojson.features[i]);
     }
     
     geojson.features = [merged];
 
-    callback(null, {"name": name, "geojson": geojson});
+    return geojson;
 }
 
-function end(error, result) {
-    console.log("generating 1 mile buffer for " + result.name);
-    var buffer1mile = turf.buffer(result.geojson, 1, 'miles');
-    fs.writeFileSync(path.resolve('buffers', result.name + '_buffer_1mile.geojson'), JSON.stringify(buffer1mile));
+function done(error, name) {
+    if (error) {
+        console.log('error [' + name + ']: ' + error);
+    } else {
+        console.log('done with ' + name);
+    }    
 }
 
-q.defer(featureUnion, 'VA_Arlington', arlington);
-q.defer(featureUnion, 'DC_Washington', dc)
-q.await(end);
+function generateBuffer(geojson, distanceInMiles, fileName) {
+    console.log('generating ' + fileName);
+    var buffer = turf.buffer(geojson, distanceInMiles, 'miles');
+    fs.writeFileSync(path.resolve('buffers', fileName), JSON.stringify(buffer));
+}
+
+var sourceFiles = fs.readdirSync(sourcePath);
+for (var i = 0; i < sourceFiles.length; i++) {
+    var sourceFileName = sourceFiles[i];
+    var sourceJson = JSON.parse(fs.readFileSync(path.resolve(sourcePath, sourceFileName)));
+    var sourceFileNameBase = sourceFileName.replace(/\.[^/.]+$/, '');
+    q.defer(generateBuffers, sourceFileNameBase, sourceJson);
+}
+q.await(done);
+
