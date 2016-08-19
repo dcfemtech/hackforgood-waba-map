@@ -7,39 +7,66 @@ var arlington = { name: 'Arlington County, VA', url: 'http://gisdata.arlgis.open
 var alexandria = { name: 'Alexandria, VA', url: 'http://data.alexgis.opendata.arcgis.com/datasets/685dfe61f1aa477f8cbd21dceb5ba9b5_0.geojson', type: 'geojson', filename: 'VA_Alexandria_Bike.geojson', mappingFunction: alexandriamap, done: false };
 var dcLanes = { name: 'Washington, DC Bike Lanes', url: 'http://opendata.dc.gov/datasets/294e062cdf2c48d5b9cbc374d9709bc0_2.geojson', type: 'geojson', filename: 'DC_Bike_Lanes.geojson', mappingFunction: dclanesmap, done: false, onDone: combineDC };
 var dcTrails = { name: 'Washington, DC Trails', url: 'http://opendata.dc.gov/datasets/e8c2b7ef54fb43d9a2ed1b0b75d0a14d_4.geojson', type: 'geojson', filename: 'DC_Bike_Trails.geojson', mappingFunction: dctrailsmap, done: false, onDone: combineDC };
-//var princegeorges = { name: 'Prince George\'s County, MD', url: 'http://gisdata.pgplanning.org/opendata/downloadzip.asp?FileName=/data/ShapeFile/Master_Plan_Trail_Ln.zip', type: 'shapefile', filename: 'MD_PrinceGeorgesCounty_Bikeways.geojson', mappingFunction: pgmap, done: false };
+var princegeorges = { name: 'Prince George\'s County, MD', url: 'http://gisdata.pgplanning.org/opendata/downloadzip.asp?FileName=/data/ShapeFile/Master_Plan_Trail_Ln.zip', type: 'shapefile', filename: 'MD_PrinceGeorgesCounty_Bikeways.geojson', mappingFunction: pgmap, done: false };
 
 
 function fetch(locality) {
     console.log('fetching file for ' + locality.name);
-    request({
-        url: locality.url,
-        json: true
-    }, function (error, response, body) {
-
-        if (!error && response.statusCode === 200) {
-            if (locality.type == 'shapefile') {
-                //TODO: convert to geojson using ogr2ogr's web service
+    if (locality.type == 'shapefile') {
+        request({
+            url: locality.url,
+            encoding: null
+        }, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                fs.writeFileSync(path.resolve('bikelanes', 'temp.zip'), body);
+                console.log('Converting Shapefile to GeoJson for ' + locality.name);
+                var formData = { upload: fs.createReadStream(path.resolve('bikelanes', 'temp.zip')), targetSrs: 'EPSG:4326' };
+                request.post({
+                    url: 'http://ogre.adc4gis.com/convert',
+                    formData: formData,
+                    proxy: 'http://127.0.0.1:8888'
+                }, function (error, response, body) {
+                    if (!error && response.statusCode === 200) {
+                        mapFilterSave(JSON.parse(body), locality);
+                    } else {
+                        console.log('ERROR: ' + error);
+                    }
+                });
+            } else {
+                console.log('ERROR: ' + error);
             }
-            else {
-                geoJson = body;
+        })        
+    }
+    else {
+        request({
+            url: locality.url,
+            json: true
+        }, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                mapFilterSave(body, locality);
+            } else {
+                console.log('ERROR: ' + error);
             }
+        })
+    }
+    
+}
 
-            //each locality has their own labeling & categorizing system.  Normalize them.
-            console.log('mapping raw file for ' + locality.name);
-            var mappedGeoJson = locality.mappingFunction(geoJson);
+function mapFilterSave(geoJson, locality) {
+    //each locality has their own labeling & categorizing system.  Normalize them.
+    console.log('mapping raw file for ' + locality.name);
+    console.log('# of raw features: ' + geoJson.features.length);
+    var mappedGeoJson = locality.mappingFunction(geoJson);
 
-            //filter it so we don't have sharrows and wide shoulders and other things WABA doesn't consider infrastructure
-            console.log('filtering mapped file for ' + locality.name);
-            mappedGeoJson.features = mappedGeoJson.features.filter(isRealBikeFacility);
+    //filter it so we don't have sharrows and wide shoulders and other things WABA doesn't consider infrastructure
+    console.log('filtering mapped file for ' + locality.name);
+    mappedGeoJson.features = mappedGeoJson.features.filter(isRealBikeFacility);
 
-            console.log('writing finalized file to disk for ' + locality.name);
-            //write to disk
-            fs.writeFileSync(path.resolve('bikelanes', locality.filename), JSON.stringify(mappedGeoJson));
-            locality.done = true;
-            if (locality.onDone) locality.onDone();
-        }
-    })
+    console.log('writing finalized file to disk for ' + locality.name);
+    //write to disk
+    fs.writeFileSync(path.resolve('bikelanes', locality.filename), JSON.stringify(mappedGeoJson));
+    locality.done = true;
+    if (locality.onDone) locality.onDone();
 }
 
 function mocomap(rawGeoJson) {
@@ -158,13 +185,38 @@ function dctrailsmap(rawGeoJson) {
     return geojson;
 }
 
+function pgmap(rawGeoJson) {
+    //filter to FACILITY_S = 'Existing'
+    //convert FACILITY_N to name
+    //convert FACILITY_T = 'Hard Surface Trail' to wabaclassification = 'Paved Trail'
+    //convert FACILITY_T = 'Shared Roadway' to wabaclassification = 'Sharrows'
+    //convert FACILITY_T = 'Bike Lane' to wabaclassification = 'Bike Lane'
+
+    var geojson = { "type": "FeatureCollection", "features": [] };
+    rawGeoJson.features = rawGeoJson.features.filter(function (value) { return value.properties.FACILITY_S == 'Existing'; })
+
+    for (var i = 0; i < rawGeoJson.features.length; i++) {
+        var rawFeature = rawGeoJson.features[i];
+        var mappedFeature = { "type": "Feature", "properties": { "objectid": i }, "geometry": rawFeature.geometry };
+        if (rawFeature.properties.FACILITY_T == 'Hard Surface Trail') mappedFeature.properties.wabaclassification = 'Paved Trail';
+        if (rawFeature.properties.FACILITY_T == 'Shared Roadway') mappedFeature.properties.wabaclassification = 'Sharrows';
+        if (rawFeature.properties.FACILITY_T == 'Bike Lane') mappedFeature.properties.wabaclassification = 'Bike Lane';
+        if (rawFeature.properties.FACILITY_T == 'Natural Surface Trail') mappedFeature.properties.wabaclassification = 'Unpaved Trail';
+        if (rawFeature.properties.FACILITY_T == 'Sidepath') mappedFeature.properties.wabaclassification = 'Sidewalk';
+
+        geojson.features.push(mappedFeature);
+    }
+
+    return geojson;
+}
+
 function isRealBikeFacility(value) {
     return (value.properties.wabaclassification == 'Paved Trail' || value.properties.wabaclassification == 'Bike Lane' || value.properties.wabaclassification == 'Separated Bike Lane');
 }
 
 function combineDC() {
     if (dcLanes.done && dcTrails.done) {
-        console.log('Combing DC Trails geojson with DC Lanes geojson');
+        console.log('Combining DC Trails geojson with DC Lanes geojson');
         var lanes = JSON.parse(fs.readFileSync(path.resolve('bikelanes', dcLanes.filename), 'utf8'));
         var trails = JSON.parse(fs.readFileSync(path.resolve('bikelanes', dcTrails.filename), 'utf8'));
         lanes.features = lanes.features.concat(trails.features);
@@ -174,9 +226,12 @@ function combineDC() {
     
 }
 
+/*
 fetch(montgomery);
 fetch(arlington);
 fetch(alexandria);
 fetch(dcLanes);
 fetch(dcTrails);
+*/
+fetch(princegeorges);
 
