@@ -23,8 +23,7 @@ function fetch(locality) {
                 var formData = { upload: fs.createReadStream(path.resolve('bikelanes', 'temp.zip')), targetSrs: 'EPSG:4326' };
                 request.post({
                     url: 'http://ogre.adc4gis.com/convert',
-                    formData: formData,
-                    proxy: 'http://127.0.0.1:8888'
+                    formData: formData
                 }, function (error, response, body) {
                     if (!error && response.statusCode === 200) {
                         mapFilterSave(JSON.parse(body), locality);
