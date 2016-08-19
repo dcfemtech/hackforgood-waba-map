@@ -175,20 +175,20 @@ app = {
     activateMenu: function() {
 
         $('.region, .buffer').on('click', function(e) {
-            event.stopPropagation();
+            e.stopPropagation();
             app.toggleFilterState(e.currentTarget);
             app.toggleFilterData(e.currentTarget);
         });
         $('#clearAll').on('click', function(e) {
-            event.stopPropagation();
+            e.stopPropagation();
             app.clearSelectAll(e.currentTarget);
         });
         $('.region, .buffer, .start, .end, #clearAll-r').on('mouseenter', function(e) {
-            event.stopPropagation();
+            e.stopPropagation();
             updateHoverText(e.currentTarget, 'enter');
         });
         $('.region, .buffer, .start, .end, #clearAll-r').on('mouseleave', function(e) {
-            event.stopPropagation();
+            e.stopPropagation();
             updateHoverText(e.currentTarget, 'leave');
         });
 
@@ -345,21 +345,21 @@ app = {
             app.state[selRegion].selBuffers[buffer] ?
                 getBufferData(selRegion, buffer) :
                 clearBufferData(selRegion, buffer);
+        }
 
-            // ======= getBufferData =======
-            function getBufferData(region, buffer) {
-                var url = 'buffers/' + regions[region].bufferFiles[buffer];
-                app.bufferAjaxQueue(url, region, buffer);
-            }
+        // ======= getBufferData =======
+        function getBufferData(region, buffer) {
+            var url = 'buffers/' + regions[region].bufferFiles[buffer];
+            app.bufferAjaxQueue(url, region, buffer);
+        }
 
-            // ======= clearBufferData =======
-            function clearBufferData(region, buffer) {
-                var bufferFeature = app.state[region].bufferLayers[buffer];
-                if (bufferFeature) {
-                    app.activeMap.removeLayer(bufferFeature);
-                }
-                app.state[region].bufferLayers[buffer] = null;
+        // ======= clearBufferData =======
+        function clearBufferData(region, buffer) {
+            var bufferFeature = app.state[region].bufferLayers[buffer];
+            if (bufferFeature) {
+                app.activeMap.removeLayer(bufferFeature);
             }
+            app.state[region].bufferLayers[buffer] = null;
         }
 
         // ======= removeBufferLayers =======
