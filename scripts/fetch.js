@@ -25,6 +25,7 @@ function fetch(locality) {
                     url: 'http://ogre.adc4gis.com/convert',
                     formData: formData
                 }, function (error, response, body) {
+                    fs.unlinkSync(path.resolve('bikelanes', 'temp.zip'));
                     if (!error && response.statusCode === 200) {
                         mapFilterSave(JSON.parse(body), locality);
                     } else {
@@ -225,12 +226,10 @@ function combineDC() {
     
 }
 
-/*
 fetch(montgomery);
 fetch(arlington);
 fetch(alexandria);
 fetch(dcLanes);
 fetch(dcTrails);
-*/
 fetch(princegeorges);
 
