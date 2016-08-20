@@ -187,6 +187,12 @@ map.on('load', function () {
     }
 });
 
+// ======= get coordinates under the mouse =======
+map.on('mousemove', function (e) {
+    document.getElementById('lat').innerHTML =  JSON.stringify(e.lngLat['lat']);
+    document.getElementById('lng').innerHTML =  JSON.stringify(e.lngLat['lng']);
+});
+
 // ======= toggle buffers visibile or invisible =======
 $('.buffer').on('click', function () {
     toggleLayerVisibility($(this).parent().parent().attr("id") + $(this).attr("class").split(' ')[1] + 'buffers-layer');
