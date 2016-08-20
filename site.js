@@ -114,6 +114,14 @@ map.addControl(new mapboxgl.Navigation({
     'position': 'bottom-right'
 }));
 
+// ======= directions =======
+/*var directions = new mapboxgl.Directions({
+    position: 'top-left',
+    profile: 'cycling'
+});
+
+map.addControl(directions);*/
+
 // ======= add bike lanes =======
 function addLanes(REGION) {
     map.addSource(REGION + 'lanes-src', {
@@ -189,8 +197,8 @@ map.on('load', function () {
 
 // ======= get coordinates under the mouse =======
 map.on('mousemove', function (e) {
-    document.getElementById('lat').innerHTML =  JSON.stringify(e.lngLat['lat']);
-    document.getElementById('lng').innerHTML =  JSON.stringify(e.lngLat['lng']);
+    document.getElementById('lat').innerHTML = JSON.stringify(e.lngLat['lat']);
+    document.getElementById('lng').innerHTML = JSON.stringify(e.lngLat['lng']);
 });
 
 // ======= toggle buffers visibile or invisible =======
