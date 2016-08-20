@@ -115,12 +115,12 @@ map.addControl(new mapboxgl.Navigation({
 }));
 
 // ======= directions =======
-/*var directions = new mapboxgl.Directions({
+var directions = new mapboxgl.Directions({
     position: 'top-left',
     profile: 'cycling'
 });
 
-map.addControl(directions);*/
+map.addControl(directions);
 
 // ======= add bike lanes =======
 function addLanes(REGION) {

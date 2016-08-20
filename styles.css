@@ -7,7 +7,8 @@ body {
 #info {
     position: absolute;
     float: left;
-    left: 75%;
+    left: 5%;
+    top: 75%;
     width: 20%;
     height: 120px;
     padding: 10px;
@@ -29,7 +30,7 @@ body {
     top: 200px;
     width: 240px;
     height: auto;
-    padding: 0;
+    padding-bottom: 15px;
     background-color: rgba(250, 250, 255, 1);
     box-shadow: 5px 5px 5px #bbb;
     border-radius: 2px;
