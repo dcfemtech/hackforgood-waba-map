@@ -116,14 +116,14 @@ map.addControl(new mapboxgl.Navigation({
 
 // ======= add bike lanes =======
 function addLanes(REGION) {
-    map.addSource(regions[REGION].id + 'lanes-src', {
+    map.addSource(REGION + 'lanes-src', {
         type: 'geojson',
         data: regions[REGION].laneFiles.lanes
     });
     map.addLayer({
-        id: regions[REGION].id + 'lanes-layer',
+        id: REGION + 'lanes-layer',
         type: 'line',
-        source: regions[REGION].id + 'lanes-src',
+        source: REGION + 'lanes-src',
         layout: {
             'line-join': 'round',
             'line-cap': 'round',
@@ -138,33 +138,70 @@ function addLanes(REGION) {
 
 // ======= add buffer =======
 function addBuffer(REGION, FEET) {
-    map.addSource(regions[REGION].id + FEET + 'buffers-src', {
+    map.addSource(REGION + FEET + 'buffers-src', {
         type: 'geojson',
         data: regions[REGION].bufferFiles[FEET]
     });
     map.addLayer({
-        id: regions[REGION].id + FEET + 'buffers-layer',
+        id: REGION + FEET + 'buffers-layer',
         type: 'fill',
-        source: regions[REGION].id + FEET + 'buffers-src',
+        source: REGION + FEET + 'buffers-src',
         layout: {
             visibility: 'none',
         },
         paint: {
-            'fill-outline-color':  '#1A3742',
+            'fill-outline-color': '#1A3742',
             'fill-color': '#56B6DB',
             'fill-opacity': 0.5
         }
     });
 }
 
+// ======= make layer visibile or invisible =======
+function toggleLayerVisibility(LAYER) {
+    var vis = map.getLayoutProperty(LAYER, 'visibility');
+    if (vis == 'none') {
+        map.setLayoutProperty(LAYER, 'visibility', 'visible');
+    } else {
+        map.setLayoutProperty(LAYER, 'visibility', 'none');
+    }
+}
+
+// ======= initialize map layers =======
 map.on('load', function () {
     for (r in regions) {
         addLanes(r);
         if (regions[r].bufferFiles.ft500) {
-            addBuffer(r, "ft500");
+            addBuffer(r, 'ft500');
+        }
+        //console.log(regions[r].id + 'ft500' + 'buffers-layer')
+        if (regions[r].bufferFiles.ft1000) {
+            addBuffer(r, 'ft1000');
         }
         if (regions[r].bufferFiles.ft2500) {
-            addBuffer(r, "ft2500");
+            addBuffer(r, 'ft2500');
+        }
+        if (regions[r].bufferFiles.ft5280) {
+            addBuffer(r, 'ft5280');
         }
     }
+});
+
+// ======= toggle buffers visibile or invisible =======
+$('.buffer').on('click', function () {
+    toggleLayerVisibility($(this).parent().parent().attr("id") + $(this).attr("class").split(' ')[1] + 'buffers-layer');
+    $(this).toggleClass('selected');
+});
+
+// ======= toggle lanes visibile or invisible =======
+$('.label-r').on('click', function () {
+    if ($(this).text() == "all") {
+        for (r in regions) {
+            map.setLayoutProperty(r + 'lanes-layer', 'visibility', 'none');
+        }
+        $('.region').removeClass('selected');
+    } else {
+        toggleLayerVisibility($(this).text() + 'lanes-layer');
+    }
+    $(this).parent().toggleClass('selected');
 });

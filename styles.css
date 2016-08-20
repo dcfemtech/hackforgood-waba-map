@@ -139,7 +139,7 @@ body {
 
 /* == buffers */
 .buffer {
-    visibility: hidden;
+    /*visibility: hidden;*/
     background-color: #ddd;
     border: 2px solid #ddd;
 }
