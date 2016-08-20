@@ -105,7 +105,7 @@ var regions = {
 // ======= initialize map =======
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v8',
+    style: 'mapbox://styles/mapbox/light-v9',
     center: [-77.0354, 38.8990],
     zoom: 11
 });
