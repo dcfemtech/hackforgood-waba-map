@@ -5,7 +5,8 @@
   "scripts": {
     "start": "serve",
     "test": "eslint -c .eslintrc *.js",
-    "buffers": "node --max-old-space-size=8192 scripts/generate-buffers.js"
+    "buffers": "node --max-old-space-size=8192 scripts/generate-buffers.js",
+    "fetch": "node scripts/fetch.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "d3-queue": "^3.0.2",
     "eslint": "^3.3.0",
     "serve": "^1.4.0",
-    "turf": "^3.0.14"
+    "turf": "^3.0.14",
+    "request": "^2.74.0"
   }
 }
