@@ -4,7 +4,8 @@
   "description": "Map of bike infrastructure in the Washington D.C. metro area for the Washington Area Bicyclists Association.",
   "scripts": {
     "start": "serve",
-    "test": "eslint -c .eslintrc *.js"
+    "test": "eslint -c .eslintrc *.js",
+    "fetch": "node scripts/fetch.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   "homepage": "https://github.com/dcfemtech/hackforgood-waba-map#readme",
   "devDependencies": {
     "eslint": "^3.3.0",
-    "serve": "^1.4.0"
+    "serve": "^1.4.0",
+    "request": "^2.74.0"
   }
 }
