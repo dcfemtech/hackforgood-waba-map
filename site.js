@@ -122,6 +122,7 @@ var directions = new mapboxgl.Directions({
 
 map.addControl(directions);
 
+
 // ======= add bike lanes =======
 function addLanes(REGION) {
     map.addSource(REGION + 'lanes-src', {
