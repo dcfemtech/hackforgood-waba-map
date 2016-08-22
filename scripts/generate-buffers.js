@@ -51,6 +51,11 @@ function done(error, name) {
 function generateBuffer(geojson, distanceInMiles, fileName) {
     console.log('generating ' + fileName);
     var buffer = turf.buffer(geojson, distanceInMiles, 'miles');
+    var areaInSqMeters = turf.area(buffer);
+    var areaInSqKm = areaInSqMeters / 1000000;
+    var areaInSqMiles = areaInSqKm / 2.58999;
+    buffer.area = areaInSqMiles;
+    
     fs.writeFileSync(path.resolve('buffers', fileName), JSON.stringify(buffer));
 }
 
