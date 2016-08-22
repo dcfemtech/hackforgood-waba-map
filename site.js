@@ -333,7 +333,7 @@ app = {
             }
         }
 
-        // == identift buffer selection
+        // == identify buffer selection
         if ($(toggleEl).hasClass('ft500')) { buffer = 'ft500' };
         if ($(toggleEl).hasClass('ft1000')) { buffer = 'ft1000' };
         if ($(toggleEl).hasClass('ft2500')) { buffer = 'ft2500' };
