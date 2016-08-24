@@ -94,10 +94,10 @@ var regions = {
             paths: null,
             trails: null },
         bufferFiles: {
-            ft500:'VA_Alexandria_Bike_Buffer_500ft.geojson',
-            ft1000:'VA_Alexandria_Bike_Buffer_1000ft.geojson',
-            ft2500:'VA_Alexandria_Bike_Buffer_2500ft.geojson',
-            ft5280:'VA_Alexandria_Bike_Buffer_5280ft.geojson' }
+            ft500:'VA_Alexandria_buffer_500ft.geojson',
+            ft1000:'VA_Alexandria_buffer_1000ft.geojson',
+            ft2500:'VA_Alexandria_buffer_2500ft.geojson',
+            ft5280:'VA_Alexandria_buffer_1mile.geojson' }
     },
     AR: {
         id: 'AR_3',
@@ -108,10 +108,10 @@ var regions = {
             paths: null,
             trails: null },
         bufferFiles: {
-            ft500:'VA_Arlington_Bike_Buffer_500ft.geojson',
-            ft1000:'VA_Arlington_Bike_Buffer_1000ft.geojson',
-            ft2500:'VA_Arlington_Bike_Buffer_2500ft.geojson',
-            ft5280:'VA_Arlington_Bike_Buffer_5280ft.geojson' }
+            ft500:'VA_Arlington_buffer_500ft.geojson',
+            ft1000:'VA_Arlington_buffer_1000ft.geojson',
+            ft2500:'VA_Arlington_buffer_2500ft.geojson',
+            ft5280:'VA_Arlington_buffer_1mile.geojson' }
     },
     DC: {
         id: 'DC_0',
@@ -122,10 +122,10 @@ var regions = {
             paths: null,
             trails: null },
         bufferFiles: {
-            ft500: 'DC_Bike_Buffer_500ft.geojson',
-            ft1000: 'DC_Bike_Buffer_1000ft.geojson',
-            ft2500: 'DC_Bike_Buffer_2500ft.geojson',
-            ft5280: 'DC_Bike_Buffer_5280ft.geojson' }
+            ft500: 'DC_Washington_buffer_500ft.geojson',
+            ft1000: 'DC_Washington_buffer_1000ft.geojson',
+            ft2500: 'DC_Washington_buffer_2500ft.geojson',
+            ft5280: 'DC_Washington_buffer_1mile.geojson' }
     },
     MO: {
         id: 'MO_1',
@@ -136,10 +136,10 @@ var regions = {
             paths: null,
             trails: null },
         bufferFiles: {
-            ft500: 'MD_MontgomeryCounty_Bikeways_Buffer_500ft.geojson',
-            ft1000: 'MD_MontgomeryCounty_Bikeways_Buffer_1000ft.geojson',
-            ft2500: 'MD_MontgomeryCounty_Bikeways_Buffer_2500ft.geojson',
-            ft5280: 'MD_MontgomeryCounty_Bikeways_Buffer_5280ft.geojson' }
+            ft500: 'MD_MontgomeryCounty_buffer_500ft.geojson',
+            ft1000: 'MD_MontgomeryCounty_buffer_1000ft.geojson',
+            ft2500: 'MD_MontgomeryCounty_buffer_2500ft.geojson',
+            ft5280: 'MD_MontgomeryCounty_buffer_1mile.geojson' }
     },
     PG: {
         id: 'PG_2',
@@ -149,7 +149,11 @@ var regions = {
             lanes: 'MD_PrinceGeorgesCounty.geojson',
             paths: null,
             trails: null },
-        bufferFiles: { ft500:null, ft1000:null, ft2500:null, ft5280:null }
+        bufferFiles: {
+			ft500: 'MD_PrinceGeorgesCounty_buffer_500ft.geojson',
+			ft1000: 'MD_PrinceGeorgesCounty_buffer_1000ft.geojson',
+			ft2500: 'MD_PrinceGeorgesCounty_buffer_2500ft.geojson',
+			ft5280: 'MD_PrinceGeorgesCounty_buffer_1mile.geojson' }
     },
 }
 
