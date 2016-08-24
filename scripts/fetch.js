@@ -8,6 +8,9 @@ var alexandria = { name: 'Alexandria, VA', url: 'http://data.alexgis.opendata.ar
 var dcLanes = { name: 'Washington, DC Bike Lanes', url: 'http://opendata.dc.gov/datasets/294e062cdf2c48d5b9cbc374d9709bc0_2.geojson', type: 'geojson', filename: 'DC_Washington_BikeLanes.geojson', mappingFunction: dcLanesMap, done: false, onDone: combineDC };
 var dcTrails = { name: 'Washington, DC Trails', url: 'http://opendata.dc.gov/datasets/e8c2b7ef54fb43d9a2ed1b0b75d0a14d_4.geojson', type: 'geojson', filename: 'DC_Washington_Trails.geojson', mappingFunction: dcTrailsMap, done: false, onDone: combineDC };
 var princeGeorges = { name: 'Prince George\'s County, MD', url: 'http://gisdata.pgplanning.org/opendata/downloadzip.asp?FileName=/data/ShapeFile/Master_Plan_Trail_Ln.zip', type: 'shapefile', filename: 'MD_PrinceGeorgesCounty.geojson', mappingFunction: pgMap, done: false };
+var fairfaxLanes = { name: 'Fairfax County, VA Bike Lanes', url: 'http://data.fairfaxcountygis.opendata.arcgis.com/datasets/0dacd6f1e697469a81d6f7292a78d30e_16.geojson', type: 'geojson', filename: 'VA_Fairfax_BikeLanes.geojson', mappingFunction: fairfaxLanesMap, done: false, onDone: combineFairfax };
+var fairfaxCountyTrails = { name: 'Fairfax County, VA County Trails', url: 'http://data.fairfaxcountygis.opendata.arcgis.com/datasets/8a08319c7cb449b9a9329709f8dfdb30_3.geojson', type: 'geojson', filename: 'VA_Fairfax_CountyTrails.geojson', mappingFunction: fairfaxCountyTrailsMap, done: false, onDone: combineFairfax };
+var fairfaxNonCountyTrails = { name: 'Fairfax County, VA Non-County Trails', url: 'http://data.fairfaxcountygis.opendata.arcgis.com/datasets/ffa1a86b009c4528899c7e0ae50b5e5b_4.geojson', type: 'geojson', filename: 'VA_Fairfax_NonCountyTrails.geojson', mappingFunction: fairfaxNonCountyTrailsMap, done: false, onDone: combineFairfax };
 
 function fetch(locality) {
     console.log('fetching file for ' + locality.name);
@@ -209,6 +212,69 @@ function pgMap(rawGeoJson) {
     return geojson;
 }
 
+function fairfaxLanesMap(rawGeoJson) {
+    //convert OBJECTID to objectid
+    //convert LABEL to name
+    //convert STATUS = 'Bike Lane' to wabaclassification = 'Bike Lane'
+    //convert STATUS = 'Corridor Caution' to wabaclassification = 'Death Trap'
+    //convert STATUS = 'Preferred' to wabaclassification = 'Signed Route'
+
+    var geojson = { type: 'FeatureCollection', features: [] };
+    for (var i = 0; i < rawGeoJson.features.length; i++) {
+        var rawFeature = rawGeoJson.features[i];
+        var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.OBJECTID, name: rawFeature.properties.LABEL }, geometry: rawFeature.geometry };
+        if (rawFeature.properties.STATUS == 'Bike Lane') mappedFeature.properties.wabaclassification = 'Bike Lane';
+        if (rawFeature.properties.STATUS == 'Corridor Caution') mappedFeature.properties.wabaclassification = 'Death Trap';
+        if (rawFeature.properties.STATUS == 'Preferred') mappedFeature.properties.wabaclassification = 'Signed Route';
+
+        geojson.features.push(mappedFeature);
+    }
+
+    return geojson;
+}
+
+function fairfaxCountyTrailsMap(rawGeoJson) {
+    //convert ID to objectid
+    //convert TRAIL_NAME to name
+    //convert SURFACE_MATERIAL = 'Asphalt' to wabaclassification = 'Paved Trail'
+    //convert SURFACE_MATERIAL = 'Concrete' to wabaclassification = 'Paved Trap'
+    //convert any other to wabaclassification = 'Unpaved Trail'
+
+    var geojson = { type: 'FeatureCollection', features: [] };
+    for (var i = 0; i < rawGeoJson.features.length; i++) {
+        var rawFeature = rawGeoJson.features[i];
+        var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.ID, name: rawFeature.properties.TRAIL_NAME }, geometry: rawFeature.geometry };
+        if (rawFeature.properties.SURFACE_MATERIAL == 'Asphalt') mappedFeature.properties.wabaclassification = 'Paved Trail';
+        if (rawFeature.properties.SURFACE_MATERIAL == 'Concrete') mappedFeature.properties.wabaclassification = 'Paved Trail';
+        if (rawFeature.properties.SURFACE_MATERIAL != 'Asphalt' && rawFeature.properties.SURFACE_MATERIAL != 'Concrete') mappedFeature.properties.wabaclassification = 'Unpaved Trail';
+
+        geojson.features.push(mappedFeature);
+    }
+
+    return geojson;
+}
+
+function fairfaxNonCountyTrailsMap(rawGeoJson) {
+    //convert OBJECTID to objectid
+    //convert TRAIL_NAME to name
+    //convert SURFACE_MATERIAL = 'Asphalt' to wabaclassification = 'Paved Trail'
+    //convert SURFACE_MATERIAL = 'Concrete' to wabaclassification = 'Paved Trap'
+    //convert any other to wabaclassification = 'Unpaved Trail'
+
+    var geojson = { type: 'FeatureCollection', features: [] };
+    for (var i = 0; i < rawGeoJson.features.length; i++) {
+        var rawFeature = rawGeoJson.features[i];
+        var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.OBJECTID, name: rawFeature.properties.TRAIL_NAME }, geometry: rawFeature.geometry };
+        if (rawFeature.properties.SURFACE_MATERIAL == 'Asphalt') mappedFeature.properties.wabaclassification = 'Paved Trail';
+        if (rawFeature.properties.SURFACE_MATERIAL == 'Concrete') mappedFeature.properties.wabaclassification = 'Paved Trail';
+        if (rawFeature.properties.SURFACE_MATERIAL != 'Asphalt' && rawFeature.properties.SURFACE_MATERIAL != 'Concrete') mappedFeature.properties.wabaclassification = 'Unpaved Trail';
+
+        geojson.features.push(mappedFeature);
+    }
+
+    return geojson;
+}
+
 function isRealBikeFacility(value) {
     return (value.properties.wabaclassification == 'Paved Trail' || value.properties.wabaclassification == 'Bike Lane' || value.properties.wabaclassification == 'Separated Bike Lane');
 }
@@ -227,10 +293,30 @@ function combineDC() {
     
 }
 
+function combineFairfax() {
+    if (fairfaxLanes.done && fairfaxCountyTrails.done && fairfaxNonCountyTrails.done) {
+        console.log('Combining Fairfax County Lanes, County Trails and Non-County Trails geojson');
+        var lanes = JSON.parse(fs.readFileSync(path.resolve('bikelanes', fairfaxLanes.filename), 'utf8'));
+        var countyTrails = JSON.parse(fs.readFileSync(path.resolve('bikelanes', fairfaxCountyTrails.filename), 'utf8'));
+        var nonCountyTrails = JSON.parse(fs.readFileSync(path.resolve('bikelanes', fairfaxNonCountyTrails.filename), 'utf8'));
+        lanes.features = lanes.features.concat(countyTrails.features);
+        lanes.features = lanes.features.concat(nonCountyTrails.features);
+
+        fs.writeFileSync(path.resolve('bikelanes', 'VA_Fairfax.geojson'), JSON.stringify(lanes));
+        fs.unlinkSync(path.resolve('bikelanes', fairfaxLanes.filename));
+        fs.unlinkSync(path.resolve('bikelanes', fairfaxCountyTrails.filename));
+        fs.unlinkSync(path.resolve('bikelanes', fairfaxNonCountyTrails.filename));
+    }
+
+}
+
 fetch(montgomery);
 fetch(arlington);
 fetch(alexandria);
 fetch(dcLanes);
 fetch(dcTrails);
 fetch(princeGeorges);
+fetch(fairfaxLanes);
+fetch(fairfaxCountyTrails);
+fetch(fairfaxNonCountyTrails);
 
