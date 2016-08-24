@@ -7,7 +7,7 @@ var loopCount = 0;
 var defaultDisplay = {
     loopCount: 0,
     allRegions: false,
-    regionsArray: ['AL', 'AR', 'DC', 'MO', 'PG'],
+    regionsArray: ['AL', 'AR', 'DC', 'FA', 'MO', 'PG'],
     bufferStyle: { 'fill': '#56B6DB', 'stroke': '#1A3742', 'stroke-width': 2 },
 
     // ======= toggleClearAll =======
@@ -35,7 +35,7 @@ var defaultMap = {
 
 // ======= state =======
 var defaultState = {
-    selRegions: { AL: false, AR: false, DC: false, MO: false, PG: false },
+    selRegions: { AL: false, AR: false, DC: false, FA: false, MO: false, PG: false },
     AL: {
         selLanes: { lanes:true, paths:false, trails:false },
         selBuffers: { ft500:false, ft1000:false, ft2500:false, ft5280:false },
@@ -62,6 +62,15 @@ var defaultState = {
         bufferLayers: { ft500:null, ft1000:null, ft2500:null, ft5280:null },
         bikeLaneStyle: { color: '#238443', weight: 2 },
         regionColor: '#238443'
+    },
+    FA: {
+        selLanes: { lanes: true, paths: true, trails: true },
+        selBuffers: { ft500: false, ft1000: false, ft2500: false, ft5280: false },
+        laneData: [],
+        laneLayers: [],
+        bufferLayers: { ft500: null, ft1000: null, ft2500: null, ft5280: null },
+        bikeLaneStyle: { color: '#238443', weight: 2 },
+        regionColor: '#333333'
     },
     MO: {
         selLanes: { lanes:true, paths:false, trails:false },
@@ -126,6 +135,22 @@ var regions = {
             ft1000: 'DC_Bike_Buffer_1000ft.geojson',
             ft2500: 'DC_Bike_Buffer_2500ft.geojson',
             ft5280: 'DC_Bike_Buffer_5280ft.geojson' }
+    },
+    FA: {
+        id: 'FA_5',
+        name: 'Fairfax',
+        box: { NW: [null, null], SE: [null, null] },
+        laneFiles: {
+            lanes: 'VA_Fairfax.geojson',
+            paths: null,
+            trails: null
+        },
+        bufferFiles: {
+            ft500: 'VA_Fairfax_buffer_500ft.geojson',
+            ft1000: 'VA_Fairfax_buffer_1000ft.geojson',
+            ft2500: 'VA_Fairfax_buffer_2500ft.geojson',
+            ft5280: 'VA_Fairfax_buffer_1mile.geojson'
+        }
     },
     MO: {
         id: 'MO_1',
