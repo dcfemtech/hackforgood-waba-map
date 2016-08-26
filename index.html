@@ -27,7 +27,7 @@
     </div>
 
     <!-- ======= menu ======= -->
-    <div class="menu">
+    <div class="menu modal">
         <div id="dragBar">
             <h3 class="menu-label">menu</h3>
         </div>
@@ -83,10 +83,17 @@
         <div class="locText end">&nbsp;</div><span class="filter-label">end</span>
     </div>
 
+    <div id="error-box" class="modal">
+        <h3 class="modal-header" role="alert">Error</h3>
+        <span id="error-text">moo!</span>
+        <button>Close</button>
+    </div>
+
     <!-- ======= map ======= -->
     <div id="map"></div>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <script src="https://api.tiles.mapbox.com/mapbox.js/v2.4.0/mapbox.js"></script>
     <script src='site.js'></script>
 
