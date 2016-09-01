@@ -24,17 +24,28 @@
 
     <!-- ======= info ======= -->
     <div id="info">
-        <h2 class="header-text">location</h2>
+        <div id="infoDrag">
+            <h3 class="box-label">location</h3>
+        </div>
         <div id="loc">
             <p>latitude: <span id="lat">&nbsp;</span></p>
             <p>longitude: <span id="lng">&nbsp;</span></p>
         </div>
     </div>
 
+    <!-- ======= error box ======= -->
+    <div id="error-box" class="modal">
+        <div id="errorFixed">
+            <h3 class="box-label" role="alert">error</h3>
+        </div>
+        <span id="error-text">&nbsp;</span>
+        <button>Close</button>
+    </div>
+
     <!-- ======= menu ======= -->
-    <div class="menu">
-        <div id="dragBar">
-            <h3 class="menu-label">menu</h3>
+    <div id="mapMenu" class="menu">
+        <div id="menuDrag">
+            <h3 class="box-label">menu</h3>
         </div>
         <div id="hoverText"></div>
         <table id="filters">

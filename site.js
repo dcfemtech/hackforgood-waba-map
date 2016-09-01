@@ -219,3 +219,37 @@ $('.label-r').on('click', function () {
     }
     $(this).parent().toggleClass('selected');
 });
+
+// ======= menu drag functions =======
+var dragger, startLoc;
+$('#menuDrag, #infoDrag').on('mousedown', function(e) {
+    dragger = $(e.currentTarget).parent('div');
+    e.preventDefault();
+    initDrag(e);
+});
+
+function initDrag(e){
+    var locXY = $(dragger).offset();
+    $(dragger).css('position', 'absolute');
+    startLoc = { x: 0, y: 0 };
+    startLoc.x = e.clientX - locXY.left;
+    startLoc.y = e.clientY - locXY.top;
+    window.addEventListener('mousemove', draggerMove, true);
+    window.addEventListener('mouseup', mouseUp, true);
+}
+function draggerMove(e){
+    var top = e.clientY - startLoc.y;
+    var left = e.clientX - startLoc.x;
+    $(dragger).css('top', top + 'px');
+    $(dragger).css('left', left + 'px');
+}
+function mouseUp() {
+    window.removeEventListener('mousemove', draggerMove, true);
+}
+
+// ======= error box =======
+function activateErrorModal() {
+    $('#error-box button').on('click', function(e) {
+        $('#error-box').fadeOut(200);
+    });
+}
