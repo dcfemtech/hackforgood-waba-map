@@ -2,12 +2,14 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y
 
 var lanesUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/bikelanes/';
 var buffersUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/buffers/';
+var countyUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/counties/';
 
 // ======= regions =======
 var regions = {
     AL: {
         id: 'AL_4',
         name: 'Alexandria',
+        countyFile: countyUrl + 'VA_Alexandria.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -18,15 +20,16 @@ var regions = {
             trails: null
         },
         bufferFiles: {
-            ft500: buffersUrl + 'VA_Alexandria_Bike_Buffer_500ft.geojson',
-            ft1000: buffersUrl + 'VA_Alexandria_Bike_Buffer_1000ft.geojson',
-            ft2500: buffersUrl + 'VA_Alexandria_Bike_Buffer_2500ft.geojson',
-            ft5280: buffersUrl + 'VA_Alexandria_Bike_Buffer_5280ft.geojson'
+            ft500: buffersUrl + 'VA_Alexandria_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'VA_Alexandria_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'VA_Alexandria_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'VA_Alexandria_buffer_1mile.geojson'
         }
     },
     AR: {
         id: 'AR_3',
         name: 'Arlington',
+        countyFile: countyUrl + 'VA_Arlington.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -37,15 +40,16 @@ var regions = {
             trails: null
         },
         bufferFiles: {
-            ft500: buffersUrl + 'VA_Arlington_Bike_Buffer_500ft.geojson',
-            ft1000: buffersUrl + 'VA_Arlington_Bike_Buffer_1000ft.geojson',
-            ft2500: buffersUrl + 'VA_Arlington_Bike_Buffer_2500ft.geojson',
-            ft5280: buffersUrl + 'VA_Arlington_Bike_Buffer_5280ft.geojson'
+            ft500: buffersUrl + 'VA_Arlington_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'VA_Arlington_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'VA_Arlington_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'VA_Arlington_buffer_1mile.geojson'
         }
     },
     DC: {
         id: 'DC_0',
         name: 'District of Columbia',
+        countyFile: countyUrl + 'DC_Washington.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -56,15 +60,37 @@ var regions = {
             trails: null
         },
         bufferFiles: {
-            ft500: buffersUrl + 'DC_Bike_Buffer_500ft.geojson',
-            ft1000: buffersUrl + 'DC_Bike_Buffer_1000ft.geojson',
-            ft2500: buffersUrl + 'DC_Bike_Buffer_2500ft.geojson',
-            ft5280: buffersUrl + 'DC_Bike_Buffer_5280ft.geojson'
+            ft500: buffersUrl + 'DC_Washington_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'DC_Washington_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'DC_Washington_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'DC_Washington_buffer_1mile.geojson'
         }
     },
+    FX: {
+        id: 'FX_4',
+        name: 'Fairfax',
+        countyFile: countyUrl + 'VA_Fairfax.geojson',
+        box: {
+            NW: [null, null],
+            SE: [null, null]
+        },
+        laneFiles: {
+            lanes: null,
+            paths: null,
+            trails: null
+        },
+        bufferFiles: {
+            ft500: null,
+            ft1000: null,
+            ft2500: null,
+            ft5280: null
+        }
+    },
+
     MO: {
         id: 'MO_1',
         name: 'Montgomery County',
+        countyFile: countyUrl + 'MD_MontgomeryCounty.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -75,15 +101,16 @@ var regions = {
             trails: null
         },
         bufferFiles: {
-            ft500: buffersUrl + 'MD_MontgomeryCounty_Bikeways_Buffer_500ft.geojson',
-            ft1000: buffersUrl + 'MD_MontgomeryCounty_Bikeways_Buffer_1000ft.geojson',
-            ft2500: buffersUrl + 'MD_MontgomeryCounty_Bikeways_Buffer_2500ft.geojson',
-            ft5280: buffersUrl + 'MD_MontgomeryCounty_Bikeways_Buffer_5280ft.geojson'
+            ft500: buffersUrl + 'MD_MontgomeryCounty_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'MD_MontgomeryCounty_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'MD_MontgomeryCounty_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'MD_MontgomeryCounty_buffer_1mile.geojson'
         }
     },
     PG: {
         id: 'PG_2',
         name: 'Prince George\'s County',
+        countyFile: countyUrl + 'MD_PrinceGeorgesCounty.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -113,6 +140,29 @@ var map = new mapboxgl.Map({
 map.addControl(new mapboxgl.Navigation({
     'position': 'bottom-right'
 }));
+
+
+// ======= add county lines =======
+function addCounties(region) {
+    map.addSource(region + 'county-src', {
+        type: 'geojson',
+        data: regions[region].countyFile
+    });
+    map.addLayer({
+        id: region + 'county-layer',
+        type: 'line',
+        source: region + 'county-src',
+        layout: {
+            'line-join': 'round',
+            'line-cap': 'round',
+            'visibility': 'visible'
+        },
+        paint: {
+            'line-color': '#707070',
+            'line-width': 1
+        }
+    });
+}
 
 // ======= add bike lanes =======
 function addLanes(region) {
@@ -174,6 +224,7 @@ function toggleLayerVisibility(layer) {
 map.on('load', function() {
     for (r in regions) {
         addLanes(r);
+        addCounties(r);
         if (regions[r].bufferFiles.ft500) {
             addBuffer(r, 'ft500');
         }
