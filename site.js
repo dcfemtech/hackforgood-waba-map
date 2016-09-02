@@ -66,10 +66,10 @@ var regions = {
             ft5280: buffersUrl + 'DC_Washington_buffer_1mile.geojson'
         }
     },
-	FX: {
-		id: 'FX_4',
-		name: 'Fairfax',
-		countyFile: countyUrl + 'VA_Fairfax.geojson',
+    FX: {
+        id: 'FX_4',
+        name: 'Fairfax',
+        countyFile: countyUrl + 'VA_Fairfax.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
