@@ -225,7 +225,7 @@ function initDrag(e){
     startLoc = { x: 0, y: 0 };
     startLoc.x = e.clientX - locXY.left;
     startLoc.y = e.clientY - locXY.top;
-    
+
     window.addEventListener('mousemove', draggerMove, true);
     window.addEventListener('mouseup', mouseUp, true);
 }
