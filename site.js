@@ -202,8 +202,8 @@ function addBuffer(region, feet) {
         },
         paint: {
             'fill-outline-color': '#1A3742',
-            'fill-color': '#56B6DB',
-            'fill-opacity': 0.5
+            'fill-color': '#7BEA7B',
+            'fill-opacity': 0.3
         }
     });
 }
@@ -222,7 +222,6 @@ function toggleLayerVisibility(layer) {
 // ======= initialize map layers =======
 map.on('load', function() {
     for (r in regions) {
-        addLanes(r);
         addCounties(r);
         if (regions[r].bufferFiles.ft500) {
             addBuffer(r, 'ft500');
@@ -237,6 +236,7 @@ map.on('load', function() {
         if (regions[r].bufferFiles.ft5280) {
             addBuffer(r, 'ft5280');
         }
+        addLanes(r);
     }
 });
 
