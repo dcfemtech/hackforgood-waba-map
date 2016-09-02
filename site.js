@@ -115,15 +115,16 @@ map.addControl(new mapboxgl.Navigation({
 }));
 
 // ======= add bike lanes =======
-function addLanes(REGION) {
-    map.addSource(REGION + 'lanes-src', {
+function addLanes(region) {
+    map.addSource(region + 'lanes-src', {
         type: 'geojson',
-        data: regions[REGION].laneFiles.lanes
+        data: regions[region].laneFiles.lanes
     });
+
     map.addLayer({
-        id: REGION + 'lanes-layer',
+        id: region + 'lanes-layer',
         type: 'line',
-        source: REGION + 'lanes-src',
+        source: region + 'lanes-src',
         layout: {
             'line-join': 'round',
             'line-cap': 'round',
@@ -137,15 +138,16 @@ function addLanes(REGION) {
 }
 
 // ======= add buffer =======
-function addBuffer(REGION, FEET) {
-    map.addSource(REGION + FEET + 'buffers-src', {
+function addBuffer(region, feet) {
+    map.addSource(region + feet + 'buffers-src', {
         type: 'geojson',
-        data: regions[REGION].bufferFiles[FEET]
+        data: regions[region].bufferFiles[feet]
     });
+
     map.addLayer({
-        id: REGION + FEET + 'buffers-layer',
+        id: region + feet + 'buffers-layer',
         type: 'fill',
-        source: REGION + FEET + 'buffers-src',
+        source: region + feet + 'buffers-src',
         layout: {
             visibility: 'none',
         },
@@ -158,12 +160,13 @@ function addBuffer(REGION, FEET) {
 }
 
 // ======= make layer visibile or invisible =======
-function toggleLayerVisibility(LAYER) {
-    var vis = map.getLayoutProperty(LAYER, 'visibility');
+function toggleLayerVisibility(layer) {
+    var vis = map.getLayoutProperty(layer, 'visibility');
+
     if (vis == 'none') {
-        map.setLayoutProperty(LAYER, 'visibility', 'visible');
+        map.setLayoutProperty(layer, 'visibility', 'visible');
     } else {
-        map.setLayoutProperty(LAYER, 'visibility', 'none');
+        map.setLayoutProperty(layer, 'visibility', 'none');
     }
 }
 
@@ -208,6 +211,7 @@ $('.label-r').on('click', function() {
 
 // ======= menu drag functions =======
 var dragger, startLoc;
+
 $('#menuDrag, #infoDrag').on('mousedown', function(e) {
     dragger = $(e.currentTarget).parent('div');
     e.preventDefault();
@@ -216,19 +220,23 @@ $('#menuDrag, #infoDrag').on('mousedown', function(e) {
 
 function initDrag(e){
     var locXY = $(dragger).offset();
+
     $(dragger).css('position', 'absolute');
     startLoc = { x: 0, y: 0 };
     startLoc.x = e.clientX - locXY.left;
     startLoc.y = e.clientY - locXY.top;
+
     window.addEventListener('mousemove', draggerMove, true);
     window.addEventListener('mouseup', mouseUp, true);
 }
+
 function draggerMove(e){
     var top = e.clientY - startLoc.y;
     var left = e.clientX - startLoc.x;
     $(dragger).css('top', top + 'px');
     $(dragger).css('left', left + 'px');
 }
+
 function mouseUp() {
     window.removeEventListener('mousemove', draggerMove, true);
 }
