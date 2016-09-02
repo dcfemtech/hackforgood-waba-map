@@ -2,12 +2,14 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y
 
 var lanesUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/bikelanes/';
 var buffersUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/buffers/';
+var countyUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/counties/';
 
 // ======= regions =======
 var regions = {
     AL: {
         id: 'AL_4',
         name: 'Alexandria',
+		countyFile: countyUrl + 'VA_Alexandria.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -27,6 +29,7 @@ var regions = {
     AR: {
         id: 'AR_3',
         name: 'Arlington',
+		countyFile: countyUrl + 'VA_Arlington.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -46,6 +49,7 @@ var regions = {
     DC: {
         id: 'DC_0',
         name: 'District of Columbia',
+		countyFile: countyUrl + 'DC_Washington.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -65,6 +69,7 @@ var regions = {
     MO: {
         id: 'MO_1',
         name: 'Montgomery County',
+		countyFile: countyUrl + 'MD_MontgomeryCounty.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -84,6 +89,7 @@ var regions = {
     PG: {
         id: 'PG_2',
         name: 'Prince George\'s County',
+		countyFile: countyUrl + 'MD_PrinceGeorgesCounty.geojson',
         box: {
             NW: [null, null],
             SE: [null, null]
@@ -113,6 +119,29 @@ var map = new mapboxgl.Map({
 map.addControl(new mapboxgl.Navigation({
     'position': 'bottom-right'
 }));
+
+
+// ======= add county lines =======
+function addCounties(REGION) {
+	map.addSource(REGION + 'county-src', {
+		type: 'geojson',
+		data: regions[REGION].countyFile
+	});
+	map.addLayer({
+		id: REGION + 'county-layer',
+		type: 'line',
+		source: REGION + 'county-src',
+		layout: {
+			'line-join': 'round',
+			'line-cap': 'round',
+			'visibility': 'visible'
+		},
+		paint: {
+			'line-color': '#707070',
+			'line-width': 1
+		}
+	});
+}
 
 // ======= add bike lanes =======
 function addLanes(region) {
@@ -174,6 +203,7 @@ function toggleLayerVisibility(layer) {
 map.on('load', function() {
     for (r in regions) {
         addLanes(r);
+		addCounties(r);
         if (regions[r].bufferFiles.ft500) {
             addBuffer(r, 'ft500');
         }
