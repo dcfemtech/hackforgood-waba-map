@@ -168,7 +168,7 @@ function toggleLayerVisibility(LAYER) {
 }
 
 // ======= initialize map layers =======
-map.on('load', function () {
+map.on('load', function() {
     for (r in regions) {
         addLanes(r);
         if (regions[r].bufferFiles.ft500) {
@@ -188,19 +188,19 @@ map.on('load', function () {
 });
 
 // ======= get coordinates under the mouse =======
-map.on('mousemove', function (e) {
+map.on('mousemove', function(e) {
     document.getElementById('lat').innerHTML = JSON.stringify(e.lngLat['lat']);
     document.getElementById('lng').innerHTML = JSON.stringify(e.lngLat['lng']);
 });
 
 // ======= toggle buffers visibile or invisible =======
-$('.buffer').on('click', function () {
+$('.buffer').on('click', function() {
     toggleLayerVisibility($(this).parent().parent().attr('id') + $(this).attr('class').split(' ')[1] + 'buffers-layer');
     $(this).toggleClass('selected');
 });
 
 // ======= toggle lanes visibile or invisible =======
-$('.label-r').on('click', function () {
+$('.label-r').on('click', function() {
     if ($(this).text() == 'all') {
         for (r in regions) {
             map.setLayoutProperty(r + 'lanes-layer', 'visibility', 'none');
@@ -241,7 +241,7 @@ function mouseUp() {
 
 // ======= error box =======
 function activateErrorModal() {
-    $('#error-box button').on('click', function(e) {
+    $('#error-box button').on('click', function() {
         $('#error-box').fadeOut(200);
     });
 }
