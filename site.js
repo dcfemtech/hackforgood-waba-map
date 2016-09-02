@@ -2,7 +2,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y
 
 var lanesUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/bikelanes/';
 var buffersUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/buffers/';
-var countyUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/Issue101/counties/';
+var countyUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/counties/';
 
 // ======= regions =======
 var regions = {
