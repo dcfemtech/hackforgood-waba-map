@@ -20,10 +20,10 @@ var regions = {
             trails: null
         },
         bufferFiles: {
-            ft500: buffersUrl + 'VA_Alexandria_Bike_Buffer_500ft.geojson',
-            ft1000: buffersUrl + 'VA_Alexandria_Bike_Buffer_1000ft.geojson',
-            ft2500: buffersUrl + 'VA_Alexandria_Bike_Buffer_2500ft.geojson',
-            ft5280: buffersUrl + 'VA_Alexandria_Bike_Buffer_5280ft.geojson'
+            ft500: buffersUrl + 'VA_Alexandria_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'VA_Alexandria_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'VA_Alexandria_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'VA_Alexandria_buffer_1mile.geojson'
         }
     },
     AR: {
@@ -40,10 +40,10 @@ var regions = {
             trails: null
         },
         bufferFiles: {
-            ft500: buffersUrl + 'VA_Arlington_Bike_Buffer_500ft.geojson',
-            ft1000: buffersUrl + 'VA_Arlington_Bike_Buffer_1000ft.geojson',
-            ft2500: buffersUrl + 'VA_Arlington_Bike_Buffer_2500ft.geojson',
-            ft5280: buffersUrl + 'VA_Arlington_Bike_Buffer_5280ft.geojson'
+            ft500: buffersUrl + 'VA_Arlington_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'VA_Arlington_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'VA_Arlington_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'VA_Arlington_buffer_1mile.geojson'
         }
     },
     DC: {
@@ -60,10 +60,10 @@ var regions = {
             trails: null
         },
         bufferFiles: {
-            ft500: buffersUrl + 'DC_Bike_Buffer_500ft.geojson',
-            ft1000: buffersUrl + 'DC_Bike_Buffer_1000ft.geojson',
-            ft2500: buffersUrl + 'DC_Bike_Buffer_2500ft.geojson',
-            ft5280: buffersUrl + 'DC_Bike_Buffer_5280ft.geojson'
+            ft500: buffersUrl + 'DC_Washington_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'DC_Washington_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'DC_Washington_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'DC_Washington_buffer_1mile.geojson'
         }
     },
     MO: {
@@ -80,10 +80,10 @@ var regions = {
             trails: null
         },
         bufferFiles: {
-            ft500: buffersUrl + 'MD_MontgomeryCounty_Bikeways_Buffer_500ft.geojson',
-            ft1000: buffersUrl + 'MD_MontgomeryCounty_Bikeways_Buffer_1000ft.geojson',
-            ft2500: buffersUrl + 'MD_MontgomeryCounty_Bikeways_Buffer_2500ft.geojson',
-            ft5280: buffersUrl + 'MD_MontgomeryCounty_Bikeways_Buffer_5280ft.geojson'
+            ft500: buffersUrl + 'MD_MontgomeryCounty_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'MD_MontgomeryCounty_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'MD_MontgomeryCounty_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'MD_MontgomeryCounty_buffer_1mile.geojson'
         }
     },
     PG: {
