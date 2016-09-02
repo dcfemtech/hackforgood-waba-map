@@ -94,12 +94,12 @@ var regions = {
             trails: null
         },
         bufferFiles: {
-            ft500: null,
-            ft1000: null,
-            ft2500: null,
-            ft5280: null
+            ft500: buffersUrl + 'MD_PrinceGeorgesCounty_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'MD_PrinceGeorgesCounty_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'MD_PrinceGeorgesCounty_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'MD_PrinceGeorgesCounty_buffer_1mile.geojson'
         }
-    },
+    }
 }
 
 // ======= initialize map =======
