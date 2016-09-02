@@ -195,13 +195,13 @@ map.on('mousemove', function (e) {
 
 // ======= toggle buffers visibile or invisible =======
 $('.buffer').on('click', function () {
-    toggleLayerVisibility($(this).parent().parent().attr("id") + $(this).attr("class").split(' ')[1] + 'buffers-layer');
+    toggleLayerVisibility($(this).parent().parent().attr('id') + $(this).attr('class').split(' ')[1] + 'buffers-layer');
     $(this).toggleClass('selected');
 });
 
 // ======= toggle lanes visibile or invisible =======
 $('.label-r').on('click', function () {
-    if ($(this).text() == "all") {
+    if ($(this).text() == 'all') {
         for (r in regions) {
             map.setLayoutProperty(r + 'lanes-layer', 'visibility', 'none');
         }
