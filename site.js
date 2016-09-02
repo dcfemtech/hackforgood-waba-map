@@ -75,18 +75,17 @@ var regions = {
             SE: [null, null]
         },
         laneFiles: {
-            lanes: null,
+            lanes: lanesUrl + 'VA_Fairfax.geojson',
             paths: null,
             trails: null
         },
         bufferFiles: {
-            ft500: null,
-            ft1000: null,
-            ft2500: null,
-            ft5280: null
+            ft500: buffersUrl + 'VA_Fairfax_buffer_500ft.geojson',
+            ft1000: buffersUrl + 'VA_Fairfax_buffer_1000ft.geojson',
+            ft2500: buffersUrl + 'VA_Fairfax_buffer_2500ft.geojson',
+            ft5280: buffersUrl + 'VA_Fairfax_buffer_1mile.geojson'
         }
     },
-
     MO: {
         id: 'MO_1',
         name: 'Montgomery County',
