@@ -2,7 +2,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y
 
 var lanesUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/bikelanes/';
 var buffersUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/buffers/';
-var countyUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/counties/';
+var countyUrl = 'https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/Issue101/counties/';
 
 // ======= regions =======
 var regions = {
@@ -66,6 +66,27 @@ var regions = {
             ft5280: buffersUrl + 'DC_Washington_buffer_1mile.geojson'
         }
     },
+	FX: {
+		id: 'FX_4',
+		name: 'Fairfax',
+		countyFile: countyUrl + 'VA_Fairfax.geojson',
+        box: {
+            NW: [null, null],
+            SE: [null, null]
+        },
+        laneFiles: {
+            lanes: null,
+            paths: null,
+            trails: null
+        },
+        bufferFiles: {
+            ft500: null,
+            ft1000: null,
+            ft2500: null,
+            ft5280: null
+        }
+    },
+
     MO: {
         id: 'MO_1',
         name: 'Montgomery County',
@@ -122,15 +143,15 @@ map.addControl(new mapboxgl.Navigation({
 
 
 // ======= add county lines =======
-function addCounties(REGION) {
-    map.addSource(REGION + 'county-src', {
+function addCounties(region) {
+    map.addSource(region + 'county-src', {
         type: 'geojson',
-        data: regions[REGION].countyFile
+        data: regions[region].countyFile
     });
     map.addLayer({
-        id: REGION + 'county-layer',
+        id: region + 'county-layer',
         type: 'line',
-        source: REGION + 'county-src',
+        source: region + 'county-src',
         layout: {
             'line-join': 'round',
             'line-cap': 'round',
