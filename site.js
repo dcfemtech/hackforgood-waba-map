@@ -1,8 +1,16 @@
 (function() {
 
-    var lanesUrl = '/bikelanes/';
-    var buffersUrl = '/buffers/';
-    var countyUrl = '/counties/';
+    // if testing locally get data from local folders, else retrieve from GitHub Pages
+    if (location.hostname == 'localhost' || location.hostname == '127.0.0.1') {
+        var lanesUrl = '/bikelanes/';
+        var buffersUrl = '/buffers/';
+        var countyUrl = '/counties/';
+    } else {
+        var baseUrl = 'https://dcfemtech.github.io/hackforgood-waba-map/';
+        var lanesUrl = baseUrl + '/bikelanes/';
+        var buffersUrl = baseUrl + '/buffers/';
+        var countyUrl = baseUrl + '/counties/';
+    }
 
     // ======= regions =======
     var regions = {
