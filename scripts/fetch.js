@@ -237,17 +237,20 @@ function fairfaxCountyTrailsMap(rawGeoJson) {
     //convert ID to objectid
     //convert TRAIL_NAME to name
     //convert SURFACE_MATERIAL = 'Asphalt' to wabaclassification = 'Paved Trail'
-    //convert SURFACE_MATERIAL = 'Concrete' to wabaclassification = 'Paved Trap'
+    //convert SURFACE_MATERIAL = 'Concrete' to wabaclassification = 'Sidewalk?'
     //convert any other to wabaclassification = 'Unpaved Trail'
 
     var geojson = { type: 'FeatureCollection', features: [] };
     for (var i = 0; i < rawGeoJson.features.length; i++) {
         var rawFeature = rawGeoJson.features[i];
         var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.ID, name: rawFeature.properties.TRAIL_NAME }, geometry: rawFeature.geometry };
-        if (rawFeature.properties.SURFACE_MATERIAL == 'Asphalt') mappedFeature.properties.wabaclassification = 'Paved Trail';
-        if (rawFeature.properties.SURFACE_MATERIAL == 'Concrete') mappedFeature.properties.wabaclassification = 'Paved Trail';
-        if (rawFeature.properties.SURFACE_MATERIAL != 'Asphalt' && rawFeature.properties.SURFACE_MATERIAL != 'Concrete') mappedFeature.properties.wabaclassification = 'Unpaved Trail';
-
+        if (!rawFeature.properties.TRAIL_NAME || rawFeature.properties.TRAIL_NAME == ' ') {
+            mappedFeature.properties.wabaclassification = 'Incidental Trail';
+        } else {
+            if (rawFeature.properties.SURFACE_MATERIAL == 'Asphalt') mappedFeature.properties.wabaclassification = 'Paved Trail';
+            if (rawFeature.properties.SURFACE_MATERIAL == 'Concrete') mappedFeature.properties.wabaclassification = 'Sidewalk?';
+            if (rawFeature.properties.SURFACE_MATERIAL != 'Asphalt' && rawFeature.properties.SURFACE_MATERIAL != 'Concrete') mappedFeature.properties.wabaclassification = 'Unpaved Trail';
+        }
         geojson.features.push(mappedFeature);
     }
 
@@ -258,16 +261,20 @@ function fairfaxNonCountyTrailsMap(rawGeoJson) {
     //convert OBJECTID to objectid
     //convert TRAIL_NAME to name
     //convert SURFACE_MATERIAL = 'Asphalt' to wabaclassification = 'Paved Trail'
-    //convert SURFACE_MATERIAL = 'Concrete' to wabaclassification = 'Paved Trap'
+    //convert SURFACE_MATERIAL = 'Concrete' to wabaclassification = 'Sidewalk?'
     //convert any other to wabaclassification = 'Unpaved Trail'
 
     var geojson = { type: 'FeatureCollection', features: [] };
     for (var i = 0; i < rawGeoJson.features.length; i++) {
         var rawFeature = rawGeoJson.features[i];
         var mappedFeature = { type: 'Feature', properties: { objectid: rawFeature.properties.OBJECTID, name: rawFeature.properties.TRAIL_NAME }, geometry: rawFeature.geometry };
-        if (rawFeature.properties.SURFACE_MATERIAL == 'Asphalt') mappedFeature.properties.wabaclassification = 'Paved Trail';
-        if (rawFeature.properties.SURFACE_MATERIAL == 'Concrete') mappedFeature.properties.wabaclassification = 'Paved Trail';
-        if (rawFeature.properties.SURFACE_MATERIAL != 'Asphalt' && rawFeature.properties.SURFACE_MATERIAL != 'Concrete') mappedFeature.properties.wabaclassification = 'Unpaved Trail';
+        if (!rawFeature.properties.TRAIL_NAME || rawFeature.properties.TRAIL_NAME == ' ') {
+            mappedFeature.properties.wabaclassification = 'Incidental Trail';
+        } else {
+            if (rawFeature.properties.SURFACE_MATERIAL == 'Asphalt') mappedFeature.properties.wabaclassification = 'Paved Trail';
+            if (rawFeature.properties.SURFACE_MATERIAL == 'Concrete') mappedFeature.properties.wabaclassification = 'Sidewalk?';
+            if (rawFeature.properties.SURFACE_MATERIAL != 'Asphalt' && rawFeature.properties.SURFACE_MATERIAL != 'Concrete') mappedFeature.properties.wabaclassification = 'Unpaved Trail';
+        }        
 
         geojson.features.push(mappedFeature);
     }
