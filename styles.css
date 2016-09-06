@@ -9,6 +9,24 @@ body {
     font-size: 14px;
     font-weight: normal;
 }
+#wabaLogo{
+  background-color: #e1e1e1;
+}
+svg{
+  width:150px;
+  height:75px;
+  color:#5b6c62;
+}
+h1{
+  font-family: Lato,sans-serif;
+  color:#5b6c62;
+  z-index:auto;
+
+}
+.descriptionText{
+  font-family: Lato,sans-serif;
+  color:#5b6c62;
+}
 #map {
     position: absolute;
     top: 0;
@@ -112,6 +130,8 @@ body {
 }
 .td-r {
     height: 20px;
+
+
 }
 .td-b {
     width: 20px;
@@ -123,7 +143,8 @@ body {
 
 /* == regions */
 .region {
-    width: 22px;
+    /*width: 22px;*/
+    width:inherit;
     height: 22px;
     margin: 2px 0 2px 20px;
     text-align: center;
@@ -156,8 +177,10 @@ body {
     border-radius: 2px;
 }
 .label-r, .label-x {
+
     margin-top: 3px;
     font-weight: bold;
+
 }
 
 /* == buffers */
