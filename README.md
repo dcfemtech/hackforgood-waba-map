@@ -4,6 +4,8 @@
 ### Live Demo
 https://dcfemtech.github.io/hackforgood-waba-map/
 
+![Screenshot of the project](https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/add-screenshot/docs/screenshot.png)
+
 ## Development
 
 This project is managed with npm - you will need to first install Node and NPM. We recommend using the [Node Version Manager (nvm)](https://github.com/creationix/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) to install and manage Node.
