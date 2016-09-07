@@ -5,28 +5,63 @@ body {
     box-sizing: border-box;
     font-family: sans-serif;
 }
+
+/* ======= Logo,title,description,credits, and translucent background div ======= */
+#header{
+  width:955px;
+  height:185px;
+  background-color: rgba(255, 255, 255, 0.8);
+  background-size:1040px 205px;
+  box-shadow: 5px 5px 5px #bbb;
+  position:absolute;
+  z-index:9;
+}
 .subhead-text {
     font-size: 14px;
     font-weight: normal;
 }
-#wabaLogo{
-  background-color: #e1e1e1;
-}
-svg{
-  width:150px;
-  height:75px;
+img{
+  width:153px;
+  height:76px;
   color:#5b6c62;
+  z-index:9;
+  position:absolute;
+  display:block;
+}
+#pageTitle{
+  display:block;
+  z-index:9;
 }
 h1{
   font-family: Lato,sans-serif;
   color:#5b6c62;
-  z-index:auto;
+  z-index:9;
+  position:absolute;
+  display:block;
+  margin-left: 150px;
+}
 
-}
-.descriptionText{
-  font-family: Lato,sans-serif;
+#description{
+  z-index:9;
+  position:absolute;
+  float:none;
+  font-family:Lato,sans-serif;
+  font-size:14px;
   color:#5b6c62;
+  margin-top:55px;
+  margin-left:20px;
 }
+a:link{
+  text-decoration:none;
+  color:#0072bc;
+}
+a:visited{
+  color:red;
+}
+a:hover{
+  color:#54ab66;
+}
+
 #map {
     position: absolute;
     top: 0;
@@ -39,7 +74,9 @@ h1{
     position: absolute;
     float: left;
     left: 20px;
-    width: 240px;
+    width: 214px;
+/*I changed the starting position of the menu by 65px*/
+    margin-top:65px;
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 5px 5px 5px #bbb;
     border-radius: 2px;
@@ -143,9 +180,9 @@ h1{
 
 /* == regions */
 .region {
-    /*width: 22px;*/
     width:inherit;
-    height: 22px;
+    height:auto;
+    /*height: 22px;*/
     margin: 2px 0 2px 20px;
     text-align: center;
     font-weight: normal;
@@ -167,7 +204,7 @@ h1{
 #clearAll-r, #clearAll-b {
     width: 36px;
     height: 22px;
-    margin: 0 0 2px 12px;
+    margin: 0 0 2px 20px;
     text-align: center;
     font-weight: bold;
     font-size: 12px;
