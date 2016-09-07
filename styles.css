@@ -8,8 +8,8 @@ body {
 
 /* ======= Logo,title,description,credits, and translucent background div ======= */
 #header{
-  width:955px;
-  height:185px;
+  width:100%;
+  height:22%;
   background-color: rgba(255, 255, 255, 0.8);
   background-size:1040px 205px;
   box-shadow: 5px 5px 5px #bbb;
@@ -75,8 +75,7 @@ a:hover{
     float: left;
     left: 20px;
     width: 214px;
-/*I changed the starting position of the menu by 65px*/
-    margin-top:65px;
+    margin-top:35px;
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 5px 5px 5px #bbb;
     border-radius: 2px;
@@ -176,13 +175,15 @@ a:hover{
 }
 .td-s {
     height: 4px;
+
 }
 
 /* == regions */
 .region {
     width:inherit;
     height:auto;
-    /*height: 22px;*/
+    max-height:36px;
+    min-height:22px;
     margin: 2px 0 2px 20px;
     text-align: center;
     font-weight: normal;
@@ -201,10 +202,12 @@ a:hover{
     color: white;
     background-color: #5b6c62;
 }
+
 #clearAll-r, #clearAll-b {
-    width: 36px;
-    height: 22px;
-    margin: 0 0 2px 20px;
+    width: inherit;
+    height: auto;
+    max-height:35px;
+    margin: 2px 0 2px 20px;
     text-align: center;
     font-weight: bold;
     font-size: 12px;
@@ -213,6 +216,7 @@ a:hover{
     border: 2px solid #5b6c62;
     border-radius: 2px;
 }
+
 .label-r, .label-x {
 
     margin-top: 3px;
@@ -236,28 +240,28 @@ a:hover{
 .ft500 {
     width: 8px;
     height: 8px;
-    margin-top: 7px;
+    margin-top: 2px;
     margin-left: 4px;
     border-radius: 6px;
 }
 .ft1000 {
     width: 10px;
     height: 10px;
-    margin-top: 6px;
+    margin-top: 1px;
     margin-left: 3px;
     border-radius: 7px;
 }
 .ft2500 {
     width: 12px;
     height: 12px;
-    margin-top: 5px;
+    margin-top: 0px;
     margin-left: 2px;
     border-radius: 8px;
 }
 .ft5280 {
     width: 14px;
     height: 14px;
-    margin-top: 4px;
+    margin-top: -1px;
     margin-left: 1px;
     margin-right: 15px;
     border-radius: 9px;
