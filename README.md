@@ -4,7 +4,7 @@
 ### Live Demo
 https://dcfemtech.github.io/hackforgood-waba-map/
 
-![Screenshot of the project](https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/add-screenshot/docs/screenshot.png)
+![Screenshot of the project](https://raw.githubusercontent.com/dcfemtech/hackforgood-waba-map/master/docs/screenshot.png)
 
 ## Development
 
