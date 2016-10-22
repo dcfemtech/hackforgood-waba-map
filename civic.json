@@ -1,0 +1,49 @@
+{
+    "id": "https://raw.githubusercontent.com/DCgov/civic.json/master/schemas/schema-v1.json",
+    "name": "WABA Bike Infrastructure Map Project",
+    "status": "Beta",
+    "type": "Website",
+    "contact": {
+        "name": "Alex Ulsh",
+        "email": "alexandra.ulsh@gmail.com"
+    },
+    "partners": [
+        {
+            "url": "http://codefordc.org",
+            "name": "Code for DC"
+        },
+        {
+            "url": "http://www.waba.org/",
+            "name": "Washington Area Bicyclist Association"
+        }
+    ],
+    "description": "Creating a bike map advocacy tool for Washington Area Bicyclist Association",
+    "homepage": "https://dcfemtech.github.io/hackforgood-waba-map/",
+    "repository": "https://github.com/dcfemtech/hackforgood-waba-map",
+    "geography": [
+        "Washington, D.C.",
+        "Montgomery County, MD",
+        "Prince George’s County, MD",
+        "Arlington County, VA",
+        "Fairfax County, VA",
+        "Alexandria, VA"
+    ],
+    "data": [
+        {
+            "name": "buffers",
+            "url": "https://github.com/dcfemtech/hackforgood-waba-map/tree/master/buffers"
+        },
+        {
+            "name": "bikelanes",
+            "url": "https://github.com/dcfemtech/hackforgood-waba-map/tree/master/bikelanes"
+        }
+    ],
+    "tags": [
+        "Data visualization",
+        "mapping",
+        "biking",
+        "bike lanes",
+        "DC",
+        "WABA"
+    ]
+}

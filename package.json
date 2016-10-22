@@ -5,7 +5,7 @@
   "scripts": {
     "start": "serve",
     "test": "eslint -c .eslintrc.js *.js",
-    "buffers": "node --max-old-space-size=8192 scripts/generate-buffers.js",
+    "buffers": "node --max-old-space-size=32768 scripts/generate-buffers.js",
     "fetch": "node scripts/fetch.js"
   },
   "repository": {
