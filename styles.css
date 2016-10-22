@@ -1,4 +1,4 @@
-/* ======= general ======= */
+/* ======= Global CSS ======= */
 body {
     margin:0;
     padding:0;
@@ -6,7 +6,20 @@ body {
     font-family: sans-serif;
 }
 
-/* ======= Logo,title,description,credits, and translucent background div ======= */
+a:link{
+  text-decoration:none;
+  color:#0072bc;
+}
+
+a:visited{
+  color:red;
+}
+
+a:hover{
+  color:#54ab66;
+}
+
+/* ======= Header div elements ======= */
 #header{
   width:100%;
   height:22%;
@@ -16,11 +29,8 @@ body {
   position:absolute;
   z-index:9;
 }
-.subhead-text {
-    font-size: 14px;
-    font-weight: normal;
-}
-img{
+
+#wabalogo{
   width:153px;
   height:76px;
   color:#5b6c62;
@@ -28,11 +38,13 @@ img{
   position:absolute;
   display:block;
 }
+
 #pageTitle{
   display:block;
   z-index:9;
 }
-h1{
+
+#headerTitle{
   font-family: Lato,sans-serif;
   color:#5b6c62;
   z-index:9;
@@ -51,16 +63,8 @@ h1{
   margin-top:55px;
   margin-left:20px;
 }
-a:link{
-  text-decoration:none;
-  color:#0072bc;
-}
-a:visited{
-  color:red;
-}
-a:hover{
-  color:#54ab66;
-}
+
+/* ======= Mapbox GL JS map ======= */
 
 #map {
     position: absolute;
@@ -81,7 +85,7 @@ a:hover{
     border-radius: 2px;
     z-index: 9;
 }
-#menuDrag, #infoDrag, #errorFixed {
+#menuDrag, #errorFixed {
     margin: 0;
     padding: 10px;
     background-color: #5b6c62;
@@ -97,18 +101,6 @@ a:hover{
     padding-bottom: 8px;
     z-index: 99;
 }
-#info {
-    top: 82%;
-    height: 120px;
-}
-
-/* ======= info ======= */
-#loc > p {
-    margin: 4px 10px;
-    padding: 4px;
-    font-size: 14px;
-    background-color: rgba(250, 250, 250, 1);
-}
 
 /* ======= menu ======= */
 .box-label {
@@ -123,7 +115,7 @@ a:hover{
     color: #5b6c62;
     font-weight: normal;
 }
-#hoverText, .locText {
+#hoverText {
     display: block;
     position: relative;
     height: 20px;
@@ -132,20 +124,6 @@ a:hover{
     font-size: 14px;
     font-weight: normal;
     background-color: #eee;
-}
-#hoverText {
-    margin: 10px 10px;
-    width: 180px;
-    color: red;
-}
-.locText {
-    display: inline-block;
-    width: 180px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 6px;
-    color: #5b6c62;
 }
 
 /* == filters */
@@ -166,16 +144,10 @@ a:hover{
 }
 .td-r {
     height: 20px;
-
-
 }
 .td-b {
     width: 20px;
     height: 20px;
-}
-.td-s {
-    height: 4px;
-
 }
 
 /* == regions */
@@ -203,7 +175,7 @@ a:hover{
     background-color: #5b6c62;
 }
 
-#clearAll-r, #clearAll-b {
+#clearAll-r {
     width: inherit;
     height: auto;
     max-height:35px;
@@ -217,11 +189,9 @@ a:hover{
     border-radius: 2px;
 }
 
-.label-r, .label-x {
-
+.label-r {
     margin-top: 3px;
     font-weight: bold;
-
 }
 
 /* == buffers */
