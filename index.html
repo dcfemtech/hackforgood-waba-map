@@ -1,13 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <!-- ======= params ======= -->
+    <!-- ======= meta ======= -->
     <meta charset=utf-8 />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>WABA Bike Infrastructure Map Project</title>
 
-    <!-- ======= mapbox ======= -->
+    <!-- ======= Mapbox GL JS libraries ======= -->
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.css' rel='stylesheet' />
 
@@ -16,29 +16,28 @@
 
 </head>
 <body>
-  <!-- ======= backround box on logo title and text ======= -->
-  <div id="header">
-  <!-- ======= WABA logo ======= -->
-  <div>
-    <img src="WABA_logo.svg" alt="Washington Area Bicyclist Association logo"/>
-  </div>
-<!-- ======= WABA title ======= -->
-<div id="pageTitle">
-  <h1>Access to the region's network of bicycle infrastructure</h1>
-</div>
 
-<!-- ======= map description and credits ======= -->
-<div id="description">
-  <p>The green lines on this map represent the existing bike lanes, protected bike lanes,
-  and multi-use trails that make up our region’s bike network. Toggle the different buffers
-  to see which neighborhoods in our region are served by our current network and which are not.
-  WABA's goal is to get everyone in our region within one mile of this network.</p>
-  <p>This map was built by incredible volunteers from
-  <a href="https://dcfemtech.github.io/">DCFemTech</a> and <a href= "http://codefordc.org/">Code For DC</a>.
-  The <a href="https://github.com/dcfemtech/hackforgood-waba-map#data-sources">bike data</a> was pulled from the respective DOTs on September 1st, 2016.
-  Send bike infrastructure questions to advocacy@waba.org.</p>
-</div>
-</div>
+    <!-- ======= header for logo title and text ======= -->
+    <div id="header">
+        <!-- ======= WABA logo ======= -->
+        <div><img id="wabalogo" src="WABA_logo.svg" alt="Washington Area Bicyclist Association"/></div>
+        <!-- ======= WABA title ======= -->
+        <div id="pageTitle">
+          <h1 id="headerTitle">Access to the region's network of bicycle infrastructure</h1>
+        </div>
+        <!-- ======= description and credits ======= -->
+        <div id="description">
+          <p>The green lines on this map represent the existing bike lanes, protected bike lanes,
+          and multi-use trails that make up our region’s bike network. Toggle the different buffers
+          to see which neighborhoods in our region are served by our current network and which are not.
+          WABA's goal is to get everyone in our region within one mile of this network.</p>
+          <p>This map was built by incredible volunteers from
+          <a class="headerLink" href="https://dcfemtech.github.io/">DCFemTech</a> and <a href= "http://codefordc.org/">Code For DC</a>.
+          The <a class="headerLink" href="https://github.com/dcfemtech/hackforgood-waba-map#data-sources">bike data</a> was pulled from the respective DOTs on September 1st, 2016.
+          Send bike infrastructure questions to advocacy@waba.org.</p>
+        </div>
+    </div>
+
     <!-- ======= error box ======= -->
     <div id="error-box" class="modal">
         <div id="errorFixed">
