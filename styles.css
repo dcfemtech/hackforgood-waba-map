@@ -109,11 +109,13 @@ a:hover{
     font-family:Lato,sans-serif;
     font-weight: bold;
     font-size:16px;
+
 }
 .filter-label {
     margin-left: 4px;
     color: #5b6c62;
     font-weight: normal;
+
 }
 #hoverText {
     display: block;
@@ -125,7 +127,6 @@ a:hover{
     font-weight: normal;
     background-color: #eee;
 }
-
 /* == filters */
 #filters {
     width: 178px;
@@ -148,11 +149,19 @@ a:hover{
 .td-b {
     width: 20px;
     height: 20px;
+    display: inline-block;
+    float: right;
+    margin-bottom: auto;
+    margin-left: auto;
+
 }
 
 /* == regions */
+
 .region {
-    width:inherit;
+    position: absolute;
+    width: inherit;
+    max-width: 35%;
     height:auto;
     max-height:36px;
     min-height:22px;
@@ -173,6 +182,9 @@ a:hover{
 .region.selected {
     color: white;
     background-color: #5b6c62;
+}
+.county{
+
 }
 
 #clearAll-r {
