@@ -6,7 +6,8 @@
     "start": "serve",
     "test": "eslint -c .eslintrc.js *.js",
     "buffers": "node --max-old-space-size=32768 scripts/generate-buffers.js",
-    "fetch": "node scripts/fetch.js"
+    "fetch": "node scripts/fetch.js",
+    "e2e": "node_modules/.bin/nightwatch --config nightwatch.conf.js"
   },
   "repository": {
     "type": "git",
@@ -32,8 +33,10 @@
   "devDependencies": {
     "d3-queue": "^3.0.2",
     "eslint": "^3.3.0",
+    "nightwatch": "^0.9.12",
+    "request": "^2.74.0",
+    "selenium-download": "^2.0.9",
     "serve": "^1.4.0",
-    "turf": "^3.0.14",
-    "request": "^2.74.0"
+    "turf": "^3.0.14"
   }
 }
