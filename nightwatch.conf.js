@@ -1,6 +1,6 @@
 'use strict';
 //require('env2')('.env'); // optionally store youre Evironment Variables in .env
-const SCREENSHOT_PATH = "./test/screenshots/";
+const SCREENSHOT_PATH = "test/screenshots/";
 const BINPATH = './node_modules/nightwatch/bin/';
 
 // we use a nightwatch.conf.js file so we can include comments and helper functions
@@ -22,7 +22,7 @@ module.exports = {
     "default": {
       "screenshots": {
         "enabled": true, // if you want to keep screenshots
-        "path": './test/screenshots' // save screenshots here
+        "path": 'test/screenshots' // save screenshots here
       },
       "globals": {
         "waitForConditionTimeout": 5000 // sometimes internet is slow so wait.
