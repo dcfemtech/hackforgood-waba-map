@@ -2,7 +2,7 @@
 
 module.exports = { // adapted from: https://git.io/vodU0
   //TODO: Write end to end tests
-    'Guinea Pig Assert Title': function(browser) {
+    'WABA Assert Title': function(browser) {
         browser
           .url('localhost:3000')
           .waitForElementVisible('body')

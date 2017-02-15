@@ -1,6 +1,6 @@
 
 module.exports = { // adapted from: https://git.io/vodU0
-  'Guinea Pig Assert Title': function(browser) {
+  'WABA Assert page title': function(browser) {
     browser
       .url('localhost:3000')
       .waitForElementVisible('body')
