@@ -7,7 +7,7 @@
     "test": "eslint -c .eslintrc.js *.js",
     "buffers": "node --max-old-space-size=32768 scripts/generate-buffers.js",
     "fetch": "node scripts/fetch.js",
-    "e2e": "node_modules/.bin/nightwatch --config nightwatch.conf.js"
+    "test:unit": "node_modules/.bin/nightwatch --config nightwatch.conf.js --group unit"
   },
   "repository": {
     "type": "git",
