@@ -5,7 +5,7 @@
   "scripts": {
     "start": "serve",
     "postinstall": "node nightwatch.conf.js",
-    "test": "eslint -c .eslintrc.js *.js",
+    "test": "npm run test:unit && npm run test:e2e",
     "buffers": "node --max-old-space-size=32768 scripts/generate-buffers.js",
     "fetch": "node scripts/fetch.js",
     "test:unit": "node_modules/.bin/nightwatch --config nightwatch.conf.js --group unit",
