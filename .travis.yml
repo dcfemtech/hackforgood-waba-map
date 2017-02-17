@@ -3,9 +3,9 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
+      - oracle-java8-set-default
 language: node_js
 node_js:
   - 4
 before_script:
   - npm run selenium-server-start
-  
