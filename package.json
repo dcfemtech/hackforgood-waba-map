@@ -7,7 +7,7 @@
     "postinstall": "node nightwatch.conf.js",
     "test": "npm run test:unit && npm run test:e2e",
     "buffers": "node --max-old-space-size=32768 scripts/generate-buffers.js",
-    "selenium-server-start": "elenium-standalone install && selenium-standalone start",
+    "selenium-server-start": "selenium-standalone install && selenium-standalone start",
     "fetch": "node scripts/fetch.js",
     "test:unit": "node_modules/.bin/nightwatch --config nightwatch.conf.js --group unit",
     "test:e2e": "node_modules/.bin/nightwatch --config nightwatch.conf.js --group e2e"
