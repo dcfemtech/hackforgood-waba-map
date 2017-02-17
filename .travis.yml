@@ -8,3 +8,4 @@ node_js:
   - 4
 before_script:
   - npm run selenium-server-start
+  
