@@ -4,6 +4,7 @@ addons:
   apt:
     packages:
       - oracle-java8-set-default
+      
 language: node_js
 node_js:
   - 4
@@ -16,6 +17,6 @@ before_install:
  - sudo apt-get install -y libappindicator1 fonts-liberation
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
  - sudo dpkg -i google-chrome*.deb
+
 script:
   - ./node_modules/npm-run-all/bin/npm-run-all/index.js -p -r start test
-#  - npm run selenium-server-start
