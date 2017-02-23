@@ -17,5 +17,5 @@ before_install:
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
  - sudo dpkg -i google-chrome*.deb
 script:
-  - npm start | npm test
+  - ./node_modules/npm-run-all/bin/npm-run-all/index.js -p -r start test
 #  - npm run selenium-server-start
