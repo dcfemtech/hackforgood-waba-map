@@ -41,7 +41,6 @@
     "npm-run-all": "^4.0.2",
     "request": "^2.74.0",
     "selenium-download": "^2.0.9",
-    "selenium-standalone": "^6.0.1",
     "serve": "^1.4.0",
     "turf": "^3.0.14"
   }
