@@ -5,10 +5,11 @@
   "scripts": {
     "start": "serve",
     "postinstall": "node nightwatch.conf.js",
-    "test": "npm run test:unit && npm run test:e2e",
+    "test": "./node_modules/npm-run-all/bin/npm-run-all/index.js -p -r start test:all",
     "buffers": "node --max-old-space-size=32768 scripts/generate-buffers.js",
     "selenium-server-start": "selenium-standalone install && selenium-standalone start",
     "fetch": "node scripts/fetch.js",
+    "test:all": "npm run test:unit && npm run test:e2e",
     "test:unit": "node_modules/.bin/nightwatch --config nightwatch.conf.js --group unit",
     "test:e2e": "node_modules/.bin/nightwatch --config nightwatch.conf.js --group e2e"
   },
