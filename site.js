@@ -6,10 +6,10 @@
         var buffersUrl = '/buffers/';
         var countyUrl = '/counties/';
     } else {
-        var baseUrl = 'https://dcfemtech.com/hackforgood-waba-map';
-        var lanesUrl = baseUrl + '/bikelanes/';
-        var buffersUrl = baseUrl + '/buffers/';
-        var countyUrl = baseUrl + '/counties/';
+        var baseUrl = 'https://dcfemtech.com/hackforgood-waba-map/';
+        var lanesUrl = baseUrl + 'bikelanes/';
+        var buffersUrl = baseUrl + 'buffers/';
+        var countyUrl = baseUrl + 'counties/';
     }
 
     // ======= regions =======
