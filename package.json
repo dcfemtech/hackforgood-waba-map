@@ -31,7 +31,7 @@
   "homepage": "https://github.com/dcfemtech/hackforgood-waba-map#readme",
   "devDependencies": {
     "d3-queue": "^3.0.2",
-    "eslint": "^3.3.0",
+    "eslint": "^6.6.0",
     "serve": "^1.4.0",
     "turf": "^3.0.14",
     "request": "^2.74.0"
