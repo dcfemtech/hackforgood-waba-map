@@ -1,20 +1,42 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <!-- ======= params ======= -->
+    <!-- ======= meta ======= -->
     <meta charset=utf-8 />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>WABA Bike Infrastructure Map Project</title>
 
-    <!-- ======= mapbox ======= -->
+    <!-- ======= Mapbox GL JS libraries ======= -->
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.css' rel='stylesheet' />
 
     <!-- ======= styles ======= -->
     <link rel="stylesheet" href="styles.css" />
+
 </head>
 <body>
+
+    <!-- ======= header for logo title and text ======= -->
+    <div id="header">
+        <!-- ======= WABA logo ======= -->
+        <div><img id="wabalogo" src="WABA_logo.svg" alt="Washington Area Bicyclist Association"/></div>
+        <!-- ======= WABA title ======= -->
+        <div id="pageTitle">
+          <h1 id="headerTitle">Access to the region's network of bicycle infrastructure</h1>
+        </div>
+        <!-- ======= description and credits ======= -->
+        <div id="description">
+          <p>The green lines on this map represent the existing bike lanes, protected bike lanes,
+          and multi-use trails that make up our region’s bike network. Toggle the different buffers
+          to see which neighborhoods in our region are served by our current network and which are not.
+          WABA's goal is to get everyone in our region within one mile of this network.</p>
+          <p>This map was built by incredible volunteers from
+          <a class="headerLink" href="https://dcfemtech.github.io/">DCFemTech</a> and <a href= "http://codefordc.org/">Code For DC</a>.
+          The <a class="headerLink" href="https://github.com/dcfemtech/hackforgood-waba-map#data-sources">bike data</a> was pulled from the respective DOTs on September 1st, 2016.
+          Send bike infrastructure questions to advocacy@waba.org.</p>
+        </div>
+    </div>
 
     <!-- ======= error box ======= -->
     <div id="error-box" class="modal">
@@ -28,66 +50,68 @@
     <!-- ======= menu ======= -->
     <div id="mapMenu" class="menu">
         <div id="menuDrag">
-            <h3 class="box-label">menu</h3>
+            <h3 class="box-label">Select region and distance</h3>
         </div>
         <div id="hoverText"></div>
-        <table id="filters">
-            <tr class="table-header">
-                <th class="td-r"><span class="filter-label">regions</span></th>
-                <th class="td-b" colspan="4"><span class="filter-label">buffers</span></td>
-            </tr>
-            <tr id="clearAll">
-                <td class="td-r"><div id="clearAll-r"><p class="label-r">all</p></div></td>
-                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
-            </tr>
+        <div id="filters">
+            <div class="table-header">
+                <div class="td-r"><span class="filter-label">regions</span></div>
+                <div class="td-b" colspan="4"><span class="filter-label">buffers</span></div>
+            </div>
+            <div id="clearAll">
+              <div class="td-r"><div id="clearAll-r"><p class="label-r">all</p></div></div>
+                <div class="bufferStack">
+                  <div class="td-b"><div class="buffer ft500">&nbsp;</div></div>
+                  <div class="td-b"><div class="buffer ft1000">&nbsp;</div></div>
+                  <div class="td-b"><div class="buffer ft2500">&nbsp;</div></div>
+                  <div class="td-b"><div class="buffer ft5280">&nbsp;</div></div>
+                </div>
+            </div>
 
             <!-- ======= regions ======= -->
-            <tr id="AL">
-                <td class="td-r"><div class="region selected"><p class="label-r">AL</p></div></td>
-                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
-            </tr>
-            <tr id="AR">
-                <td class="td-r"><div class="region selected"><p class="label-r">AR</p></div></td>
-                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
-            </tr>
-            <tr id="DC">
-                <td class="td-r"><div class="region selected"><p class="label-r">DC</p></div></td>
-                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
-            </tr>
-            <tr id="FX">
-                <td class="td-r"><div class="region selected"><p class="label-r">FX</p></div></td>
-                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
-            </tr>
-            <tr id="MO">
-                <td class="td-r"><div class="region selected"><p class="label-r">MO</p></div></td>
-                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
-            </tr>
-            <tr id="PG">
-                <td class="td-r"><div class="region selected"><p class="label-r">PG</p></div></td>
-                <td class="td-b"><div class="buffer ft500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft1000">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft2500">&nbsp;</div></td>
-                <td class="td-b"><div class="buffer ft5280">&nbsp;</div></td>
-            </tr>
-        </table>
+            <div id="AL" class="county">
+                <div class="td-r"><div class="region selected"><p class="label-r">Alexandria</p></div></div>
+                <div class="td-b"><div class="buffer ft500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft1000">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft2500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft5280">&nbsp;</div></div>
+            </div>
+            <div id="AR" class="county">
+                <div class="td-r"><div class="region selected"><p class="label-r">Arlington</p></div></div>
+                    <div class="td-b"><div class="buffer ft500">&nbsp;</div></div>
+                    <div class="td-b"><div class="buffer ft1000">&nbsp;</div></div>
+                    <div class="td-b"><div class="buffer ft2500">&nbsp;</div></div>
+                    <div class="td-b"><div class="buffer ft5280">&nbsp;</div></div>
+            </div>
+            <div id="DC" class="county">
+                <div class="td-r"><div class="region selected"><p class="label-r">District of Columbia</p></div></div>
+                <div class="td-b"><div class="buffer ft500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft1000">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft2500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft5280">&nbsp;</div></div>
+            </div>
+            <div id="FX" class="county">
+                <div class="td-r"><div class="region selected"><p class="label-r">Fairfax</p></div></div>
+                <div class="td-b"><div class="buffer ft500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft1000">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft2500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft5280">&nbsp;</div></div>
+            </div>
+            <div id="MO" class="county">
+                <div class="td-r"><div class="region selected"><p class="label-r">Montgomery</p></div></div>
+                <div class="td-b"><div class="buffer ft500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft1000">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft2500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft5280">&nbsp;</div></div>
+            </div>
+            <div id="PG" class="county">
+                <div class="td-r"><div class="region selected"><p class="label-r">Prince George</p></div></div>
+                <div class="td-b"><div class="buffer ft500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft1000">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft2500">&nbsp;</div></div>
+                <div class="td-b"><div class="buffer ft5280">&nbsp;</div></div>
+            </div>
+        </div>
     </div>
 
     <!-- ======= map ======= -->
